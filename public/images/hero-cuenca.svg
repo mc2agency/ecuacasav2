@@ -1,0 +1,28 @@
+<svg width="1200" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#eff6ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dbeafe;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="mountainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:0.5" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Sky background -->
+  <rect width="1200" height="600" fill="url(#skyGradient)"/>
+  
+  <!-- Mountains (representing Cuenca's Andes backdrop) -->
+  <path d="M 0 400 Q 200 200, 400 300 T 800 250 L 1200 350 L 1200 600 L 0 600 Z" 
+        fill="url(#mountainGradient)" opacity="0.6"/>
+  <path d="M 0 450 Q 300 300, 600 380 T 1200 420 L 1200 600 L 0 600 Z" 
+        fill="url(#mountainGradient)" opacity="0.4"/>
+  
+  <!-- Decorative circles (representing colonial architecture) -->
+  <circle cx="100" cy="500" r="40" fill="#fbbf24" opacity="0.2"/>
+  <circle cx="1100" cy="480" r="50" fill="#d97706" opacity="0.15"/>
+  
+  <!-- Text overlay area indicator -->
+  <rect x="50" y="200" width="500" height="250" fill="white" opacity="0.7" rx="20"/>
+</svg>
