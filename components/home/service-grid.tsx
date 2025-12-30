@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { useTranslation } from '@/hooks/use-translation';
-import { LucideIcon } from 'lucide-react';
+import { SERVICE_ICONS, DEFAULT_SERVICE_ICON } from '@/lib/constants';
+import { getLocalizedField } from '@/lib/i18n/helpers';
 
 interface Service {
   slug: string;
@@ -11,8 +12,6 @@ interface Service {
   name_en: string;
   description_es: string;
   description_en: string;
-  icon: LucideIcon;
-  provider_count: number;
 }
 
 interface ServiceGridProps {
@@ -36,7 +35,7 @@ export function ServiceGrid({ services }: ServiceGridProps) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service) => {
-            const Icon = service.icon;
+            const Icon = SERVICE_ICONS[service.slug] || DEFAULT_SERVICE_ICON;
             return (
               <Link key={service.slug} href={`/services/${service.slug}`}>
                 <Card className="h-full hover:shadow-lg transition-shadow duration-200 cursor-pointer group">
@@ -45,15 +44,12 @@ export function ServiceGrid({ services }: ServiceGridProps) {
                       <Icon className="w-6 h-6 text-primary-600" />
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                      {locale === 'en' ? service.name_en : service.name_es}
+                      {getLocalizedField(service, 'name', locale)}
                     </h3>
                     <p className="text-gray-600 mb-4 line-clamp-2">
-                      {locale === 'en' ? service.description_en : service.description_es}
+                      {getLocalizedField(service, 'description', locale)}
                     </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500">
-                        {service.provider_count} {t('services.providers_available')}
-                      </span>
                       <span className="text-primary-600 font-medium group-hover:text-primary-700">
                         {t('services.view_providers')} →
                       </span>

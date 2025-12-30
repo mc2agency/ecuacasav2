@@ -18,9 +18,9 @@ export function getProviderPlaceholder(name: string): string {
  * Returns path to hero image (Cuenca cityscape or provider photo)
  */
 export function getHeroImage(): string {
-  // Using a free Cuenca stock photo placeholder
+  // Using SVG placeholder for hero background
   // In production, replace with actual hero image
-  return '/images/hero-cuenca.jpg';
+  return '/images/hero-cuenca.svg';
 }
 
 /**

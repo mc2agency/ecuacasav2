@@ -10,7 +10,6 @@ export const locationsRepository = {
     const { data, error } = await supabase
       .from('neighborhoods')
       .select('slug, name')
-      .eq('status', 'active')
       .order('name');
 
     if (error) {
@@ -30,7 +29,6 @@ export const locationsRepository = {
       .from('neighborhoods')
       .select('*')
       .eq('slug', slug)
-      .eq('status', 'active')
       .single();
 
     if (error) {

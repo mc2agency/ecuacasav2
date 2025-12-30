@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { RatingStars } from '@/components/shared/rating-stars';
 import { WhatsAppButton } from '@/components/shared/whatsapp-button';
 import { useTranslation } from '@/hooks/use-translation';
+import { getLocalizedField } from '@/lib/i18n/helpers';
 import { CheckCircle, MapPin, Clock } from 'lucide-react';
 
 interface Provider {
@@ -73,7 +74,7 @@ export function FeaturedProviders({ providers }: FeaturedProvidersProps) {
                 </div>
 
                 <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                  {locale === 'en' ? provider.description_en : provider.description_es}
+                  {getLocalizedField(provider, 'description', locale)}
                 </p>
 
                 <div className="space-y-2 mb-4">
@@ -81,7 +82,7 @@ export function FeaturedProviders({ providers }: FeaturedProvidersProps) {
                     <div className="flex flex-wrap gap-1">
                       {provider.services.slice(0, 2).map((service, idx) => (
                         <Badge key={idx} variant="secondary" className="text-xs">
-                          {locale === 'en' ? service.name_en : service.name_es}
+                          {getLocalizedField(service, 'name', locale)}
                         </Badge>
                       ))}
                       {provider.services.length > 2 && (

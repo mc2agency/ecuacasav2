@@ -35,12 +35,8 @@ export const providersRepository = {
         phone,
         services:provider_services(
           service:services(name_es, name_en)
-        ),
-        neighborhoods:provider_neighborhoods(
-          neighborhood:neighborhoods(name)
         )
       `)
-      .eq('status', 'active')
       .eq('featured', true)
       .order('rating', { ascending: false })
       .limit(limit);
@@ -50,7 +46,12 @@ export const providersRepository = {
       return [];
     }
 
-    return transformProviderData(data || []);
+    // Transform data without neighborhoods for now
+    return (data || []).map(provider => ({
+      ...provider,
+      services: provider.services?.map((ps: any) => ps.service) || [],
+      neighborhoods: [], // Empty for now until DB schema is fixed
+    }));
   }),
 
   /**
@@ -75,12 +76,8 @@ export const providersRepository = {
         phone,
         services:provider_services!inner(
           service:services!inner(slug, name_es, name_en)
-        ),
-        neighborhoods:provider_neighborhoods(
-          neighborhood:neighborhoods(name)
         )
       `)
-      .eq('status', 'active')
       .eq('services.service.slug', serviceSlug)
       .order('rating', { ascending: false });
 
@@ -89,7 +86,11 @@ export const providersRepository = {
       return [];
     }
 
-    return transformProviderData(data || []);
+    return (data || []).map(provider => ({
+      ...provider,
+      services: provider.services?.map((ps: any) => ps.service) || [],
+      neighborhoods: [],
+    }));
   }),
 
   /**
@@ -103,13 +104,9 @@ export const providersRepository = {
         *,
         services:provider_services(
           service:services(*)
-        ),
-        neighborhoods:provider_neighborhoods(
-          neighborhood:neighborhoods(*)
         )
       `)
       .eq('slug', slug)
-      .eq('status', 'active')
       .single();
 
     if (error) {
@@ -117,6 +114,10 @@ export const providersRepository = {
       return null;
     }
 
-    return transformProviderData([data])[0];
+    return {
+      ...data,
+      services: data.services?.map((ps: any) => ps.service) || [],
+      neighborhoods: [],
+    };
   }),
 };

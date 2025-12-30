@@ -10,7 +10,6 @@ export const servicesRepository = {
     const { data, error } = await supabase
       .from('services')
       .select('slug, name_es, name_en, description_es, description_en')
-      .eq('status', 'active')
       .order('name_en');
 
     if (error) {
@@ -26,11 +25,10 @@ export const servicesRepository = {
    */
   getBySlug: cache(async (slug: string) => {
     const supabase = await createClient();
-    const { data, error } = await supabase
+    const { data, error} = await supabase
       .from('services')
       .select('*')
       .eq('slug', slug)
-      .eq('status', 'active')
       .single();
 
     if (error) {
