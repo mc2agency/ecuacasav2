@@ -42,10 +42,10 @@ export function Footer() {
             {/* Social Icons */}
             <div className="flex items-center gap-4 mt-6">
               <a
-                href="https://facebook.com/ecuacasa"
+                href="https://www.facebook.com/profile.php?id=651942891326268"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-purple-600 hover:text-white transition-all"
+                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition-all"
                 aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
