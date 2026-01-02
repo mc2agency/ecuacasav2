@@ -1,16 +1,19 @@
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 
 export async function createClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  // Use non-NEXT_PUBLIC_ env vars for server-side to ensure availability at runtime
+  // NEXT_PUBLIC_ vars are for client-side and may not be available in serverless functions
+  const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  if (!supabaseUrl || !supabaseAnonKey) {
+  if (!supabaseUrl || !supabaseKey) {
     console.error('Missing Supabase environment variables:', {
       url: !!supabaseUrl,
-      key: !!supabaseAnonKey
+      key: !!supabaseKey,
+      envKeys: Object.keys(process.env).filter(k => k.includes('SUPABASE'))
     });
     throw new Error('Missing Supabase environment variables');
   }
 
-  return createSupabaseClient(supabaseUrl, supabaseAnonKey);
+  return createSupabaseClient(supabaseUrl, supabaseKey);
 }
