@@ -233,11 +233,15 @@ export default function ProvidersPage() {
                       </div>
 
                       <div className="flex items-center justify-between text-sm">
-                        <div className="flex items-center gap-1.5 text-gray-600">
-                          <Clock className="w-4 h-4" />
-                          <span>{provider.response_time}</span>
-                        </div>
-                        <span className="font-semibold text-gray-900">{provider.price_range}</span>
+                        {provider.response_time && (
+                          <div className="flex items-center gap-1.5 text-gray-600">
+                            <Clock className="w-4 h-4" />
+                            <span>{provider.response_time}</span>
+                          </div>
+                        )}
+                        {provider.price_range && (
+                          <span className="font-semibold text-gray-900">{provider.price_range}</span>
+                        )}
                       </div>
 
                       {provider.speaks_english && (

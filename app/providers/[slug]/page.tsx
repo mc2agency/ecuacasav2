@@ -103,16 +103,20 @@ export default async function ProviderPage({ params }: ProviderPageProps) {
             <div className="p-8">
               {/* Quick Stats */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
-                <div className="bg-gray-50 rounded-xl p-4 text-center">
-                  <Clock className="w-6 h-6 text-primary-600 mx-auto mb-2" />
-                  <div className="text-sm text-gray-500">Tiempo de respuesta</div>
-                  <div className="font-semibold text-gray-900">{provider.response_time}</div>
-                </div>
-                <div className="bg-gray-50 rounded-xl p-4 text-center">
-                  <DollarSign className="w-6 h-6 text-primary-600 mx-auto mb-2" />
-                  <div className="text-sm text-gray-500">Rango de precios</div>
-                  <div className="font-semibold text-gray-900">{provider.price_range}</div>
-                </div>
+                {provider.response_time && (
+                  <div className="bg-gray-50 rounded-xl p-4 text-center">
+                    <Clock className="w-6 h-6 text-primary-600 mx-auto mb-2" />
+                    <div className="text-sm text-gray-500">Tiempo de respuesta</div>
+                    <div className="font-semibold text-gray-900">{provider.response_time}</div>
+                  </div>
+                )}
+                {provider.price_range && (
+                  <div className="bg-gray-50 rounded-xl p-4 text-center">
+                    <DollarSign className="w-6 h-6 text-primary-600 mx-auto mb-2" />
+                    <div className="text-sm text-gray-500">Rango de precios</div>
+                    <div className="font-semibold text-gray-900">{provider.price_range}</div>
+                  </div>
+                )}
                 <div className="bg-gray-50 rounded-xl p-4 text-center col-span-2 sm:col-span-1">
                   <Briefcase className="w-6 h-6 text-primary-600 mx-auto mb-2" />
                   <div className="text-sm text-gray-500">Servicios</div>

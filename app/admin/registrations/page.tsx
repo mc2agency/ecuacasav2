@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Check, X, Phone, Mail, MessageSquare, Filter } from 'lucide-react';
+import { Check, X, Phone, Mail, MessageSquare, Filter, Pencil } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
 
 interface Registration {
   id: string;
@@ -17,6 +18,7 @@ interface Registration {
   message: string | null;
   status: string;
   created_at: string;
+  provider_id?: string; // Associated provider ID if approved
 }
 
 type StatusFilter = 'all' | 'pending' | 'contacted' | 'approved' | 'rejected';
@@ -34,7 +36,30 @@ export default function AdminRegistrationsPage() {
     try {
       const response = await fetch('/api/admin/registrations');
       const data = await response.json();
-      setRegistrations(Array.isArray(data) ? data : []);
+      const regs = Array.isArray(data) ? data : [];
+
+      // For approved registrations, try to find associated provider by phone
+      const supabase = createClient();
+      const approvedRegs = regs.filter((r: Registration) => r.status === 'approved');
+
+      if (approvedRegs.length > 0) {
+        const phones = approvedRegs.map((r: Registration) => r.phone);
+        const { data: providers } = await supabase
+          .from('providers')
+          .select('id, phone')
+          .in('phone', phones);
+
+        if (providers) {
+          const phoneToProviderId = new Map(providers.map(p => [p.phone, p.id]));
+          regs.forEach((reg: Registration) => {
+            if (reg.status === 'approved' && phoneToProviderId.has(reg.phone)) {
+              reg.provider_id = phoneToProviderId.get(reg.phone);
+            }
+          });
+        }
+      }
+
+      setRegistrations(regs);
     } catch (error) {
       console.error('Error fetching registrations:', error);
       setRegistrations([]);
@@ -277,6 +302,29 @@ export default function AdminRegistrationsPage() {
                           Rechazar
                         </Button>
                       </>
+                    )}
+                    {reg.status === 'approved' && reg.provider_id && (
+                      <Link href={`/admin/providers/${reg.provider_id}/edit`}>
+                        <Button
+                          size="sm"
+                          className="bg-purple-600 hover:bg-purple-700 w-full"
+                        >
+                          <Pencil className="w-4 h-4 mr-1" />
+                          Editar Profesional
+                        </Button>
+                      </Link>
+                    )}
+                    {reg.status === 'approved' && !reg.provider_id && (
+                      <Link href="/admin/providers">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="w-full"
+                        >
+                          <Pencil className="w-4 h-4 mr-1" />
+                          Ver Profesionales
+                        </Button>
+                      </Link>
                     )}
                     <a
                       href={`https://wa.me/${reg.phone.replace(/\D/g, '')}`}
