@@ -161,47 +161,18 @@ export default function EditProviderPage() {
     setSubmitting(true);
 
     try {
-      const supabase = createClient();
+      const response = await fetch('/api/admin/providers', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: providerId,
+          ...data,
+        }),
+      });
 
-      // Update provider
-      const { error: updateError } = await supabase
-        .from('providers')
-        .update({
-          name: data.name,
-          phone: data.phone,
-          email: data.email || null,
-          description_es: data.description_es || null,
-          description_en: data.description_en || null,
-          price_range: data.price_range || null,
-          response_time: data.response_time || null,
-          rating: data.rating,
-          review_count: data.review_count,
-          speaks_english: data.speaks_english,
-          verified: data.verified,
-          featured: data.featured,
-          status: data.status,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', providerId);
-
-      if (updateError) throw updateError;
-
-      // Update services: delete old relationships and insert new ones
-      await supabase.from('provider_services').delete().eq('provider_id', providerId);
-
-      // Get service IDs for selected slugs
-      const { data: serviceData } = await supabase
-        .from('services')
-        .select('id, slug')
-        .in('slug', data.services);
-
-      if (serviceData && serviceData.length > 0) {
-        const providerServices = serviceData.map((service) => ({
-          provider_id: providerId,
-          service_id: service.id,
-        }));
-
-        await supabase.from('provider_services').insert(providerServices);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Update failed');
       }
 
       router.push('/admin/providers');

@@ -91,3 +91,87 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
+
+export async function PUT(request: NextRequest) {
+  const supabase = getSupabaseClient();
+  try {
+    const data = await request.json();
+    const { id, services, ...updateData } = data;
+
+    if (!id) {
+      return NextResponse.json({ error: 'Provider ID is required' }, { status: 400 });
+    }
+
+    // Prepend +593 to phone number if not already present
+    let fullPhone = updateData.phone?.replace(/\s/g, '') || '';
+    if (fullPhone && !fullPhone.startsWith('+')) {
+      fullPhone = `+593${fullPhone}`;
+    }
+
+    // Update provider
+    const { error: updateError } = await supabase
+      .from('providers')
+      .update({
+        name: updateData.name,
+        phone: fullPhone,
+        email: updateData.email || null,
+        description_es: updateData.description_es || null,
+        description_en: updateData.description_en || null,
+        price_range: updateData.price_range || null,
+        response_time: updateData.response_time || null,
+        rating: updateData.rating || 0,
+        review_count: updateData.review_count || 0,
+        speaks_english: updateData.speaks_english || false,
+        verified: updateData.verified || false,
+        featured: updateData.featured || false,
+        status: updateData.status || 'active',
+      })
+      .eq('id', id);
+
+    if (updateError) {
+      console.error('Provider update error:', updateError);
+      return NextResponse.json({ error: updateError.message }, { status: 500 });
+    }
+
+    // Update services if provided
+    if (services && Array.isArray(services)) {
+      // Delete existing service relationships
+      const { error: deleteError } = await supabase
+        .from('provider_services')
+        .delete()
+        .eq('provider_id', id);
+
+      if (deleteError) {
+        console.error('Error deleting provider services:', deleteError);
+      }
+
+      // Get service IDs and create new relationships
+      if (services.length > 0) {
+        const { data: serviceData } = await supabase
+          .from('services')
+          .select('id, slug')
+          .in('slug', services);
+
+        if (serviceData) {
+          const providerServices = serviceData.map((service) => ({
+            provider_id: id,
+            service_id: service.id,
+          }));
+
+          const { error: servicesError } = await supabase
+            .from('provider_services')
+            .insert(providerServices);
+
+          if (servicesError) {
+            console.error('Provider services error:', servicesError);
+          }
+        }
+      }
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error updating provider:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
