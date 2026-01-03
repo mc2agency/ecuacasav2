@@ -27,7 +27,7 @@ function detectBrowserLanguage(): Locale {
 }
 
 export function TranslationProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('en');
+  const [locale, setLocaleState] = useState<Locale>('es');
 
   useEffect(() => {
     // Check localStorage first, then browser language
