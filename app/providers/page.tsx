@@ -51,34 +51,47 @@ export default function ProvidersPage() {
 
   useEffect(() => {
     async function fetchData() {
-      const supabase = createClient();
+      try {
+        const supabase = createClient();
 
-      // Fetch providers
-      const { data: providersData } = await supabase
-        .from('providers')
-        .select(`
-          id, slug, name, description_es, description_en,
-          rating, review_count, price_range, response_time,
-          verified, speaks_english, featured, phone,
-          services:provider_services(service:services(slug, name_es, name_en))
-        `)
-        .eq('status', 'active')
-        .order('rating', { ascending: false });
+        // Fetch providers
+        const { data: providersData, error: providersError } = await supabase
+          .from('providers')
+          .select(`
+            id, slug, name, description_es, description_en,
+            rating, review_count, price_range, response_time,
+            verified, speaks_english, featured, phone,
+            services:provider_services(service:services(slug, name_es, name_en))
+          `)
+          .eq('status', 'active')
+          .order('rating', { ascending: false });
 
-      // Fetch services for filter dropdown
-      const { data: servicesData } = await supabase
-        .from('services')
-        .select('slug, name_es, name_en')
-        .order('name_en');
+        if (providersError) {
+          console.error('Error fetching providers:', providersError);
+        }
 
-      const transformedProviders = (providersData || []).map((p: any) => ({
-        ...p,
-        services: p.services?.map((ps: any) => ps.service) || [],
-      }));
+        // Fetch services for filter dropdown
+        const { data: servicesData, error: servicesError } = await supabase
+          .from('services')
+          .select('slug, name_es, name_en')
+          .order('name_en');
 
-      setProviders(transformedProviders);
-      setServices(servicesData || []);
-      setLoading(false);
+        if (servicesError) {
+          console.error('Error fetching services:', servicesError);
+        }
+
+        const transformedProviders = (providersData || []).map((p: any) => ({
+          ...p,
+          services: p.services?.map((ps: any) => ps.service) || [],
+        }));
+
+        setProviders(transformedProviders);
+        setServices(servicesData || []);
+      } catch (error) {
+        console.error('Unexpected error in fetchData:', error);
+      } finally {
+        setLoading(false);
+      }
     }
 
     fetchData();
