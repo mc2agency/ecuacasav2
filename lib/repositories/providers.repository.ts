@@ -85,6 +85,7 @@ export const providersRepository = {
         )
       `)
       .eq('featured', true)
+      .eq('status', 'active')
       .order('rating', { ascending: false })
       .limit(limit);
 
