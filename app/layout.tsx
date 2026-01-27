@@ -5,6 +5,8 @@ import { TranslationProvider } from "@/hooks/use-translation";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { FloatingWhatsApp } from "@/components/shared/floating-whatsapp";
+import { ServiceWorkerRegister } from "@/components/shared/sw-register";
+import { InstallPrompt } from "@/components/shared/install-prompt";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,6 +18,17 @@ export const metadata: Metadata = {
   description: "Find trusted, verified home service professionals in Cuenca, Ecuador. Plumbers, electricians, cleaners & more — English-speaking providers for expats and locals.",
   keywords: "Cuenca, Ecuador, home services, plumber, electrician, cleaning, handyman, expat services, servicios del hogar, profesionales verificados",
   metadataBase: new URL("https://ecuacasa.com"),
+  manifest: "/manifest.json",
+  themeColor: "#7c3aed",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "EcuaCasa",
+  },
+  icons: {
+    icon: "/icons/icon-192.png",
+    apple: "/icons/icon-192.png",
+  },
   alternates: {
     canonical: "/",
   },
@@ -62,6 +75,8 @@ export default function RootLayout({
           </main>
           <Footer />
           <FloatingWhatsApp />
+          <InstallPrompt />
+          <ServiceWorkerRegister />
         </TranslationProvider>
       </body>
     </html>
