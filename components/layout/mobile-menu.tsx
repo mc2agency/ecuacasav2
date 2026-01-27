@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useTranslation } from '@/hooks/use-translation';
+import { LanguageToggle } from '@/components/shared/language-toggle';
 import { useEffect } from 'react';
 
 interface MobileMenuProps {
@@ -15,8 +15,6 @@ interface MobileMenuProps {
 
 export function MobileMenu({ open, onClose, navLinks }: MobileMenuProps) {
   const pathname = usePathname();
-  const { t, locale, setLocale } = useTranslation();
-
   // Close menu on route change
   useEffect(() => {
     onClose();
@@ -35,10 +33,6 @@ export function MobileMenu({ open, onClose, navLinks }: MobileMenuProps) {
   }, [open]);
 
   if (!open) return null;
-
-  const toggleLanguage = () => {
-    setLocale(locale === 'en' ? 'es' : 'en');
-  };
 
   return (
     <>
@@ -88,13 +82,7 @@ export function MobileMenu({ open, onClose, navLinks }: MobileMenuProps) {
           {/* Footer Actions */}
           <div className="px-4 py-6 border-t border-gray-200 space-y-3">
             {/* Language Toggle */}
-            <Button
-              variant="outline"
-              className="w-full justify-center"
-              onClick={toggleLanguage}
-            >
-              {locale === 'en' ? '🇪🇸 Español' : '🇺🇸 English'}
-            </Button>
+            <LanguageToggle variant="button" className="w-full justify-center" />
 
             {/* Admin Link - Only show when authenticated */}
             {/* TODO: Add auth check in Phase 7 */}
