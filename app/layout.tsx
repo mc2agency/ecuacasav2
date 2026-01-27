@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/footer";
 import { FloatingWhatsApp } from "@/components/shared/floating-whatsapp";
 import { ServiceWorkerRegister } from "@/components/shared/sw-register";
 import { InstallPrompt } from "@/components/shared/install-prompt";
+import { AnalyticsProvider } from "@/components/shared/analytics-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -77,6 +78,7 @@ export default function RootLayout({
           <FloatingWhatsApp />
           <InstallPrompt />
           <ServiceWorkerRegister />
+          <AnalyticsProvider />
         </TranslationProvider>
       </body>
     </html>

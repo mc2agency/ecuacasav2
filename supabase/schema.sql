@@ -160,3 +160,20 @@ CREATE TABLE contact_logs (
 
 CREATE INDEX idx_contact_logs_provider ON contact_logs(provider_id);
 CREATE INDEX idx_contact_logs_contacted_at ON contact_logs(contacted_at);
+
+-- ANALYTICS EVENTS
+CREATE TABLE analytics_events (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  event_type text NOT NULL,
+  page text,
+  provider_slug text,
+  service_slug text,
+  referrer text,
+  user_agent text,
+  locale text,
+  metadata jsonb DEFAULT '{}',
+  created_at timestamptz DEFAULT now()
+);
+
+CREATE INDEX idx_analytics_event_type ON analytics_events(event_type);
+CREATE INDEX idx_analytics_created_at ON analytics_events(created_at);

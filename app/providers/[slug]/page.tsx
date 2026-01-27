@@ -12,6 +12,7 @@ import { WhatsAppButton } from '@/components/shared/whatsapp-button';
 import { providersRepository } from '@/lib/repositories';
 import { getProviderPlaceholder, getBlurDataURL } from '@/lib/utils/placeholders';
 import { CheckCircle, Clock, DollarSign, ArrowLeft, MapPin, Briefcase } from 'lucide-react';
+import { ProviderReviews } from '@/components/providers/provider-reviews';
 
 interface ProviderPageProps {
   params: Promise<{ slug: string }>;
@@ -186,6 +187,11 @@ export default async function ProviderPage({ params }: ProviderPageProps) {
             </div>
           </CardContent>
         </Card>
+
+        {/* Reviews Section */}
+        <div className="mt-8">
+          <ProviderReviews providerId={provider.id} />
+        </div>
 
         {/* Back to Providers */}
         <div className="text-center mt-8">

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { MessageCircle, X } from 'lucide-react';
+import { trackWhatsAppClick } from '@/lib/analytics';
 
 const SUPPORT_PHONE = '593939451457';
 
@@ -31,6 +32,7 @@ export function FloatingWhatsApp() {
             href={`https://wa.me/${SUPPORT_PHONE}?text=${message}`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick('support')}
             className="block w-full py-2.5 bg-[#25D366] hover:bg-[#20bd5a] text-white text-center font-medium rounded-lg transition-colors"
           >
             Abrir WhatsApp

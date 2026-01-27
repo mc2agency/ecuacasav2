@@ -3,6 +3,7 @@
 import { MessageCircle } from 'lucide-react';
 import { generateWhatsAppLink } from '@/lib/utils/whatsapp';
 import { useTranslation } from '@/hooks/use-translation';
+import { trackWhatsAppClick } from '@/lib/analytics';
 
 interface WhatsAppButtonProps {
   providerName: string;
@@ -32,6 +33,8 @@ export function WhatsAppButton({
   const url = generateWhatsAppLink(phoneNumber, providerName, serviceName);
 
   const handleClick = async () => {
+    // Track analytics
+    trackWhatsAppClick(providerName);
     // Log contact click (fire and forget - don't wait for response)
     if (providerId) {
       try {

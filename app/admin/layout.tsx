@@ -3,7 +3,7 @@
 import { useState, useEffect, ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, Users, FileText, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Users, FileText, LogOut, Menu, X, BarChart3 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
 interface AdminLayoutProps {
@@ -87,6 +87,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
     { href: '/admin/providers', icon: Users, label: 'Profesionales' },
     { href: '/admin/registrations', icon: FileText, label: 'Solicitudes' },
+    { href: '/admin/analytics', icon: BarChart3, label: 'Analytics' },
   ];
 
   if (loading) {
