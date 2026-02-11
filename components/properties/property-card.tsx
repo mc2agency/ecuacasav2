@@ -23,14 +23,18 @@ interface PropertyCardProps {
   compact?: boolean;
 }
 
-// Generate consistent placeholder images based on property type and ID
+// Generate consistent placeholder images with Cuenca-style landscapes
+// Using seeds that produce green hills, valleys, and countryside views
 function getPropertyImage(property: Property): string {
-  // Use picsum.photos with seed for consistent images per property
   const seed = parseInt(property.id) || 1;
-  const category = property.type === 'terreno' ? 'nature' : 'house';
-  // Different image seeds for variety
-  const imageId = (seed * 17 + 100) % 1000;
-  return `https://picsum.photos/seed/${category}${imageId}/400/300`;
+  // Use landscape/countryside themed seeds for Cuenca aesthetic
+  const landscapeSeeds = [
+    'hills', 'valley', 'farm', 'green', 'mountain', 'field', 'meadow', 'rural',
+    'countryside', 'nature', 'landscape', 'pastoral', 'terrain', 'andes', 'ecuador'
+  ];
+  const seedIndex = seed % landscapeSeeds.length;
+  const uniqueSeed = `${landscapeSeeds[seedIndex]}${seed}`;
+  return `https://picsum.photos/seed/${uniqueSeed}/400/300`;
 }
 
 export function PropertyCard({

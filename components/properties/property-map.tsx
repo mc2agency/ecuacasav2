@@ -9,16 +9,51 @@ import { useTranslation } from '@/hooks/use-translation';
 import { getLocalizedField } from '@/lib/i18n/helpers';
 import 'leaflet/dist/leaflet.css';
 
+// Custom styles to override Leaflet popup defaults
+const popupStyles = `
+  .leaflet-popup-content-wrapper {
+    border-radius: 12px !important;
+    padding: 0 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    border: none !important;
+    overflow: hidden;
+  }
+  .leaflet-popup-content {
+    margin: 0 !important;
+    width: 280px !important;
+  }
+  .leaflet-popup-tip {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    border: none !important;
+  }
+  .leaflet-popup-close-button {
+    color: #6b7280 !important;
+    font-size: 20px !important;
+    padding: 8px 10px !important;
+    z-index: 10;
+  }
+  .leaflet-popup-close-button:hover {
+    color: #1f2937 !important;
+  }
+`;
+
 // Cuenca, Ecuador center coordinates
 const CUENCA_CENTER: [number, number] = [-2.9001, -79.0059];
 const DEFAULT_ZOOM = 12;
 
-// Generate property image URL
+// Generate property image URL with Cuenca-style landscapes
+// Using specific seeds that produce green hills, valleys, and countryside views
 function getPropertyImage(property: Property): string {
   const seed = parseInt(property.id) || 1;
-  const category = property.type === 'terreno' ? 'nature' : 'house';
-  const imageId = (seed * 17 + 100) % 1000;
-  return `https://picsum.photos/seed/${category}${imageId}/200/150`;
+  // Use landscape/countryside themed seeds for Cuenca aesthetic
+  // These seeds tend to produce green hills, farmland, and valley views
+  const landscapeSeeds = [
+    'hills', 'valley', 'farm', 'green', 'mountain', 'field', 'meadow', 'rural',
+    'countryside', 'nature', 'landscape', 'pastoral', 'terrain', 'andes', 'ecuador'
+  ];
+  const seedIndex = seed % landscapeSeeds.length;
+  const uniqueSeed = `${landscapeSeeds[seedIndex]}${seed}`;
+  return `https://picsum.photos/seed/${uniqueSeed}/400/300`;
 }
 
 // Custom price marker icon
@@ -86,7 +121,7 @@ export function PropertyMap({
   const [mapReady, setMapReady] = useState(false);
   const mapRef = useRef<L.Map | null>(null);
 
-  // Fix Leaflet default icon issue in Next.js
+  // Fix Leaflet default icon issue in Next.js and inject custom popup styles
   useEffect(() => {
     delete (L.Icon.Default.prototype as any)._getIconUrl;
     L.Icon.Default.mergeOptions({
@@ -94,7 +129,25 @@ export function PropertyMap({
       iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
     });
+
+    // Inject custom popup styles
+    const styleId = 'leaflet-popup-custom-styles';
+    if (!document.getElementById(styleId)) {
+      const styleEl = document.createElement('style');
+      styleEl.id = styleId;
+      styleEl.textContent = popupStyles;
+      document.head.appendChild(styleEl);
+    }
+
     setMapReady(true);
+
+    return () => {
+      // Cleanup on unmount
+      const existingStyle = document.getElementById(styleId);
+      if (existingStyle) {
+        existingStyle.remove();
+      }
+    };
   }, []);
 
   const handlePopupClick = (property: Property) => {
@@ -154,15 +207,18 @@ export function PropertyMap({
             >
               <Popup className="property-popup" closeButton={true} maxWidth={280} minWidth={260}>
                 <div
-                  className="cursor-pointer"
+                  className="cursor-pointer group"
                   onClick={() => handlePopupClick(property)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && handlePopupClick(property)}
                 >
                   {/* Property Image */}
-                  <div className="relative w-full h-32 -mt-3 -mx-3 mb-3 overflow-hidden rounded-t-lg" style={{ width: 'calc(100% + 24px)' }}>
+                  <div className="relative w-full h-36 overflow-hidden">
                     <img
                       src={imageUrl}
                       alt={title}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     {/* EcuaCasa Verified Badge - Brand Green */}
                     <div className="absolute bottom-2 right-2 bg-green-600/90 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] text-white font-medium">
@@ -181,7 +237,7 @@ export function PropertyMap({
                   </div>
 
                   {/* Property Info */}
-                  <div className="px-1">
+                  <div className="p-3">
                     {/* Price */}
                     <div className="flex items-baseline justify-between mb-1">
                       <span className="text-lg font-bold text-gray-900">
@@ -219,8 +275,8 @@ export function PropertyMap({
                     </div>
 
                     {/* CTA */}
-                    <div className="mt-2 text-center">
-                      <span className="text-xs text-purple-600 font-medium hover:text-purple-700">
+                    <div className="mt-3 pt-2 border-t border-gray-100 text-center">
+                      <span className="text-xs text-purple-600 font-medium group-hover:text-purple-700 transition-colors">
                         Ver detalles →
                       </span>
                     </div>
