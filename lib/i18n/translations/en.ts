@@ -115,4 +115,85 @@ export const en = {
   'common.delete': 'Delete',
   'common.edit': 'Edit',
   'common.view': 'View',
+
+  // Properties / Real Estate
+  'nav.properties': 'Properties',
+  'properties.title': 'Properties for Sale',
+  'properties.subtitle': 'Verified real estate in Cuenca, Ecuador',
+  'properties.search_placeholder': 'Search by location or sector...',
+  'properties.filters': 'Filters',
+  'properties.clear_filters': 'Clear Filters',
+  'properties.results': 'properties found',
+  'properties.no_results': 'No properties found',
+  'properties.no_results_desc': 'Try adjusting your filters to see more results',
+  'properties.view_on_map': 'View on Map',
+  'properties.view_list': 'View List',
+
+  // Property Types
+  'properties.type': 'Property Type',
+  'properties.type.all': 'All Types',
+  'properties.type.terreno': 'Land',
+  'properties.type.casa': 'House',
+  'properties.type.departamento': 'Apartment',
+
+  // Property Filters
+  'properties.price_range': 'Price Range',
+  'properties.price_min': 'Min Price',
+  'properties.price_max': 'Max Price',
+  'properties.size_range': 'Size (m²)',
+  'properties.size_min': 'Min Size',
+  'properties.size_max': 'Max Size',
+  'properties.sector': 'Sector',
+  'properties.sector.all': 'All Sectors',
+  'properties.verified_only': 'Verified Only',
+
+  // Property Utilities
+  'properties.utilities': 'Utilities',
+  'properties.utilities.agua': 'Water',
+  'properties.utilities.luz': 'Electricity',
+  'properties.utilities.alcantarillado': 'Sewage',
+  'properties.utilities.via': 'Road Access',
+
+  // Property Card
+  'properties.price_per_m2': 'per m²',
+  'properties.size_label': 'Size',
+  'properties.contact_agent': 'Contact Agent',
+  'properties.view_details': 'View Details',
+  'properties.verified_badge': 'Verified',
+  'properties.gps_verified': 'GPS Verified',
+  'properties.featured': 'Featured',
+
+  // Property Detail Page
+  'properties.detail.gallery': 'Photo Gallery',
+  'properties.detail.overview': 'Overview',
+  'properties.detail.location': 'Location',
+  'properties.detail.documents': 'Verified Documents',
+  'properties.detail.documents_desc': 'Documentation status verified by EcuaCasa',
+  'properties.detail.agent': 'Listing Agent',
+  'properties.detail.contact_via_whatsapp': 'Contact via WhatsApp',
+  'properties.detail.response_time': 'Response Time',
+  'properties.detail.total_sales': 'Total Sales',
+  'properties.detail.rating': 'Rating',
+
+  // Document Types
+  'properties.docs.iprus': 'IPRUS',
+  'properties.docs.certificado_gravamenes': 'Certificate of Liens',
+  'properties.docs.escritura': 'Title Deed',
+  'properties.docs.linea_fabrica': 'Building Line',
+  'properties.docs.levantamiento_topografico': 'Land Survey',
+
+  // EcuaCasa Guarantee
+  'properties.guarantee.title': 'EcuaCasa Guarantee',
+  'properties.guarantee.desc': 'This property has been verified by our team. We confirm the exact GPS location, document authenticity, and agent identity.',
+  'properties.guarantee.gps': 'Exact GPS location verified',
+  'properties.guarantee.docs': 'Legal documents reviewed',
+  'properties.guarantee.agent': 'Agent identity confirmed',
+  'properties.guarantee.photos': 'Photos verified on-site',
+
+  // Map
+  'properties.map.zoom_in': 'Zoom In',
+  'properties.map.zoom_out': 'Zoom Out',
+  'properties.map.reset': 'Reset View',
+  'properties.map.satellite': 'Satellite',
+  'properties.map.street': 'Street',
 } as const;
