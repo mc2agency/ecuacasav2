@@ -12,7 +12,6 @@ import {
   MapPin,
   Droplet,
   Zap,
-  Home,
   Clock,
   Maximize2,
 } from 'lucide-react';
@@ -22,6 +21,16 @@ interface PropertyCardProps {
   isSelected?: boolean;
   onClick?: () => void;
   compact?: boolean;
+}
+
+// Generate consistent placeholder images based on property type and ID
+function getPropertyImage(property: Property): string {
+  // Use picsum.photos with seed for consistent images per property
+  const seed = parseInt(property.id) || 1;
+  const category = property.type === 'terreno' ? 'nature' : 'house';
+  // Different image seeds for variety
+  const imageId = (seed * 17 + 100) % 1000;
+  return `https://picsum.photos/seed/${category}${imageId}/400/300`;
 }
 
 export function PropertyCard({
@@ -37,36 +46,45 @@ export function PropertyCard({
     ? PROPERTY_TYPE_LABELS[property.type].en
     : PROPERTY_TYPE_LABELS[property.type].es;
 
-  // Generate a placeholder image based on property type
-  const placeholderImage = `/api/placeholder/400/300?text=${encodeURIComponent(typeLabel)}`;
+  const propertyImage = getPropertyImage(property);
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (onClick) {
+      e.preventDefault();
+      onClick();
+    }
+  };
 
   return (
-    <Card
-      className={`group overflow-hidden transition-all duration-300 cursor-pointer ${
-        isSelected
-          ? 'ring-2 ring-purple-500 shadow-xl border-purple-200'
-          : 'hover:shadow-lg border-gray-200 hover:border-purple-200'
-      } ${compact ? '' : 'h-full'}`}
-      onClick={onClick}
-    >
-      <CardContent className="p-0">
-        {/* Image Section */}
-        <Link href={`/propiedades/${property.slug}`}>
-          <div className="relative h-40 w-full bg-gradient-to-br from-purple-50 to-pink-50 overflow-hidden">
-            {/* Placeholder gradient background with icon */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Home className="w-16 h-16 text-purple-200" />
-            </div>
+    <Link href={`/propiedades/${property.slug}`} onClick={handleClick}>
+      <Card
+        className={`group overflow-hidden transition-all duration-300 cursor-pointer ${
+          isSelected
+            ? 'ring-2 ring-green-500 shadow-xl border-green-200'
+            : 'hover:shadow-lg border-gray-200 hover:border-gray-300'
+        } ${compact ? '' : 'h-full'}`}
+      >
+        <CardContent className="p-0">
+          {/* Image Section */}
+          <div className="relative h-40 w-full overflow-hidden bg-gray-100">
+            {/* Property Photo */}
+            <Image
+              src={propertyImage}
+              alt={title}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
 
-            {/* Watermark */}
-            <div className="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] text-white font-medium">
+            {/* EcuaCasa Verificado Watermark - Brand Green */}
+            <div className="absolute bottom-2 right-2 bg-green-600/90 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] text-white font-medium">
               EcuaCasa Verificado
             </div>
 
             {/* Badges */}
             <div className="absolute top-2 left-2 flex flex-col gap-1">
               {property.verified && (
-                <div className="bg-green-500 text-white px-2 py-0.5 rounded-full flex items-center gap-1 text-xs font-medium shadow">
+                <div className="bg-green-600 text-white px-2 py-0.5 rounded-full flex items-center gap-1 text-xs font-medium shadow">
                   <CheckCircle className="w-3 h-3" />
                   {t('properties.verified_badge')}
                 </div>
@@ -79,8 +97,9 @@ export function PropertyCard({
               )}
             </div>
 
+            {/* Featured Badge - Gold/Amber */}
             {property.featured && (
-              <div className="absolute top-2 right-2 bg-pink-500 text-white px-2 py-0.5 rounded-full text-xs font-medium shadow">
+              <div className="absolute top-2 right-2 bg-amber-500 text-white px-2 py-0.5 rounded-full text-xs font-medium shadow">
                 {t('properties.featured')}
               </div>
             )}
@@ -90,87 +109,85 @@ export function PropertyCard({
               {typeLabel}
             </div>
           </div>
-        </Link>
 
-        {/* Content Section */}
-        <div className="p-4">
-          {/* Price */}
-          <div className="flex items-baseline justify-between mb-2">
-            <span className="text-xl font-bold text-gray-900">
-              ${property.price.toLocaleString()}
-            </span>
-            <span className="text-sm text-gray-500">
-              ${property.pricePerM2.toLocaleString()}/m²
-            </span>
-          </div>
+          {/* Content Section */}
+          <div className="p-4">
+            {/* Price */}
+            <div className="flex items-baseline justify-between mb-2">
+              <span className="text-xl font-bold text-gray-900">
+                ${property.price.toLocaleString()}
+              </span>
+              <span className="text-sm text-gray-500">
+                ${property.pricePerM2.toLocaleString()}/m²
+              </span>
+            </div>
 
-          {/* Title */}
-          <Link href={`/propiedades/${property.slug}`}>
-            <h3 className="font-semibold text-gray-900 hover:text-purple-600 transition-colors line-clamp-1 mb-2">
+            {/* Title */}
+            <h3 className="font-semibold text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-1 mb-2">
               {title}
             </h3>
-          </Link>
 
-          {/* Location & Size */}
-          <div className="flex items-center gap-3 text-sm text-gray-600 mb-3">
-            <div className="flex items-center gap-1">
-              <MapPin className="w-4 h-4 text-gray-400" />
-              <span>{property.sector}</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Maximize2 className="w-4 h-4 text-gray-400" />
-              <span>{property.size.toLocaleString()} m²</span>
-            </div>
-          </div>
-
-          {/* Utilities */}
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            {property.utilities.agua && (
-              <Badge variant="outline" className="text-xs bg-blue-50 border-blue-200 text-blue-700">
-                <Droplet className="w-3 h-3 mr-1" />
-                {t('properties.utilities.agua')}
-              </Badge>
-            )}
-            {property.utilities.luz && (
-              <Badge variant="outline" className="text-xs bg-yellow-50 border-yellow-200 text-yellow-700">
-                <Zap className="w-3 h-3 mr-1" />
-                {t('properties.utilities.luz')}
-              </Badge>
-            )}
-            {property.utilities.alcantarillado && (
-              <Badge variant="outline" className="text-xs bg-green-50 border-green-200 text-green-700">
-                {t('properties.utilities.alcantarillado')}
-              </Badge>
-            )}
-            {property.utilities.via && (
-              <Badge variant="outline" className="text-xs bg-gray-50 border-gray-200 text-gray-700">
-                {t('properties.utilities.via')}
-              </Badge>
-            )}
-          </div>
-
-          {/* Agent Info */}
-          <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-bold">
-                {property.agent.name.charAt(0)}
+            {/* Location & Size */}
+            <div className="flex items-center gap-3 text-sm text-gray-600 mb-3">
+              <div className="flex items-center gap-1">
+                <MapPin className="w-4 h-4 text-gray-400" />
+                <span>{property.sector}</span>
               </div>
-              <div>
-                <p className="text-sm font-medium text-gray-900 flex items-center gap-1">
-                  {property.agent.name}
-                  {property.agent.verified && (
-                    <CheckCircle className="w-3 h-3 text-green-500" />
-                  )}
-                </p>
+              <div className="flex items-center gap-1">
+                <Maximize2 className="w-4 h-4 text-gray-400" />
+                <span>{property.size.toLocaleString()} m²</span>
               </div>
             </div>
-            <div className="flex items-center gap-1 text-xs text-gray-500">
-              <Clock className="w-3 h-3" />
-              {property.agent.responseTime}
+
+            {/* Utilities */}
+            <div className="flex flex-wrap gap-1.5 mb-3">
+              {property.utilities.agua && (
+                <Badge variant="outline" className="text-xs bg-blue-50 border-blue-200 text-blue-700">
+                  <Droplet className="w-3 h-3 mr-1" />
+                  {t('properties.utilities.agua')}
+                </Badge>
+              )}
+              {property.utilities.luz && (
+                <Badge variant="outline" className="text-xs bg-yellow-50 border-yellow-200 text-yellow-700">
+                  <Zap className="w-3 h-3 mr-1" />
+                  {t('properties.utilities.luz')}
+                </Badge>
+              )}
+              {property.utilities.alcantarillado && (
+                <Badge variant="outline" className="text-xs bg-green-50 border-green-200 text-green-700">
+                  {t('properties.utilities.alcantarillado')}
+                </Badge>
+              )}
+              {property.utilities.via && (
+                <Badge variant="outline" className="text-xs bg-gray-50 border-gray-200 text-gray-700">
+                  {t('properties.utilities.via')}
+                </Badge>
+              )}
+            </div>
+
+            {/* Agent Info */}
+            <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-bold">
+                  {property.agent.name.charAt(0)}
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-900 flex items-center gap-1">
+                    {property.agent.name}
+                    {property.agent.verified && (
+                      <CheckCircle className="w-3 h-3 text-green-500" />
+                    )}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1 text-xs text-gray-500">
+                <Clock className="w-3 h-3" />
+                {property.agent.responseTime}
+              </div>
             </div>
           </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }
