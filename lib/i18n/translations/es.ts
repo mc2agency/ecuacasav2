@@ -115,4 +115,85 @@ export const es = {
   'common.delete': 'Eliminar',
   'common.edit': 'Editar',
   'common.view': 'Ver',
+
+  // Properties / Real Estate
+  'nav.properties': 'Propiedades',
+  'properties.title': 'Propiedades en Venta',
+  'properties.subtitle': 'Bienes raíces verificados en Cuenca, Ecuador',
+  'properties.search_placeholder': 'Buscar por ubicación o sector...',
+  'properties.filters': 'Filtros',
+  'properties.clear_filters': 'Limpiar Filtros',
+  'properties.results': 'propiedades encontradas',
+  'properties.no_results': 'No se encontraron propiedades',
+  'properties.no_results_desc': 'Intenta ajustar los filtros para ver más resultados',
+  'properties.view_on_map': 'Ver en Mapa',
+  'properties.view_list': 'Ver Lista',
+
+  // Property Types
+  'properties.type': 'Tipo de Propiedad',
+  'properties.type.all': 'Todos los Tipos',
+  'properties.type.terreno': 'Terreno',
+  'properties.type.casa': 'Casa',
+  'properties.type.departamento': 'Departamento',
+
+  // Property Filters
+  'properties.price_range': 'Rango de Precio',
+  'properties.price_min': 'Precio Mínimo',
+  'properties.price_max': 'Precio Máximo',
+  'properties.size_range': 'Tamaño (m²)',
+  'properties.size_min': 'Tamaño Mínimo',
+  'properties.size_max': 'Tamaño Máximo',
+  'properties.sector': 'Sector',
+  'properties.sector.all': 'Todos los Sectores',
+  'properties.verified_only': 'Solo Verificados',
+
+  // Property Utilities
+  'properties.utilities': 'Servicios',
+  'properties.utilities.agua': 'Agua',
+  'properties.utilities.luz': 'Luz',
+  'properties.utilities.alcantarillado': 'Alcantarillado',
+  'properties.utilities.via': 'Acceso Vial',
+
+  // Property Card
+  'properties.price_per_m2': 'por m²',
+  'properties.size_label': 'Tamaño',
+  'properties.contact_agent': 'Contactar Agente',
+  'properties.view_details': 'Ver Detalles',
+  'properties.verified_badge': 'Verificado',
+  'properties.gps_verified': 'GPS Verificado',
+  'properties.featured': 'Destacado',
+
+  // Property Detail Page
+  'properties.detail.gallery': 'Galería de Fotos',
+  'properties.detail.overview': 'Resumen',
+  'properties.detail.location': 'Ubicación',
+  'properties.detail.documents': 'Documentos Verificados',
+  'properties.detail.documents_desc': 'Estado de documentación verificado por EcuaCasa',
+  'properties.detail.agent': 'Agente de la Propiedad',
+  'properties.detail.contact_via_whatsapp': 'Contactar por WhatsApp',
+  'properties.detail.response_time': 'Tiempo de Respuesta',
+  'properties.detail.total_sales': 'Ventas Totales',
+  'properties.detail.rating': 'Calificación',
+
+  // Document Types
+  'properties.docs.iprus': 'IPRUS',
+  'properties.docs.certificado_gravamenes': 'Certificado de Gravámenes',
+  'properties.docs.escritura': 'Escritura',
+  'properties.docs.linea_fabrica': 'Línea de Fábrica',
+  'properties.docs.levantamiento_topografico': 'Levantamiento Topográfico',
+
+  // EcuaCasa Guarantee
+  'properties.guarantee.title': 'Garantía EcuaCasa',
+  'properties.guarantee.desc': 'Esta propiedad ha sido verificada por nuestro equipo. Confirmamos la ubicación GPS exacta, autenticidad de documentos e identidad del agente.',
+  'properties.guarantee.gps': 'Ubicación GPS exacta verificada',
+  'properties.guarantee.docs': 'Documentos legales revisados',
+  'properties.guarantee.agent': 'Identidad del agente confirmada',
+  'properties.guarantee.photos': 'Fotos verificadas en sitio',
+
+  // Map
+  'properties.map.zoom_in': 'Acercar',
+  'properties.map.zoom_out': 'Alejar',
+  'properties.map.reset': 'Restablecer Vista',
+  'properties.map.satellite': 'Satélite',
+  'properties.map.street': 'Calle',
 } as const;
