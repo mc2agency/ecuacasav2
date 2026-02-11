@@ -136,7 +136,7 @@ export function PropertiesPageClient() {
               )}
             </div>
 
-            {/* Map Panel - 60% on desktop */}
+            {/* Map Panel - 60% on desktop, full width on mobile */}
             <div className="flex-1 relative">
               <PropertyMap
                 properties={filteredProperties}
@@ -144,25 +144,6 @@ export function PropertiesPageClient() {
                 onPropertySelect={setSelectedProperty}
                 className="w-full h-full"
               />
-
-              {/* Mobile Selected Property Card Overlay */}
-              {isMobile && selectedProperty && (
-                <div className="absolute bottom-4 left-4 right-4 z-[1000]">
-                  <div className="bg-white rounded-xl shadow-2xl border border-gray-200 relative">
-                    <button
-                      onClick={() => setSelectedProperty(null)}
-                      className="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-500 hover:text-gray-700 z-10"
-                    >
-                      ×
-                    </button>
-                    <PropertyCard
-                      property={selectedProperty}
-                      isSelected={true}
-                      compact
-                    />
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         ) : (

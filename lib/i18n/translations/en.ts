@@ -2,6 +2,7 @@ export const en = {
   // Navigation
   'nav.services': 'Services',
   'nav.providers': 'Providers',
+  'nav.blog': 'Guide',
   'nav.how_it_works': 'How It Works',
   'nav.for_providers': 'For Providers',
   'nav.admin': 'Admin',
