@@ -2,293 +2,56 @@ import { BlogPost } from './types';
 
 export const BLOG_POSTS: BlogPost[] = [
   {
-    slug: 'contacte-20-agentes-inmobiliarios-cuenca',
-    title: {
-      en: 'I Contacted 20 Real Estate Agents in Cuenca. Only 1 Responded Professionally.',
-      es: 'Contacté a 20 Agentes Inmobiliarios en Cuenca. Solo 1 Respondió Profesionalmente.',
-    },
-    excerpt: {
-      en: 'My real experience trying to buy land in Cuenca reveals a broken system that frustrates buyers and sellers alike. Here\'s what I learned and why I built EcuaCasa.',
-      es: 'Mi experiencia real tratando de comprar terreno en Cuenca revela un sistema roto que frustra a compradores y vendedores por igual. Esto es lo que aprendí y por qué construí EcuaCasa.',
-    },
-    content: {
-      en: `## The Problem Nobody Talks About
-
-Last month, I set out to buy land in Cuenca. I had my budget ready, knew the sectors I wanted to explore, and was prepared to move quickly. What I wasn't prepared for was the complete chaos of Cuenca's real estate market.
-
-I contacted **20 different real estate agents** through WhatsApp, Facebook, and direct calls. Want to guess how many actually responded with useful information?
-
-**One.**
-
-That's a 5% professional response rate. In any other industry, this would be considered a catastrophic failure. In Cuenca real estate, it's apparently normal.
-
-## What Happened to the Other 19?
-
-Let me break down what I experienced:
-
-- **8 agents** never responded at all. Not even a "busy right now" message.
-- **5 agents** responded once, then ghosted when I asked follow-up questions.
-- **3 agents** sent me listings in completely different cities (one sent me properties in Ambato!)
-- **2 agents** couldn't tell me basic information like the price per square meter.
-- **1 agent** tried to charge me a "consultation fee" just to view listings.
-
-Only **1 agent** out of 20 did what you'd expect: responded promptly, answered my questions, provided verified documents, and actually seemed interested in helping me buy.
-
-## The Data Confirms This Isn't Just Me
-
-This isn't just my bad luck. The research backs up what I experienced:
-
-> "The market lacks a centralized Multiple Listing Service (MLS)."
-> — The Cuenca Dispatch, October 2025
-
-> "The system is not automated, it is not centralized, and it relies on people, not platforms."
-> — CuencaHighLife, December 2025
-
-Despite **32% increase in property demand** in Cuenca in 2024 (according to Plusvalía platform data), the service quality hasn't kept pace. There's a disconnect between surging demand and agent responsiveness.
-
-## The WhatsApp Problem
-
-Here's something interesting: one expat blogger noted they "literally purchased their condo through WhatsApp." That's the reality here—WhatsApp is the primary business communication tool.
-
-But WhatsApp wasn't designed for real estate transactions. There's no:
-- Message tracking
-- Response time monitoring
-- Document verification
-- Listing database
-
-[SCREENSHOT: Example of unanswered WhatsApp messages to agents]
-
-When your entire real estate market runs on a chat app with no accountability, buyers suffer.
-
-## Why Does This Matter?
-
-The expat community in Cuenca is substantial:
-
-- **8,000-10,000 expats** currently living in Cuenca (International Living estimate)
-- **92 different nationalities** represented (OverseasPropertyAlert)
-- **6% increase** in construction permits in the first 9 months of 2024 vs 2023 (INEC)
-
-These are serious buyers with real money. Yet the market treats them as an afterthought.
-
-## What a Professional Agent Should Do
-
-Based on my one positive experience, here's what good service looks like:
-
-1. **Respond within 24 hours** — even if just to acknowledge receipt
-2. **Ask qualifying questions** — budget, timeline, preferred sectors
-3. **Provide verified documents** — IPRUS, Certificado de Gravámenes, Escritura
-4. **Know the property** — price per m², utility availability, zoning restrictions
-5. **Be honest about limitations** — don't show listings in other cities
-6. **Follow up** — check in if the buyer goes quiet
-
-This shouldn't be exceptional. This should be the minimum.
-
-## Why I Built EcuaCasa
-
-After this experience, I realized the problem wasn't finding properties—it was finding *agents who respond*.
-
-That's why EcuaCasa tracks:
-
-- **Agent response times** — visible on every listing
-- **Verification status** — documents verified, GPS confirmed
-- **Real Cuenca properties only** — no Ambato surprises
-- **WhatsApp integration** — but with accountability
-
-Every agent on EcuaCasa has agreed to respond within 24 hours. If they don't, we know—and you'll know too.
-
-## What You Can Do
-
-If you're looking to buy property in Cuenca:
-
-1. **Don't settle for poor service** — you're spending serious money
-2. **Ask for documents upfront** — any hesitation is a red flag
-3. **Compare response times** — slow responses often mean slow closings
-4. **Work with verified agents** — not random Facebook contacts
-
-The Cuenca real estate market has enormous potential. The land is beautiful, prices are reasonable by North American standards, and the investment visa program is one of the most accessible in the world.
-
-But the buying experience needs to improve. That's what we're building.
-
----
-
-*Have you had similar experiences with Cuenca real estate agents? We'd love to hear your story. [Contact us on WhatsApp](/contact)*`,
-      es: `## El Problema del Que Nadie Habla
-
-El mes pasado, me propuse comprar terreno en Cuenca. Tenía mi presupuesto listo, conocía los sectores que quería explorar y estaba preparado para actuar rápido. Para lo que no estaba preparado fue para el caos completo del mercado inmobiliario de Cuenca.
-
-Contacté a **20 agentes inmobiliarios diferentes** a través de WhatsApp, Facebook y llamadas directas. ¿Quieren adivinar cuántos respondieron con información útil?
-
-**Uno.**
-
-Eso es una tasa de respuesta profesional del 5%. En cualquier otra industria, esto se consideraría un fracaso catastrófico. En bienes raíces de Cuenca, aparentemente es normal.
-
-## ¿Qué Pasó con los Otros 19?
-
-Permítanme desglosar lo que experimenté:
-
-- **8 agentes** nunca respondieron en absoluto. Ni siquiera un mensaje de "ocupado ahora mismo".
-- **5 agentes** respondieron una vez, luego desaparecieron cuando hice preguntas de seguimiento.
-- **3 agentes** me enviaron listados en ciudades completamente diferentes (¡uno me envió propiedades en Ambato!)
-- **2 agentes** no pudieron decirme información básica como el precio por metro cuadrado.
-- **1 agente** intentó cobrarme una "tarifa de consulta" solo para ver los listados.
-
-Solo **1 agente** de 20 hizo lo que esperarías: respondió rápidamente, contestó mis preguntas, proporcionó documentos verificados y realmente parecía interesado en ayudarme a comprar.
-
-## Los Datos Confirman Que No Soy Solo Yo
-
-Esta no es solo mi mala suerte. La investigación respalda lo que experimenté:
-
-> "El mercado carece de un Servicio de Listado Múltiple (MLS) centralizado."
-> — The Cuenca Dispatch, Octubre 2025
-
-> "El sistema no está automatizado, no está centralizado, y depende de personas, no de plataformas."
-> — CuencaHighLife, Diciembre 2025
-
-A pesar del **aumento del 32% en la demanda de propiedades** en Cuenca en 2024 (según datos de la plataforma Plusvalía), la calidad del servicio no ha seguido el ritmo. Hay una desconexión entre la demanda creciente y la capacidad de respuesta de los agentes.
-
-## El Problema de WhatsApp
-
-Aquí hay algo interesante: un blogger expatriado señaló que "literalmente compraron su condominio a través de WhatsApp." Esa es la realidad aquí—WhatsApp es la herramienta principal de comunicación comercial.
-
-Pero WhatsApp no fue diseñado para transacciones inmobiliarias. No hay:
-- Seguimiento de mensajes
-- Monitoreo de tiempo de respuesta
-- Verificación de documentos
-- Base de datos de listados
-
-[SCREENSHOT: Ejemplo de mensajes de WhatsApp sin responder a agentes]
-
-Cuando todo tu mercado inmobiliario funciona con una app de chat sin rendición de cuentas, los compradores sufren.
-
-## ¿Por Qué Importa Esto?
-
-La comunidad de expatriados en Cuenca es sustancial:
-
-- **8,000-10,000 expatriados** viviendo actualmente en Cuenca (estimación de International Living)
-- **92 nacionalidades diferentes** representadas (OverseasPropertyAlert)
-- **Aumento del 6%** en permisos de construcción en los primeros 9 meses de 2024 vs 2023 (INEC)
-
-Estos son compradores serios con dinero real. Sin embargo, el mercado los trata como una idea secundaria.
-
-## Lo Que un Agente Profesional Debería Hacer
-
-Basado en mi única experiencia positiva, así es como se ve un buen servicio:
-
-1. **Responder dentro de 24 horas** — aunque sea solo para confirmar recepción
-2. **Hacer preguntas de calificación** — presupuesto, cronograma, sectores preferidos
-3. **Proporcionar documentos verificados** — IPRUS, Certificado de Gravámenes, Escritura
-4. **Conocer la propiedad** — precio por m², disponibilidad de servicios, restricciones de zonificación
-5. **Ser honesto sobre las limitaciones** — no mostrar listados en otras ciudades
-6. **Hacer seguimiento** — consultar si el comprador deja de responder
-
-Esto no debería ser excepcional. Esto debería ser el mínimo.
-
-## Por Qué Construí EcuaCasa
-
-Después de esta experiencia, me di cuenta de que el problema no era encontrar propiedades—era encontrar *agentes que respondan*.
-
-Por eso EcuaCasa rastrea:
-
-- **Tiempos de respuesta de agentes** — visibles en cada listado
-- **Estado de verificación** — documentos verificados, GPS confirmado
-- **Solo propiedades reales de Cuenca** — sin sorpresas de Ambato
-- **Integración con WhatsApp** — pero con rendición de cuentas
-
-Cada agente en EcuaCasa ha acordado responder dentro de 24 horas. Si no lo hacen, lo sabemos—y tú también lo sabrás.
-
-## Lo Que Puedes Hacer
-
-Si estás buscando comprar propiedad en Cuenca:
-
-1. **No te conformes con un servicio deficiente** — estás gastando dinero serio
-2. **Pide documentos por adelantado** — cualquier vacilación es una señal de alerta
-3. **Compara tiempos de respuesta** — respuestas lentas a menudo significan cierres lentos
-4. **Trabaja con agentes verificados** — no con contactos aleatorios de Facebook
-
-El mercado inmobiliario de Cuenca tiene un enorme potencial. La tierra es hermosa, los precios son razonables según los estándares norteamericanos, y el programa de visa de inversionista es uno de los más accesibles del mundo.
-
-Pero la experiencia de compra necesita mejorar. Eso es lo que estamos construyendo.
-
----
-
-*¿Has tenido experiencias similares con agentes inmobiliarios de Cuenca? Nos encantaría escuchar tu historia. [Contáctanos por WhatsApp](/contact)*`,
-    },
-    category: 'guia-comprador',
-    featuredImage: 'https://picsum.photos/seed/realestate1/1200/630',
-    publishedAt: '2026-02-10',
-    author: {
-      name: 'EcuaCasa',
-      role: {
-        en: 'Research Team',
-        es: 'Equipo de Investigación',
-      },
-    },
-    readingTime: 8,
-    tags: ['agentes', 'compradores', 'experiencia', 'whatsapp'],
-    relatedSlugs: ['5-documentos-verificar-comprar-terreno-ecuador'],
-  },
-  {
     slug: '5-documentos-verificar-comprar-terreno-ecuador',
     title: {
-      en: 'The 5 Documents You MUST Verify Before Buying Land in Ecuador (And What Happens If You Don\'t)',
-      es: 'Los 5 Documentos que DEBES Verificar Antes de Comprar Terreno en Ecuador (Y Qué Pasa Si No Lo Haces)',
+      en: 'The 5 Documents You Must Verify Before Buying Land in Ecuador',
+      es: 'Los 5 Documentos que Debes Verificar Antes de Comprar Terreno en Ecuador',
     },
     excerpt: {
-      en: 'Skip these verification steps and you could lose your entire investment. Learn what IPRUS, Certificado de Gravámenes, and other critical documents mean for your purchase.',
-      es: 'Omite estos pasos de verificación y podrías perder toda tu inversión. Aprende qué significan IPRUS, Certificado de Gravámenes y otros documentos críticos para tu compra.',
+      en: 'A complete guide to the essential documents every buyer should verify before purchasing property in Ecuador. Learn what IPRUS, Certificado de Gravámenes, and other critical documents mean for your purchase.',
+      es: 'Una guía completa de los documentos esenciales que todo comprador debe verificar antes de adquirir propiedad en Ecuador. Aprende qué significan IPRUS, Certificado de Gravámenes y otros documentos críticos para tu compra.',
     },
     content: {
-      en: `## Why Document Verification Matters
+      en: `## Understanding Property Documentation in Ecuador
 
-Before we dive into the documents, let me share a warning that appears repeatedly in expat forums and legal guides:
+Buying property in Ecuador is straightforward when you know what to look for. Ecuador's property registry system is transparent and accessible—all records are public, which means anyone can verify ownership and property status.
 
-> "Always get a title check from your lawyer. Not all property records are digitized or easy to interpret, and unfortunately, some sellers try to pass off land they don't really own."
-> — AmyPrisco.com
-
-This isn't paranoia. Documented scams include:
-- **Fake "Land for Sale" signs** placed on properties the seller doesn't own
-- **Relatives disputing sales** after closing because they weren't consulted
-- **Unpaid property taxes** that become the new owner's responsibility
-- **Liens and debts** attached to the property
-
-The good news? Ecuador's property register is **public**. Anyone can verify ownership. The problem is most buyers don't know *what* to verify or *how*.
-
-Here are the 5 documents you must check before signing anything.
+This guide walks you through the five essential documents that protect your investment and ensure a smooth transaction.
 
 ---
 
 ## Document #1: IPRUS (Informe de Regulación Urbana y Sustentabilidad)
 
 ### What It Is
-The IPRUS is a municipal document that shows the property's official registration status, cadastral value, zoning designation, and building regulations. Think of it as the property's "ID card" from the city's perspective.
+The IPRUS is a municipal document that shows the property's official registration status, cadastral value, zoning designation, and building regulations. Think of it as the property's official profile from the municipality's perspective.
 
 ### Why It Matters
-- Shows the **avalúo catastral** (cadastral value) — critical for investor visa qualification
-- Confirms the property is registered with the municipality
-- Details zoning restrictions (residential, commercial, agricultural)
+- Shows the **avalúo catastral** (cadastral value) — important for tax purposes and investor visa qualification
+- Confirms the property is properly registered with the municipality
+- Details zoning (residential, commercial, agricultural)
 - Lists maximum building heights and setback requirements
 
 ### Where to Get It
 Municipal offices (Municipio de Cuenca) or through your lawyer. Cost: approximately $15-30.
 
-### Red Flags to Watch
-- Property not appearing in municipal records
-- Cadastral value significantly different from asking price (could indicate tax issues)
-- Zoning that doesn't match your intended use
+### What to Look For
+- Property appears in municipal records
+- Zoning matches your intended use
+- No pending municipal issues
 
 ---
 
 ## Document #2: Certificado de Gravámenes
 
 ### What It Is
-A certificate from the Registro de la Propiedad (Property Registry) showing all liens, mortgages, debts, and legal encumbrances attached to the property.
+A certificate from the Registro de la Propiedad (Property Registry) showing any liens, mortgages, or legal encumbrances attached to the property.
 
 ### Why It Matters
-If there's a lien on the property, **you inherit it**. This includes:
-- Unpaid mortgages
-- Tax debts
-- Legal disputes
-- Pending lawsuits
+This document reveals the property's legal status:
+- Outstanding mortgages
+- Tax obligations
+- Any pending legal matters
+- Ownership history
 
 > "A thorough investigation of the property, confirming through the Municipality that it has clear title and no known debts, deficits, liens."
 > — EcuadorVisas.com
@@ -296,98 +59,95 @@ If there's a lien on the property, **you inherit it**. This includes:
 ### Where to Get It
 Registro de la Propiedad in Cuenca. Cost: approximately $10-20.
 
-### Red Flags to Watch
-- Any active liens or mortgages
-- Recent ownership changes (could indicate disputes)
-- Multiple owners listed (all must agree to sell)
+### What to Look For
+- Clear title with no active liens
+- Consistent ownership history
+- All listed owners available to sign (if multiple)
 
 ---
 
 ## Document #3: Escritura Pública (Title Deed)
 
 ### What It Is
-The official notarized title deed proving ownership. This is the most important document—it's the legal proof that the seller actually owns what they're selling.
+The official notarized title deed proving ownership. This is the foundational document—the legal proof of who owns the property.
 
 ### Why It Matters
-Without a valid Escritura:
-- The seller may not be the legal owner
-- The property boundaries may be undefined
-- Previous sales may not have been properly registered
+The Escritura establishes:
+- Legal ownership
+- Property boundaries as registered
+- Chain of title from previous owners
 
 ### Where to Get It
-The seller should provide this. Verify it at the Registro de la Propiedad.
+The seller provides this document. Verify its registration at the Registro de la Propiedad.
 
-### Red Flags to Watch
-- Seller can't produce the original Escritura
-- Names on Escritura don't match seller's ID
-- Escritura not registered at Registro de la Propiedad
-- Property inherited but not properly transferred (common issue)
+### What to Look For
+- Names match the seller's identification
+- Document is registered at the Registro de la Propiedad
+- If inherited, proper succession documents are in order
 
 ---
 
 ## Document #4: Línea de Fábrica
 
 ### What It Is
-A municipal certificate showing the property's exact boundaries, building setbacks, and construction permissions. It defines what you can legally build and where.
+A municipal certificate showing the property's exact boundaries, building setbacks, and construction permissions. This document defines what can be built and where.
 
 ### Why It Matters
 - Confirms exact property boundaries
 - Shows permitted construction area
-- Indicates utility access points
-- Required before any construction permit
+- Indicates utility access points (water, electricity, sewer)
+- Required before obtaining construction permits
 
 ### Where to Get It
 Municipal planning office. Cost: approximately $20-40.
 
-### Red Flags to Watch
-- Boundaries don't match what seller claims
-- Building restrictions that limit your plans
-- No utility access (water, electricity) available
+### What to Look For
+- Boundaries align with what's being sold
+- Building allowances meet your needs
+- Utility connections are available or planned
 
 ---
 
 ## Document #5: Levantamiento Topográfico (Land Survey)
 
 ### What It Is
-A professional topographical survey showing exact measurements, elevations, and boundary markers. This is your ground truth.
+A professional topographical survey showing exact measurements, elevations, and boundary markers. This is your on-the-ground verification.
 
 ### Why It Matters
-- Confirms actual size matches claimed size
-- Shows exact boundary locations
-- Identifies terrain issues (slopes, flood zones)
-- Required for any construction
+- Confirms actual size matches documented size
+- Shows exact boundary locations with markers
+- Identifies terrain characteristics (slopes, drainage)
+- Required for construction planning
 
 ### Where to Get It
 Licensed surveyor (topógrafo). Cost: $200-500 depending on property size.
 
-### Red Flags to Watch
-- Survey size differs from Escritura size
-- Boundary markers missing or moved
-- Neighboring properties encroaching
-- Terrain issues not disclosed
+### What to Look For
+- Survey measurements match the Escritura
+- Boundary markers are in place
+- Terrain suits your building plans
 
 ---
 
 ## The Verification Checklist
 
-Here's a simple checklist matching what we show on EcuaCasa listings:
+Here's a simple checklist for tracking document status:
 
-| Document | Status | What to Check |
-|----------|--------|---------------|
-| IPRUS | ✓ | Municipal registration, zoning |
-| Certificado de Gravámenes | ✓ | No liens or debts |
-| Escritura Pública | ✓ | Valid title, registered |
-| Línea de Fábrica | ✓ | Boundaries, building rights |
-| Levantamiento Topográfico | ✓ | Accurate size, clear boundaries |
+| Document | Purpose | Typical Cost |
+|----------|---------|--------------|
+| IPRUS | Municipal registration, zoning | $15-30 |
+| Certificado de Gravámenes | Liens and legal status | $10-20 |
+| Escritura Pública | Proof of ownership | Seller provides |
+| Línea de Fábrica | Boundaries, building rights | $20-40 |
+| Levantamiento Topográfico | Physical survey | $200-500 |
 
-**5 de 5 verificados** = Safe to proceed
-**Any missing** = Ask why before continuing
+**All 5 verified** = Ready to proceed with confidence
 
 ---
 
-## What This Costs
+## Closing Costs in Ecuador
 
-The total closing costs in Ecuador are remarkably low:
+One advantage of buying in Ecuador is the low transaction costs:
 
 | Item | Cost |
 |------|------|
@@ -397,91 +157,75 @@ The total closing costs in Ecuador are remarkably low:
 | Registration fee | ~0.10% |
 | **Total** | **Approximately 1-2%** |
 
-Compare this to 2-5% in the United States. Ecuador's low closing costs make proper verification even more affordable.
+This is significantly lower than many countries, making professional verification even more accessible.
 
 ---
 
-## How EcuaCasa Helps
+## Working with Professionals
 
-Every listing on EcuaCasa shows verification status for all 5 documents:
+A good real estate transaction involves:
 
-- **5 de 5** — All documents verified
-- **Parcialmente Verificado** — Some documents pending
-- **En Proceso** — Verification in progress
+1. **A qualified lawyer** — Essential for reviewing documents and guiding the process ($500-1,500)
+2. **A licensed surveyor** — For physical verification of boundaries
+3. **A knowledgeable agent** — To help navigate listings and negotiations
 
-We don't just take the seller's word. We verify:
-- GPS coordinates match claimed location
-- Documents are current (not expired)
-- Agent has physical access to property
+These professionals work together to ensure your purchase is secure.
 
 ---
 
-## Final Advice
+## Key Takeaways
 
-1. **Never skip verification** — even for "urgent" deals
-2. **Hire a lawyer** — $500-1,500 is cheap insurance
-3. **Get everything in writing** — verbal promises mean nothing
-4. **Take your time** — legitimate sellers don't pressure you
-5. **Use the checklist** — missing documents are red flags
+1. **Ecuador's system is transparent** — All property records are public
+2. **Verification is affordable** — Total document costs under $600
+3. **Professional help is accessible** — Lawyers and surveyors are reasonably priced
+4. **Take your time** — Good properties don't require rushed decisions
+5. **Use the checklist** — Systematic verification protects your investment
 
-The Cuenca real estate market offers genuine opportunities. Land prices are a fraction of North American equivalents. The investor visa path is accessible. But you must do your homework.
-
-Don't become a cautionary tale. Verify before you buy.
+The Cuenca real estate market offers genuine opportunities for buyers who do their homework. With proper verification, you can purchase with confidence.
 
 ---
 
-*Looking for verified properties with all documents in order? [Browse our listings](/propiedades)*`,
-      es: `## Por Qué Importa la Verificación de Documentos
+*Looking for properties with verified documentation? [Browse listings on EcuaCasa](/propiedades)*`,
+      es: `## Entendiendo la Documentación de Propiedades en Ecuador
 
-Antes de profundizar en los documentos, permítanme compartir una advertencia que aparece repetidamente en foros de expatriados y guías legales:
+Comprar propiedad en Ecuador es sencillo cuando sabes qué buscar. El sistema de registro de propiedades de Ecuador es transparente y accesible—todos los registros son públicos, lo que significa que cualquiera puede verificar la propiedad y el estado del inmueble.
 
-> "Siempre obtén una verificación de título de tu abogado. No todos los registros de propiedad están digitalizados o son fáciles de interpretar, y desafortunadamente, algunos vendedores intentan vender terrenos que realmente no les pertenecen."
-> — AmyPrisco.com
-
-Esto no es paranoia. Las estafas documentadas incluyen:
-- **Carteles falsos de "Se Vende Terreno"** colocados en propiedades que el vendedor no posee
-- **Familiares disputando ventas** después del cierre porque no fueron consultados
-- **Impuestos prediales impagos** que se convierten en responsabilidad del nuevo propietario
-- **Gravámenes y deudas** adjuntos a la propiedad
-
-¿La buena noticia? El registro de propiedad de Ecuador es **público**. Cualquiera puede verificar la propiedad. El problema es que la mayoría de los compradores no saben *qué* verificar o *cómo*.
-
-Aquí están los 5 documentos que debes revisar antes de firmar cualquier cosa.
+Esta guía te lleva a través de los cinco documentos esenciales que protegen tu inversión y aseguran una transacción sin problemas.
 
 ---
 
 ## Documento #1: IPRUS (Informe de Regulación Urbana y Sustentabilidad)
 
 ### Qué Es
-El IPRUS es un documento municipal que muestra el estado de registro oficial de la propiedad, valor catastral, designación de zonificación y regulaciones de construcción. Piensa en él como la "cédula de identidad" de la propiedad desde la perspectiva de la ciudad.
+El IPRUS es un documento municipal que muestra el estado de registro oficial de la propiedad, valor catastral, designación de zonificación y regulaciones de construcción. Piénsalo como el perfil oficial de la propiedad desde la perspectiva del municipio.
 
 ### Por Qué Importa
-- Muestra el **avalúo catastral** — crítico para la calificación de visa de inversionista
-- Confirma que la propiedad está registrada en el municipio
-- Detalla restricciones de zonificación (residencial, comercial, agrícola)
+- Muestra el **avalúo catastral** — importante para propósitos fiscales y calificación de visa de inversionista
+- Confirma que la propiedad está debidamente registrada en el municipio
+- Detalla la zonificación (residencial, comercial, agrícola)
 - Lista alturas máximas de construcción y requisitos de retiro
 
 ### Dónde Obtenerlo
 Oficinas municipales (Municipio de Cuenca) o a través de tu abogado. Costo: aproximadamente $15-30.
 
-### Señales de Alerta
-- Propiedad que no aparece en registros municipales
-- Valor catastral significativamente diferente del precio de venta (podría indicar problemas fiscales)
-- Zonificación que no coincide con tu uso previsto
+### Qué Buscar
+- La propiedad aparece en los registros municipales
+- La zonificación coincide con tu uso previsto
+- Sin asuntos municipales pendientes
 
 ---
 
 ## Documento #2: Certificado de Gravámenes
 
 ### Qué Es
-Un certificado del Registro de la Propiedad que muestra todos los gravámenes, hipotecas, deudas y cargas legales adjuntas a la propiedad.
+Un certificado del Registro de la Propiedad que muestra cualquier gravamen, hipoteca o carga legal adjunta a la propiedad.
 
 ### Por Qué Importa
-Si hay un gravamen sobre la propiedad, **lo heredas**. Esto incluye:
-- Hipotecas impagas
-- Deudas fiscales
-- Disputas legales
-- Demandas pendientes
+Este documento revela el estado legal de la propiedad:
+- Hipotecas pendientes
+- Obligaciones fiscales
+- Cualquier asunto legal pendiente
+- Historial de propiedad
 
 > "Una investigación exhaustiva de la propiedad, confirmando a través del Municipio que tiene título limpio y no tiene deudas, déficits o gravámenes conocidos."
 > — EcuadorVisas.com
@@ -489,98 +233,95 @@ Si hay un gravamen sobre la propiedad, **lo heredas**. Esto incluye:
 ### Dónde Obtenerlo
 Registro de la Propiedad en Cuenca. Costo: aproximadamente $10-20.
 
-### Señales de Alerta
-- Cualquier gravamen o hipoteca activa
-- Cambios de propiedad recientes (podría indicar disputas)
-- Múltiples propietarios listados (todos deben acordar vender)
+### Qué Buscar
+- Título limpio sin gravámenes activos
+- Historial de propiedad consistente
+- Todos los propietarios listados disponibles para firmar (si hay múltiples)
 
 ---
 
 ## Documento #3: Escritura Pública
 
 ### Qué Es
-La escritura de título oficial notariada que prueba la propiedad. Este es el documento más importante—es la prueba legal de que el vendedor realmente posee lo que está vendiendo.
+La escritura de título oficial notariada que prueba la propiedad. Este es el documento fundamental—la prueba legal de quién es dueño de la propiedad.
 
 ### Por Qué Importa
-Sin una Escritura válida:
-- El vendedor puede no ser el propietario legal
-- Los límites de la propiedad pueden estar indefinidos
-- Las ventas anteriores pueden no haberse registrado correctamente
+La Escritura establece:
+- Propiedad legal
+- Límites de la propiedad según registro
+- Cadena de título de propietarios anteriores
 
 ### Dónde Obtenerlo
-El vendedor debe proporcionar esto. Verifícalo en el Registro de la Propiedad.
+El vendedor proporciona este documento. Verifica su registro en el Registro de la Propiedad.
 
-### Señales de Alerta
-- El vendedor no puede producir la Escritura original
-- Los nombres en la Escritura no coinciden con la identificación del vendedor
-- Escritura no registrada en el Registro de la Propiedad
-- Propiedad heredada pero no transferida correctamente (problema común)
+### Qué Buscar
+- Los nombres coinciden con la identificación del vendedor
+- El documento está registrado en el Registro de la Propiedad
+- Si es heredada, los documentos de sucesión están en orden
 
 ---
 
 ## Documento #4: Línea de Fábrica
 
 ### Qué Es
-Un certificado municipal que muestra los límites exactos de la propiedad, retiros de construcción y permisos de construcción. Define qué puedes construir legalmente y dónde.
+Un certificado municipal que muestra los límites exactos de la propiedad, retiros de construcción y permisos de construcción. Este documento define qué se puede construir y dónde.
 
 ### Por Qué Importa
 - Confirma los límites exactos de la propiedad
 - Muestra el área de construcción permitida
-- Indica puntos de acceso a servicios públicos
-- Requerido antes de cualquier permiso de construcción
+- Indica puntos de acceso a servicios (agua, electricidad, alcantarillado)
+- Requerido antes de obtener permisos de construcción
 
 ### Dónde Obtenerlo
 Oficina de planificación municipal. Costo: aproximadamente $20-40.
 
-### Señales de Alerta
-- Los límites no coinciden con lo que el vendedor afirma
-- Restricciones de construcción que limitan tus planes
-- No hay acceso a servicios (agua, electricidad) disponible
+### Qué Buscar
+- Los límites coinciden con lo que se está vendiendo
+- Los permisos de construcción satisfacen tus necesidades
+- Las conexiones de servicios están disponibles o planificadas
 
 ---
 
 ## Documento #5: Levantamiento Topográfico
 
 ### Qué Es
-Un levantamiento topográfico profesional que muestra mediciones exactas, elevaciones y marcadores de límites. Esta es tu verdad sobre el terreno.
+Un levantamiento topográfico profesional que muestra mediciones exactas, elevaciones y marcadores de límites. Esta es tu verificación en el terreno.
 
 ### Por Qué Importa
-- Confirma que el tamaño real coincide con el tamaño declarado
-- Muestra ubicaciones exactas de límites
-- Identifica problemas de terreno (pendientes, zonas de inundación)
-- Requerido para cualquier construcción
+- Confirma que el tamaño real coincide con el tamaño documentado
+- Muestra ubicaciones exactas de límites con marcadores
+- Identifica características del terreno (pendientes, drenaje)
+- Requerido para planificación de construcción
 
 ### Dónde Obtenerlo
 Topógrafo licenciado. Costo: $200-500 dependiendo del tamaño de la propiedad.
 
-### Señales de Alerta
-- El tamaño del levantamiento difiere del tamaño de la Escritura
-- Marcadores de límites faltantes o movidos
-- Propiedades vecinas invadiendo
-- Problemas de terreno no revelados
+### Qué Buscar
+- Las mediciones del levantamiento coinciden con la Escritura
+- Los marcadores de límites están en su lugar
+- El terreno es adecuado para tus planes de construcción
 
 ---
 
-## La Lista de Verificación
+## Lista de Verificación
 
-Aquí hay una lista de verificación simple que coincide con lo que mostramos en los listados de EcuaCasa:
+Aquí hay una lista simple para rastrear el estado de los documentos:
 
-| Documento | Estado | Qué Verificar |
-|-----------|--------|---------------|
-| IPRUS | ✓ | Registro municipal, zonificación |
-| Certificado de Gravámenes | ✓ | Sin gravámenes o deudas |
-| Escritura Pública | ✓ | Título válido, registrado |
-| Línea de Fábrica | ✓ | Límites, derechos de construcción |
-| Levantamiento Topográfico | ✓ | Tamaño exacto, límites claros |
+| Documento | Propósito | Costo Típico |
+|-----------|-----------|--------------|
+| IPRUS | Registro municipal, zonificación | $15-30 |
+| Certificado de Gravámenes | Gravámenes y estado legal | $10-20 |
+| Escritura Pública | Prueba de propiedad | El vendedor proporciona |
+| Línea de Fábrica | Límites, derechos de construcción | $20-40 |
+| Levantamiento Topográfico | Levantamiento físico | $200-500 |
 
-**5 de 5 verificados** = Seguro para proceder
-**Alguno faltante** = Pregunta por qué antes de continuar
+**Los 5 verificados** = Listo para proceder con confianza
 
 ---
 
-## Cuánto Cuesta Esto
+## Costos de Cierre en Ecuador
 
-Los costos totales de cierre en Ecuador son notablemente bajos:
+Una ventaja de comprar en Ecuador son los bajos costos de transacción:
 
 | Concepto | Costo |
 |----------|-------|
@@ -590,43 +331,652 @@ Los costos totales de cierre en Ecuador son notablemente bajos:
 | Tasa de registro | ~0.10% |
 | **Total** | **Aproximadamente 1-2%** |
 
-Compara esto con 2-5% en Estados Unidos. Los bajos costos de cierre de Ecuador hacen que la verificación adecuada sea aún más accesible.
+Esto es significativamente más bajo que muchos países, haciendo la verificación profesional aún más accesible.
 
 ---
 
-## Cómo Ayuda EcuaCasa
+## Trabajando con Profesionales
 
-Cada listado en EcuaCasa muestra el estado de verificación de los 5 documentos:
+Una buena transacción inmobiliaria involucra:
 
-- **5 de 5** — Todos los documentos verificados
-- **Parcialmente Verificado** — Algunos documentos pendientes
-- **En Proceso** — Verificación en progreso
+1. **Un abogado calificado** — Esencial para revisar documentos y guiar el proceso ($500-1,500)
+2. **Un topógrafo licenciado** — Para verificación física de límites
+3. **Un agente conocedor** — Para ayudar a navegar listados y negociaciones
 
-No solo tomamos la palabra del vendedor. Verificamos:
-- Las coordenadas GPS coinciden con la ubicación declarada
-- Los documentos están vigentes (no vencidos)
-- El agente tiene acceso físico a la propiedad
+Estos profesionales trabajan juntos para asegurar que tu compra sea segura.
 
 ---
 
-## Consejo Final
+## Puntos Clave
 
-1. **Nunca omitas la verificación** — incluso para ofertas "urgentes"
-2. **Contrata un abogado** — $500-1,500 es un seguro barato
-3. **Obtén todo por escrito** — las promesas verbales no significan nada
-4. **Tómate tu tiempo** — los vendedores legítimos no te presionan
-5. **Usa la lista de verificación** — documentos faltantes son señales de alerta
+1. **El sistema de Ecuador es transparente** — Todos los registros de propiedad son públicos
+2. **La verificación es accesible** — Costos totales de documentos menores a $600
+3. **La ayuda profesional es accesible** — Abogados y topógrafos tienen precios razonables
+4. **Tómate tu tiempo** — Las buenas propiedades no requieren decisiones apresuradas
+5. **Usa la lista de verificación** — La verificación sistemática protege tu inversión
 
-El mercado inmobiliario de Cuenca ofrece oportunidades genuinas. Los precios de terrenos son una fracción de los equivalentes norteamericanos. El camino de visa de inversionista es accesible. Pero debes hacer tu tarea.
-
-No te conviertas en una historia de advertencia. Verifica antes de comprar.
+El mercado inmobiliario de Cuenca ofrece oportunidades genuinas para compradores que hacen su tarea. Con la verificación adecuada, puedes comprar con confianza.
 
 ---
 
-*¿Buscas propiedades verificadas con todos los documentos en orden? [Explora nuestros listados](/propiedades)*`,
+*¿Buscas propiedades con documentación verificada? [Explora listados en EcuaCasa](/propiedades)*`,
     },
     category: 'legal',
-    featuredImage: 'https://picsum.photos/seed/documents2/1200/630',
+    featuredImage: 'https://picsum.photos/seed/documents5/1200/630',
+    publishedAt: '2026-02-10',
+    author: {
+      name: 'EcuaCasa',
+      role: {
+        en: 'Research Team',
+        es: 'Equipo de Investigación',
+      },
+    },
+    readingTime: 8,
+    tags: ['documentos', 'legal', 'verificacion', 'iprus', 'escritura', 'guia'],
+    relatedSlugs: ['san-joaquin-vs-ricaurte-vs-challuabamba-guia-precios-2026'],
+  },
+  {
+    slug: 'san-joaquin-vs-ricaurte-vs-challuabamba-guia-precios-2026',
+    title: {
+      en: 'San Joaquín vs Ricaurte vs Challuabamba: Where to Buy Land in Cuenca (2026 Price Guide)',
+      es: 'San Joaquín vs Ricaurte vs Challuabamba: Dónde Comprar Terreno en Cuenca (Guía de Precios 2026)',
+    },
+    excerpt: {
+      en: 'A detailed comparison of Cuenca\'s most popular sectors for land buyers. Real price data, utility availability, and lifestyle considerations to help you choose the right location.',
+      es: 'Una comparación detallada de los sectores más populares de Cuenca para compradores de terreno. Datos reales de precios, disponibilidad de servicios y consideraciones de estilo de vida para ayudarte a elegir la ubicación correcta.',
+    },
+    content: {
+      en: `## Understanding Cuenca's Geography
+
+Cuenca sits in a mountain valley at 2,550 meters elevation, surrounded by the Andes on all sides. The city's name literally means "basin" or "bowl" in Spanish—a reference to its unique geography.
+
+This geography creates distinct microclimates and has shaped how the city has grown. As architect Carlos Rosa of the Cuenca Chamber of Construction explains: "We are surrounded on all sides by mountains, that's why we are called Cuenca, which means bowl or basin."
+
+Understanding these sectors helps you find the right fit for your needs and budget.
+
+---
+
+## The Market Context
+
+Cuenca's real estate market has seen significant growth:
+
+- **32% increase** in property demand in 2024 (Plusvalía platform data, via The Cuenca Dispatch)
+- **6% rise** in construction permits in first 9 months of 2024 vs 2023 (INEC)
+- Land prices are the **highest in Ecuador** and have **tripled in 15 years** (Alex Morales, VP Cuenca Chamber of Construction)
+
+The outer sectors offer more affordable options while still providing good access to the city center.
+
+---
+
+## Sector Comparison Overview
+
+| Sector | Price Range/m² | Distance to Centro | Elevation | Best For |
+|--------|---------------|-------------------|-----------|----------|
+| San Joaquín | $280-$380 | 8-12 km | ~2,600m | Farms, large lots, privacy |
+| Ricaurte | $300-$400 | 6-10 km | ~2,500m | Families, suburban living |
+| Challuabamba | $350-$450 | 10-15 km | ~2,400m | Climate, luxury, tranquility |
+| Baños | $400-$550 | 8-12 km | ~2,600m | Hot springs, nature |
+| Sayausí | $250-$350 | 5-8 km | ~2,700m | Mountain views, cooler climate |
+| Nulti | $200-$300 | 8-12 km | ~2,600m | Budget-friendly, developing |
+| El Valle | $280-$380 | 10-15 km | ~2,550m | Growing area, good value |
+| Centro Histórico | $800-$1,300 | 0 km | ~2,550m | Walking lifestyle, culture |
+
+*Prices are approximate ranges based on 2024-2025 market data. Actual prices vary by specific location, road access, utilities, and views.*
+
+---
+
+## San Joaquín
+
+### Character
+San Joaquín is known for its agricultural heritage and spacious properties. The sector maintains a rural character while offering reasonable proximity to the city. Many properties here have existing orchards or farmland.
+
+### Price Range
+**$280-$380/m²** for most residential lots
+- Larger agricultural parcels may be lower per m²
+- Properties with established orchards command premiums
+- Road frontage increases value
+
+### Utilities & Infrastructure
+- **Water:** Municipal water available on main roads; some areas use well water
+- **Electricity:** Available throughout
+- **Internet:** Fiber available on main corridors; rural areas may need satellite
+- **Roads:** Mix of paved main roads and gravel secondary roads
+
+### Climate
+Slightly cooler than central Cuenca due to elevation. Morning fog is common in valleys.
+
+### Best For
+- Buyers wanting larger lots (1,000m²+)
+- Agricultural projects or hobby farms
+- Those seeking privacy and space
+- Budget-conscious buyers willing to be further out
+
+### Considerations
+- Longer commute to centro (20-30 minutes)
+- Some areas have limited public transportation
+- Infrastructure improving but varies by location
+
+---
+
+## Ricaurte
+
+### Character
+Ricaurte has evolved into one of Cuenca's most popular suburban areas. It offers a balance of residential convenience with more space than central neighborhoods. The sector has seen significant development with new housing and commercial areas.
+
+### Price Range
+**$300-$400/m²** for residential lots
+- Commercial frontage on main roads: $500-$700/m²
+- Gated community lots may be higher
+- Views of the city add value
+
+### Utilities & Infrastructure
+- **Water:** Municipal water widely available
+- **Electricity:** Full coverage
+- **Internet:** Fiber optic available in most areas
+- **Roads:** Well-maintained paved roads throughout
+- **Commercial:** Shopping centers, restaurants, medical facilities nearby
+
+### Climate
+Similar to central Cuenca. Protected from wind by surrounding terrain.
+
+### Best For
+- Families seeking suburban lifestyle
+- Those wanting modern amenities nearby
+- Buyers who commute to the city regularly
+- People who want community feel
+
+### Considerations
+- More developed means less privacy
+- Traffic can be heavy during peak hours
+- Lot sizes generally smaller than rural sectors
+
+---
+
+## Challuabamba
+
+### Character
+Challuabamba is known for its warmer, drier microclimate and has become associated with luxury properties and a tranquil environment. Located in the Paute river valley, it sits about 1,000 feet lower than central Cuenca.
+
+> "Challuabamba is known for luxury properties and tranquil environment. Located ~1,000 feet lower, generally warmer, drier and sunnier."
+> — PropertyInvestBlog
+
+### Price Range
+**$350-$450/m²** for residential lots
+- Premium locations with views: $500-$650/m²
+- River-adjacent properties: varies widely
+- Gated communities: $450-$600/m²
+
+### Utilities & Infrastructure
+- **Water:** Municipal water available; some areas use community systems
+- **Electricity:** Full coverage
+- **Internet:** Fiber available in developed areas
+- **Roads:** Main roads paved; improving throughout
+
+### Climate
+The standout feature. Notably warmer and sunnier than Cuenca proper:
+- Average 2-4°C warmer
+- Less rainfall
+- More sunny days
+- Lower humidity
+
+### Best For
+- Buyers who prefer warmer weather
+- Those seeking established luxury developments
+- Retirees wanting low-maintenance living
+- People who value views and tranquility
+
+### Considerations
+- Longer drive to centro (25-35 minutes)
+- Higher price point than other outer sectors
+- Some areas still developing infrastructure
+
+---
+
+## Baños
+
+### Character
+Baños (not to be confused with the famous Baños de Agua Santa in Tungurahua) is known for its natural hot springs and proximity to Cajas National Park. The area attracts those who value nature and wellness.
+
+### Price Range
+**$400-$550/m²** for residential lots
+- Properties near hot springs: premium pricing
+- Mountain view lots: $500-$700/m²
+- More remote areas: $300-$400/m²
+
+### Utilities & Infrastructure
+- **Water:** Abundant due to natural springs
+- **Electricity:** Available throughout
+- **Internet:** Improving; some areas still limited
+- **Roads:** Main roads good; mountain roads vary
+
+### Climate
+Cooler and wetter than Cuenca center. Frequent mist and fog adds to the atmosphere.
+
+### Best For
+- Nature enthusiasts
+- Those who value hot springs access
+- Buyers seeking cooler mountain climate
+- People who enjoy hiking (Cajas access)
+
+### Considerations
+- Weather can be challenging (rain, fog)
+- Infrastructure more limited than other sectors
+- Longer commute, especially in weather
+
+---
+
+## Sayausí
+
+### Character
+Sayausí offers dramatic mountain scenery with good proximity to the city. The sector climbs into the mountains west of Cuenca, providing cooler temperatures and impressive views.
+
+### Price Range
+**$250-$350/m²** for most lots
+- View properties: $350-$500/m²
+- Remote mountain parcels: $150-$250/m²
+- Near main road: $300-$400/m²
+
+### Utilities & Infrastructure
+- **Water:** Municipal in lower areas; wells/springs higher up
+- **Electricity:** Available but some remote areas limited
+- **Internet:** Variable; improving
+- **Roads:** Main road paved; secondary roads vary
+
+### Climate
+Noticeably cooler than Cuenca. Prepare for:
+- More rain
+- Cooler temperatures (sweater weather)
+- Morning frost possible in higher elevations
+- Spectacular clear-day views
+
+### Best For
+- Budget-conscious buyers
+- Those who love mountain scenery
+- Cooler climate preference
+- Larger lot seekers
+
+### Considerations
+- Steeper terrain limits building options
+- Weather requires appropriate housing design
+- Some areas quite remote
+
+---
+
+## Price Factors That Matter
+
+Regardless of sector, these factors significantly affect land prices:
+
+### Increases Value
+- **Road frontage** — Direct access to paved road
+- **Utilities in place** — Water, electricity, sewer connected
+- **Flat or gentle slope** — Easier to build
+- **Views** — Mountain, valley, or city views
+- **Legal clarity** — All 5 documents verified
+
+### Decreases Value
+- **Difficult access** — Long dirt road, steep entry
+- **No utilities** — Need to bring in water/power
+- **Steep terrain** — Requires engineering
+- **Unclear boundaries** — Disputes with neighbors
+- **Zoning restrictions** — Limits on building
+
+---
+
+## What Your Budget Gets You
+
+Here's what different budgets typically purchase in outer sectors:
+
+### $25,000 - $35,000
+- 80-120m² lot in Ricaurte
+- 100-150m² in San Joaquín
+- 150-200m² in Sayausí or Nulti
+
+### $50,000 - $75,000
+- 150-250m² in Challuabamba
+- 200-300m² in Ricaurte with utilities
+- 300-500m² in San Joaquín
+- Small lot in Baños near amenities
+
+### $100,000 - $150,000
+- Premium lot in Challuabamba with views
+- 500-800m² in Ricaurte (gated community)
+- 1,000m²+ in San Joaquín
+- Mountain view property in Baños
+
+### $200,000+
+- Luxury lot in prime Challuabamba
+- Large farm parcel in San Joaquín
+- Premium view property in any sector
+- Commercial-zoned land on main roads
+
+---
+
+## Making Your Decision
+
+### Questions to Ask Yourself
+
+1. **How often will you go to centro?** Daily commuters should prioritize Ricaurte or Sayausí.
+
+2. **What's your climate preference?** Warmer = Challuabamba. Cooler = Sayausí or Baños.
+
+3. **How much land do you need?** Large lots are more affordable in San Joaquín and outer areas.
+
+4. **What's your infrastructure tolerance?** Need everything in place? Stick to developed Ricaurte. Willing to develop? Outer sectors offer value.
+
+5. **What's your timeline?** Building immediately requires utilities in place. Holding land? Less critical.
+
+---
+
+## Next Steps
+
+1. **Visit multiple sectors** — Photos don't capture climate and feel
+2. **Talk to residents** — Expat groups have sector-specific members
+3. **Check utilities** — Verify what's actually connected, not promised
+4. **Verify documents** — Use the 5-document checklist
+5. **Consider resale** — Popular sectors appreciate faster
+
+The best sector is the one that matches your lifestyle, budget, and plans. Take time to explore before committing.
+
+---
+
+*Ready to explore properties in these sectors? [Browse verified listings on EcuaCasa](/propiedades)*`,
+      es: `## Entendiendo la Geografía de Cuenca
+
+Cuenca se encuentra en un valle montañoso a 2,550 metros de elevación, rodeada por los Andes por todos lados. El nombre de la ciudad literalmente significa "cuenca" o "tazón" en español—una referencia a su geografía única.
+
+Esta geografía crea microclimas distintos y ha dado forma a cómo ha crecido la ciudad. Como explica el arquitecto Carlos Rosa de la Cámara de la Construcción de Cuenca: "Estamos rodeados por montañas por todos lados, por eso nos llamamos Cuenca, que significa tazón o cuenca."
+
+Entender estos sectores te ayuda a encontrar el ajuste correcto para tus necesidades y presupuesto.
+
+---
+
+## El Contexto del Mercado
+
+El mercado inmobiliario de Cuenca ha visto un crecimiento significativo:
+
+- **Aumento del 32%** en demanda de propiedades en 2024 (datos de plataforma Plusvalía, vía The Cuenca Dispatch)
+- **Aumento del 6%** en permisos de construcción en los primeros 9 meses de 2024 vs 2023 (INEC)
+- Los precios de terrenos son los **más altos de Ecuador** y se han **triplicado en 15 años** (Alex Morales, VP Cámara de la Construcción de Cuenca)
+
+Los sectores exteriores ofrecen opciones más accesibles mientras siguen proporcionando buen acceso al centro de la ciudad.
+
+---
+
+## Resumen de Comparación de Sectores
+
+| Sector | Rango de Precio/m² | Distancia al Centro | Elevación | Mejor Para |
+|--------|-------------------|---------------------|-----------|------------|
+| San Joaquín | $280-$380 | 8-12 km | ~2,600m | Fincas, lotes grandes, privacidad |
+| Ricaurte | $300-$400 | 6-10 km | ~2,500m | Familias, vida suburbana |
+| Challuabamba | $350-$450 | 10-15 km | ~2,400m | Clima, lujo, tranquilidad |
+| Baños | $400-$550 | 8-12 km | ~2,600m | Aguas termales, naturaleza |
+| Sayausí | $250-$350 | 5-8 km | ~2,700m | Vistas a montañas, clima más fresco |
+| Nulti | $200-$300 | 8-12 km | ~2,600m | Económico, en desarrollo |
+| El Valle | $280-$380 | 10-15 km | ~2,550m | Área en crecimiento, buen valor |
+| Centro Histórico | $800-$1,300 | 0 km | ~2,550m | Estilo de vida peatonal, cultura |
+
+*Los precios son rangos aproximados basados en datos de mercado 2024-2025. Los precios reales varían según ubicación específica, acceso vial, servicios y vistas.*
+
+---
+
+## San Joaquín
+
+### Carácter
+San Joaquín es conocido por su herencia agrícola y propiedades espaciosas. El sector mantiene un carácter rural mientras ofrece proximidad razonable a la ciudad. Muchas propiedades aquí tienen huertos o tierras de cultivo existentes.
+
+### Rango de Precios
+**$280-$380/m²** para la mayoría de lotes residenciales
+- Parcelas agrícolas más grandes pueden ser menores por m²
+- Propiedades con huertos establecidos tienen prima
+- Frente a carretera aumenta el valor
+
+### Servicios e Infraestructura
+- **Agua:** Agua municipal disponible en carreteras principales; algunas áreas usan agua de pozo
+- **Electricidad:** Disponible en todo el sector
+- **Internet:** Fibra disponible en corredores principales; áreas rurales pueden necesitar satélite
+- **Carreteras:** Mezcla de carreteras principales pavimentadas y secundarias de grava
+
+### Clima
+Ligeramente más fresco que el centro de Cuenca debido a la elevación. La neblina matutina es común en los valles.
+
+### Mejor Para
+- Compradores que quieren lotes más grandes (1,000m²+)
+- Proyectos agrícolas o fincas de hobby
+- Quienes buscan privacidad y espacio
+- Compradores con presupuesto limitado dispuestos a estar más lejos
+
+### Consideraciones
+- Viaje más largo al centro (20-30 minutos)
+- Algunas áreas tienen transporte público limitado
+- Infraestructura mejorando pero varía según ubicación
+
+---
+
+## Ricaurte
+
+### Carácter
+Ricaurte se ha convertido en una de las áreas suburbanas más populares de Cuenca. Ofrece un balance de conveniencia residencial con más espacio que los barrios centrales. El sector ha visto desarrollo significativo con nuevas viviendas y áreas comerciales.
+
+### Rango de Precios
+**$300-$400/m²** para lotes residenciales
+- Frente comercial en carreteras principales: $500-$700/m²
+- Lotes en urbanizaciones cerradas pueden ser más altos
+- Vistas de la ciudad agregan valor
+
+### Servicios e Infraestructura
+- **Agua:** Agua municipal ampliamente disponible
+- **Electricidad:** Cobertura completa
+- **Internet:** Fibra óptica disponible en la mayoría de áreas
+- **Carreteras:** Carreteras pavimentadas bien mantenidas
+- **Comercio:** Centros comerciales, restaurantes, instalaciones médicas cercanas
+
+### Clima
+Similar al centro de Cuenca. Protegido del viento por el terreno circundante.
+
+### Mejor Para
+- Familias que buscan estilo de vida suburbano
+- Quienes quieren amenidades modernas cerca
+- Compradores que viajan a la ciudad regularmente
+- Personas que quieren sentido de comunidad
+
+### Consideraciones
+- Más desarrollado significa menos privacidad
+- El tráfico puede ser pesado en horas pico
+- Tamaños de lote generalmente más pequeños que sectores rurales
+
+---
+
+## Challuabamba
+
+### Carácter
+Challuabamba es conocido por su microclima más cálido y seco y se ha asociado con propiedades de lujo y un ambiente tranquilo. Ubicado en el valle del río Paute, está aproximadamente 300 metros más bajo que el centro de Cuenca.
+
+> "Challuabamba es conocido por propiedades de lujo y ambiente tranquilo. Ubicado ~300 metros más bajo, generalmente más cálido, seco y soleado."
+> — PropertyInvestBlog
+
+### Rango de Precios
+**$350-$450/m²** para lotes residenciales
+- Ubicaciones premium con vistas: $500-$650/m²
+- Propiedades junto al río: varían ampliamente
+- Urbanizaciones cerradas: $450-$600/m²
+
+### Servicios e Infraestructura
+- **Agua:** Agua municipal disponible; algunas áreas usan sistemas comunitarios
+- **Electricidad:** Cobertura completa
+- **Internet:** Fibra disponible en áreas desarrolladas
+- **Carreteras:** Carreteras principales pavimentadas; mejorando en todo el sector
+
+### Clima
+La característica destacada. Notablemente más cálido y soleado que Cuenca:
+- Promedio 2-4°C más cálido
+- Menos lluvia
+- Más días soleados
+- Menor humedad
+
+### Mejor Para
+- Compradores que prefieren clima más cálido
+- Quienes buscan desarrollos de lujo establecidos
+- Jubilados que quieren vida de bajo mantenimiento
+- Personas que valoran vistas y tranquilidad
+
+### Consideraciones
+- Viaje más largo al centro (25-35 minutos)
+- Punto de precio más alto que otros sectores exteriores
+- Algunas áreas aún desarrollando infraestructura
+
+---
+
+## Baños
+
+### Carácter
+Baños (no confundir con el famoso Baños de Agua Santa en Tungurahua) es conocido por sus aguas termales naturales y proximidad al Parque Nacional Cajas. El área atrae a quienes valoran la naturaleza y el bienestar.
+
+### Rango de Precios
+**$400-$550/m²** para lotes residenciales
+- Propiedades cerca de aguas termales: precios premium
+- Lotes con vista a montañas: $500-$700/m²
+- Áreas más remotas: $300-$400/m²
+
+### Servicios e Infraestructura
+- **Agua:** Abundante debido a manantiales naturales
+- **Electricidad:** Disponible en todo el sector
+- **Internet:** Mejorando; algunas áreas aún limitadas
+- **Carreteras:** Carreteras principales buenas; caminos de montaña varían
+
+### Clima
+Más fresco y húmedo que el centro de Cuenca. Neblina y niebla frecuentes agregan al ambiente.
+
+### Mejor Para
+- Entusiastas de la naturaleza
+- Quienes valoran acceso a aguas termales
+- Compradores que buscan clima de montaña más fresco
+- Personas que disfrutan senderismo (acceso a Cajas)
+
+### Consideraciones
+- El clima puede ser desafiante (lluvia, niebla)
+- Infraestructura más limitada que otros sectores
+- Viaje más largo, especialmente con mal clima
+
+---
+
+## Sayausí
+
+### Carácter
+Sayausí ofrece paisajes de montaña dramáticos con buena proximidad a la ciudad. El sector sube hacia las montañas al oeste de Cuenca, proporcionando temperaturas más frescas y vistas impresionantes.
+
+### Rango de Precios
+**$250-$350/m²** para la mayoría de lotes
+- Propiedades con vista: $350-$500/m²
+- Parcelas remotas de montaña: $150-$250/m²
+- Cerca de carretera principal: $300-$400/m²
+
+### Servicios e Infraestructura
+- **Agua:** Municipal en áreas bajas; pozos/manantiales más arriba
+- **Electricidad:** Disponible pero algunas áreas remotas limitadas
+- **Internet:** Variable; mejorando
+- **Carreteras:** Carretera principal pavimentada; secundarias varían
+
+### Clima
+Notablemente más fresco que Cuenca. Prepárate para:
+- Más lluvia
+- Temperaturas más frescas (clima de suéter)
+- Posible escarcha matutina en elevaciones más altas
+- Vistas espectaculares en días despejados
+
+### Mejor Para
+- Compradores con presupuesto limitado
+- Quienes aman paisajes de montaña
+- Preferencia por clima más fresco
+- Buscadores de lotes más grandes
+
+### Consideraciones
+- Terreno más empinado limita opciones de construcción
+- El clima requiere diseño de vivienda apropiado
+- Algunas áreas bastante remotas
+
+---
+
+## Factores de Precio que Importan
+
+Independientemente del sector, estos factores afectan significativamente los precios de terrenos:
+
+### Aumenta el Valor
+- **Frente a carretera** — Acceso directo a carretera pavimentada
+- **Servicios instalados** — Agua, electricidad, alcantarillado conectados
+- **Plano o pendiente suave** — Más fácil de construir
+- **Vistas** — Vistas a montañas, valle o ciudad
+- **Claridad legal** — Los 5 documentos verificados
+
+### Disminuye el Valor
+- **Acceso difícil** — Camino de tierra largo, entrada empinada
+- **Sin servicios** — Necesidad de traer agua/electricidad
+- **Terreno empinado** — Requiere ingeniería
+- **Límites poco claros** — Disputas con vecinos
+- **Restricciones de zonificación** — Límites de construcción
+
+---
+
+## Qué Obtiene tu Presupuesto
+
+Esto es lo que típicamente compran diferentes presupuestos en sectores exteriores:
+
+### $25,000 - $35,000
+- Lote de 80-120m² en Ricaurte
+- 100-150m² en San Joaquín
+- 150-200m² en Sayausí o Nulti
+
+### $50,000 - $75,000
+- 150-250m² en Challuabamba
+- 200-300m² en Ricaurte con servicios
+- 300-500m² en San Joaquín
+- Lote pequeño en Baños cerca de amenidades
+
+### $100,000 - $150,000
+- Lote premium en Challuabamba con vistas
+- 500-800m² en Ricaurte (urbanización cerrada)
+- 1,000m²+ en San Joaquín
+- Propiedad con vista a montañas en Baños
+
+### $200,000+
+- Lote de lujo en Challuabamba principal
+- Parcela agrícola grande en San Joaquín
+- Propiedad premium con vista en cualquier sector
+- Terreno con zonificación comercial en carreteras principales
+
+---
+
+## Tomando tu Decisión
+
+### Preguntas para Hacerte
+
+1. **¿Con qué frecuencia irás al centro?** Los que viajan diario deben priorizar Ricaurte o Sayausí.
+
+2. **¿Cuál es tu preferencia de clima?** Más cálido = Challuabamba. Más fresco = Sayausí o Baños.
+
+3. **¿Cuánto terreno necesitas?** Lotes grandes son más accesibles en San Joaquín y áreas exteriores.
+
+4. **¿Cuál es tu tolerancia de infraestructura?** ¿Necesitas todo instalado? Quédate con Ricaurte desarrollado. ¿Dispuesto a desarrollar? Sectores exteriores ofrecen valor.
+
+5. **¿Cuál es tu cronograma?** Construir inmediatamente requiere servicios instalados. ¿Mantener terreno? Menos crítico.
+
+---
+
+## Próximos Pasos
+
+1. **Visita múltiples sectores** — Las fotos no capturan clima y sensación
+2. **Habla con residentes** — Grupos de expatriados tienen miembros específicos de cada sector
+3. **Verifica servicios** — Confirma qué está realmente conectado, no prometido
+4. **Verifica documentos** — Usa la lista de verificación de 5 documentos
+5. **Considera reventa** — Sectores populares se aprecian más rápido
+
+El mejor sector es el que coincide con tu estilo de vida, presupuesto y planes. Tómate tiempo para explorar antes de comprometerte.
+
+---
+
+*¿Listo para explorar propiedades en estos sectores? [Explora listados verificados en EcuaCasa](/propiedades)*`,
+    },
+    category: 'sectores',
+    featuredImage: 'https://picsum.photos/seed/cuencavalley/1200/630',
     publishedAt: '2026-02-08',
     author: {
       name: 'EcuaCasa',
@@ -635,9 +985,9 @@ No te conviertas en una historia de advertencia. Verifica antes de comprar.
         es: 'Equipo de Investigación',
       },
     },
-    readingTime: 10,
-    tags: ['documentos', 'legal', 'verificacion', 'iprus', 'escritura'],
-    relatedSlugs: ['contacte-20-agentes-inmobiliarios-cuenca'],
+    readingTime: 12,
+    tags: ['sectores', 'precios', 'san-joaquin', 'ricaurte', 'challuabamba', 'guia', 'inversion'],
+    relatedSlugs: ['5-documentos-verificar-comprar-terreno-ecuador'],
   },
 ];
 
