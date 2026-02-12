@@ -143,7 +143,7 @@ export function Footer() {
       <div className="bg-black py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-center text-sm text-gray-500">
-            © {currentYear} EcuaCasa. {locale === 'en' ? 'All rights reserved.' : 'Todos los derechos reservados.'}
+            © {currentYear} MC2Agency LLC. {locale === 'en' ? 'All rights reserved.' : 'Todos los derechos reservados.'}
           </p>
         </div>
       </div>
