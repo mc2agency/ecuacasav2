@@ -58,9 +58,15 @@ export const es = {
 
   // Trust Signals
   'trust.title': '¿Por Qué Elegir EcuaCasa?',
-  'trust.subtitle': 'Tu mercado confiable para servicios del hogar en Cuenca',
+  'trust.subtitle': 'Tu servicio de confianza para el hogar en Cuenca',
+  'trust.request_title': 'Tú Pides, Nosotros Resolvemos',
+  'trust.request_desc': 'Dinos qué necesitas y encontramos el profesional adecuado para ti',
+  'trust.response_title': 'Respuesta en Menos de 2 Horas',
+  'trust.response_desc': 'Te conectamos con profesionales disponibles rápidamente',
   'trust.verified_title': 'Profesionales Verificados',
-  'trust.verified_desc': 'Todos los profesionales son evaluados y verificados',
+  'trust.verified_desc': 'Todos los profesionales son evaluados y verificados por nuestro equipo',
+  'trust.commitment_title': 'Sin Compromiso',
+  'trust.commitment_desc': 'Cotizaciones gratis sin obligación de contratar',
   'trust.local_title': 'Expertos Locales',
   'trust.local_desc': 'Conecta con profesionales locales de confianza',
   'trust.rated_title': 'Calificados y Revisados',

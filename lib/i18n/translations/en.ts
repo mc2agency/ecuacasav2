@@ -58,9 +58,15 @@ export const en = {
 
   // Trust Signals
   'trust.title': 'Why Choose EcuaCasa',
-  'trust.subtitle': 'Your trusted marketplace for home services in Cuenca',
-  'trust.verified_title': 'Verified Providers',
-  'trust.verified_desc': 'All providers are screened and verified',
+  'trust.subtitle': 'Your trusted home service in Cuenca',
+  'trust.request_title': 'You Ask, We Handle It',
+  'trust.request_desc': 'Tell us what you need and we find the right professional for you',
+  'trust.response_title': 'Response in Under 2 Hours',
+  'trust.response_desc': 'We connect you with available professionals quickly',
+  'trust.verified_title': 'Verified Professionals',
+  'trust.verified_desc': 'All providers are screened and verified by our team',
+  'trust.commitment_title': 'No Commitment',
+  'trust.commitment_desc': 'Free quotes with no obligation to hire',
   'trust.local_title': 'Local Experts',
   'trust.local_desc': 'Connect with trusted local professionals',
   'trust.rated_title': 'Rated & Reviewed',

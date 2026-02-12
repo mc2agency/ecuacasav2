@@ -126,15 +126,6 @@ export function Footer() {
               </li>
             </ul>
 
-            {/* Trust Badge */}
-            <div className="mt-6 p-4 bg-gray-800 rounded-xl">
-              <p className="text-sm font-medium text-white">
-                {locale === 'en' ? '50+ Verified Professionals' : '50+ Profesionales Verificados'}
-              </p>
-              <p className="text-xs text-gray-400 mt-1">
-                {locale === 'en' ? 'Trusted by expats in Cuenca' : 'Confiado por expatriados en Cuenca'}
-              </p>
-            </div>
           </div>
         </div>
       </div>

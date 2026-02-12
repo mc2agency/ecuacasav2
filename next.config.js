@@ -21,6 +21,9 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // /servicios -> /services redirects (Spanish to English URL)
+      { source: '/servicios', destination: '/services', permanent: true },
+      { source: '/servicios/:slug', destination: '/services/:slug', permanent: true },
       // Old URLs indexed by Google -> new structure
       { source: '/plomeria', destination: '/services/plomeria', permanent: true },
       { source: '/limpieza', destination: '/services/limpieza', permanent: true },

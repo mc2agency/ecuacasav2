@@ -2,8 +2,16 @@ import Link from 'next/link';
 import { CheckCircle, Users, MessageCircle, Star, TrendingUp, Shield, Clock } from 'lucide-react';
 
 export const metadata = {
-  title: 'Para Profesionales | EcuaCasa',
-  description: 'Únete a EcuaCasa y conecta con clientes expatriados que buscan tus servicios en Cuenca — 100% gratis',
+  title: 'Únete a EcuaCasa | Recibe Clientes en Cuenca Ecuador',
+  description: 'Recibe solicitudes de clientes expatriados y locales en Cuenca. Únete gratis a la red de profesionales verificados de EcuaCasa.',
+  openGraph: {
+    title: 'Únete a EcuaCasa | Recibe Clientes en Cuenca Ecuador',
+    description: 'Recibe solicitudes de clientes expatriados y locales en Cuenca. Únete gratis a la red de profesionales verificados de EcuaCasa.',
+    url: 'https://ecuacasa.com/for-providers',
+  },
+  alternates: {
+    canonical: '/for-providers',
+  },
 };
 
 export default function ForProvidersPage() {
