@@ -7,8 +7,16 @@ import { SERVICE_ICONS, DEFAULT_SERVICE_ICON } from '@/lib/constants';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Servicios | EcuaCasa',
-  description: 'Explora todos los servicios para el hogar disponibles en Cuenca, Ecuador',
+  title: 'Servicios para el Hogar en Cuenca Ecuador | Limpieza, Electricidad, Plomería',
+  description: 'Profesionales verificados para servicios del hogar en Cuenca. Limpieza, electricidad, plomería, carpintería, jardinería, pintura y más. Respuesta en menos de 2 horas.',
+  openGraph: {
+    title: 'Servicios para el Hogar en Cuenca Ecuador | Limpieza, Electricidad, Plomería',
+    description: 'Profesionales verificados para servicios del hogar en Cuenca. Limpieza, electricidad, plomería, carpintería, jardinería, pintura y más. Respuesta en menos de 2 horas.',
+    url: 'https://ecuacasa.com/services',
+  },
+  alternates: {
+    canonical: '/services',
+  },
 };
 
 export default async function ServicesPage() {

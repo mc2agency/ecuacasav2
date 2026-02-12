@@ -13,11 +13,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "EcuaCasa - Trusted Home Services in Cuenca, Ecuador",
+    default: "EcuaCasa | Servicios para el Hogar y Propiedades en Cuenca, Ecuador",
     template: "%s | EcuaCasa",
   },
-  description: "Find trusted, verified home service professionals in Cuenca, Ecuador. Plumbers, electricians, cleaners & more — English-speaking providers for expats and locals.",
-  keywords: "Cuenca, Ecuador, home services, plumber, electrician, cleaning, handyman, expat services, servicios del hogar, profesionales verificados",
+  description: "Encuentra profesionales verificados para tu hogar y propiedades en venta y arriendo en Cuenca, Ecuador. Servicios de limpieza, electricidad, plomería, carpintería y más.",
+  keywords: "Cuenca, Ecuador, home services, plumber, electrician, cleaning, handyman, expat services, servicios del hogar, profesionales verificados, propiedades, bienes raíces",
   metadataBase: new URL("https://ecuacasa.com"),
   manifest: "/manifest.json",
   themeColor: "#7c3aed",
@@ -34,25 +34,25 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "EcuaCasa - Trusted Home Services in Cuenca, Ecuador",
-    description: "Find trusted, verified home service professionals in Cuenca, Ecuador. English-speaking providers for expats and locals.",
+    title: "EcuaCasa | Servicios para el Hogar y Propiedades en Cuenca, Ecuador",
+    description: "Encuentra profesionales verificados para tu hogar y propiedades en venta y arriendo en Cuenca, Ecuador. Servicios de limpieza, electricidad, plomería, carpintería y más.",
     url: "https://ecuacasa.com",
     siteName: "EcuaCasa",
-    locale: "en_US",
+    locale: "es_EC",
     type: "website",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "EcuaCasa - Home Services in Cuenca, Ecuador",
+        alt: "EcuaCasa - Servicios para el Hogar en Cuenca, Ecuador",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "EcuaCasa - Trusted Home Services in Cuenca, Ecuador",
-    description: "Find trusted, verified home service professionals in Cuenca, Ecuador. English-speaking providers for expats and locals.",
+    title: "EcuaCasa | Servicios para el Hogar y Propiedades en Cuenca, Ecuador",
+    description: "Encuentra profesionales verificados para tu hogar y propiedades en venta y arriendo en Cuenca, Ecuador.",
     images: ["/og-image.png"],
   },
   robots: {
