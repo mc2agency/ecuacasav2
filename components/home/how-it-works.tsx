@@ -1,28 +1,28 @@
 'use client';
 
 import { useTranslation } from '@/hooks/use-translation';
-import { Search, MessageCircle, CheckCircle } from 'lucide-react';
+import { ClipboardList, Zap, CheckCircle } from 'lucide-react';
 
 export function HowItWorks() {
   const { t, locale } = useTranslation();
 
   const steps = [
     {
-      icon: Search,
-      titleKey: 'how_it_works.step1_title',
-      descKey: 'how_it_works.step1_desc',
+      icon: ClipboardList,
+      titleKey: 'how_it_works.new_step1_title',
+      descKey: 'how_it_works.new_step1_desc',
       number: 1,
     },
     {
-      icon: MessageCircle,
-      titleKey: 'how_it_works.step2_title',
-      descKey: 'how_it_works.step2_desc',
+      icon: Zap,
+      titleKey: 'how_it_works.new_step2_title',
+      descKey: 'how_it_works.new_step2_desc',
       number: 2,
     },
     {
       icon: CheckCircle,
-      titleKey: 'how_it_works.step3_title',
-      descKey: 'how_it_works.step3_desc',
+      titleKey: 'how_it_works.new_step3_title',
+      descKey: 'how_it_works.new_step3_desc',
       number: 3,
     },
   ];
@@ -78,7 +78,7 @@ export function HowItWorks() {
         {/* CTA */}
         <div className="text-center mt-16">
           <a
-            href="#search"
+            href="/solicitar"
             className="inline-block px-10 py-4 bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-105 duration-300"
           >
             {t('how_it_works.cta')}

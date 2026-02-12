@@ -1,118 +1,153 @@
-import Link from 'next/link';
-import { CheckCircle, Users, MessageCircle, Star, TrendingUp, Shield, Clock } from 'lucide-react';
+'use client';
 
-export const metadata = {
-  title: 'Para Profesionales | EcuaCasa',
-  description: 'Únete a EcuaCasa y conecta con clientes expatriados que buscan tus servicios en Cuenca — 100% gratis',
-};
+import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent } from '@/components/ui/card';
+import { createClient } from '@/lib/supabase/client';
+import { useTranslation } from '@/hooks/use-translation';
+import { getLocalizedField } from '@/lib/i18n/helpers';
+import {
+  MessageCircle,
+  Shield,
+  Star,
+  DollarSign,
+  UserPlus,
+  ClipboardCheck,
+  Send,
+  TrendingUp,
+  CheckCircle,
+  Loader2,
+} from 'lucide-react';
+
+const providerSchema = z.object({
+  name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
+  phone: z.string().min(9, 'Ingresa un número válido').max(10),
+  service: z.string().min(1, 'Selecciona un servicio'),
+  description: z.string().optional(),
+});
+
+type ProviderForm = z.infer<typeof providerSchema>;
+
+interface Service {
+  slug: string;
+  name_es: string;
+  name_en: string;
+}
 
 export default function ForProvidersPage() {
+  const { t, locale } = useTranslation();
+  const [services, setServices] = useState<Service[]>([]);
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ProviderForm>({
+    resolver: zodResolver(providerSchema),
+    defaultValues: { name: '', phone: '', service: '', description: '' },
+  });
+
+  useEffect(() => {
+    async function fetchServices() {
+      const supabase = createClient();
+      const { data } = await supabase.from('services').select('slug, name_es, name_en').order('display_order');
+      setServices(data || []);
+    }
+    fetchServices();
+  }, []);
+
+  const onSubmit = async (data: ProviderForm) => {
+    setSubmitting(true);
+    try {
+      let fullPhone = data.phone.replace(/\s/g, '');
+      if (fullPhone.startsWith('0')) fullPhone = fullPhone.substring(1);
+      fullPhone = `+593${fullPhone}`;
+
+      await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.name,
+          phone: fullPhone,
+          services: [data.service],
+          speaks_english: false,
+          message: data.description || null,
+        }),
+      });
+      setSuccess(true);
+    } catch {
+      alert(locale === 'en' ? 'Error submitting. Please try again.' : 'Error al enviar. Intenta de nuevo.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const benefits = [
-    {
-      icon: Users,
-      title: 'Acceso a más clientes',
-      description: 'Conecta con la comunidad de expatriados en Cuenca que buscan servicios confiables',
-    },
-    {
-      icon: MessageCircle,
-      title: 'Contacto directo por WhatsApp',
-      description: 'Los clientes te contactan directamente, sin intermediarios ni comisiones',
-    },
-    {
-      icon: Star,
-      title: 'Construye tu reputación',
-      description: 'Recibe reseñas y calificaciones que destacan tu trabajo profesional',
-    },
-    {
-      icon: Shield,
-      title: 'Perfil verificado',
-      description: 'Obtén la insignia de verificado y genera más confianza con los clientes',
-    },
-    {
-      icon: TrendingUp,
-      title: 'Mayor visibilidad',
-      description: 'Tu perfil aparece en búsquedas relevantes y en la página principal',
-    },
-    {
-      icon: Clock,
-      title: 'Responde cuando puedas',
-      description: 'Tú decides cuándo y cómo responder a las solicitudes de los clientes',
-    },
+    { icon: MessageCircle, titleKey: 'for_providers.benefit1_title', descKey: 'for_providers.benefit1_desc' },
+    { icon: Shield, titleKey: 'for_providers.benefit2_title', descKey: 'for_providers.benefit2_desc' },
+    { icon: Star, titleKey: 'for_providers.benefit3_title', descKey: 'for_providers.benefit3_desc' },
+    { icon: DollarSign, titleKey: 'for_providers.benefit4_title', descKey: 'for_providers.benefit4_desc' },
   ];
 
   const steps = [
-    {
-      number: 1,
-      title: 'Regístrate',
-      description: 'Completa el formulario con tu información y servicios que ofreces',
-    },
-    {
-      number: 2,
-      title: 'Te verificamos',
-      description: 'Nuestro equipo revisa tu información y te contacta para verificar',
-    },
-    {
-      number: 3,
-      title: 'Empieza a recibir clientes',
-      description: 'Tu perfil aparece en la plataforma y los clientes te contactan por WhatsApp',
-    },
+    { icon: UserPlus, titleKey: 'for_providers.step1_title', descKey: 'for_providers.step1_desc', number: 1 },
+    { icon: ClipboardCheck, titleKey: 'for_providers.step2_title', descKey: 'for_providers.step2_desc', number: 2 },
+    { icon: Send, titleKey: 'for_providers.step3_title', descKey: 'for_providers.step3_desc', number: 3 },
+    { icon: TrendingUp, titleKey: 'for_providers.step4_title', descKey: 'for_providers.step4_desc', number: 4 },
   ];
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white py-20 sm:py-28">
+      {/* Hero */}
+      <section className="bg-gradient-to-br from-purple-600 via-purple-700 to-pink-600 text-white py-20 sm:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-              Haz crecer tu negocio con EcuaCasa
+              {t('for_providers.title')}
             </h1>
-            <p className="text-xl text-primary-100 mb-10">
-              Únete a nuestra red de profesionales verificados y conecta con clientes que valoran
-              la calidad y la confianza
+            <p className="text-xl text-purple-100 mb-10">
+              {t('for_providers.subtitle')}
             </p>
-            <Link
-              href="/register"
-              className="inline-block px-8 py-4 bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-105 text-lg"
+            <a
+              href="#registro"
+              className="inline-block px-8 py-4 bg-white text-purple-600 font-bold rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-105 text-lg"
             >
-              Registrarme gratis
-            </Link>
-            <p className="mt-4 text-primary-200 text-sm">
-              Sin comisiones • Sin cuotas mensuales • 100% gratis
+              {t('for_providers.cta')}
+            </a>
+            <p className="mt-4 text-purple-200 text-sm">
+              {locale === 'en' ? 'No commissions • No monthly fees • 100% free' : 'Sin comisiones • Sin cuotas mensuales • 100% gratis'}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
+      {/* Benefits */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              ¿Por qué unirte a EcuaCasa?
+              {t('for_providers.why_title')}
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Beneficios exclusivos para profesionales que quieren destacar en Cuenca
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {benefits.map((benefit, idx) => {
               const Icon = benefit.icon;
               return (
-                <div
-                  key={idx}
-                  className="bg-gray-50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 group"
-                >
-                  <div className="w-14 h-14 bg-gradient-to-br from-primary-100 to-blue-100 rounded-xl flex items-center justify-center mb-5 group-hover:from-accent-100 group-hover:to-accent-200 transition-colors">
-                    <Icon className="w-7 h-7 text-primary-600 group-hover:text-accent-600 transition-colors" />
+                <div key={idx} className="bg-gray-50 rounded-2xl p-8 hover:shadow-lg transition-all group text-center">
+                  <div className="w-14 h-14 bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl flex items-center justify-center mb-5 mx-auto group-hover:from-purple-200 group-hover:to-pink-200 transition-colors">
+                    <Icon className="w-7 h-7 text-purple-600" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-gray-600">
-                    {benefit.description}
-                  </p>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">{t(benefit.titleKey)}</h3>
+                  <p className="text-gray-600 text-sm">{t(benefit.descKey)}</p>
                 </div>
               );
             })}
@@ -120,125 +155,118 @@ export default function ForProvidersPage() {
         </div>
       </section>
 
-      {/* How It Works Section */}
+      {/* How It Works */}
       <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              ¿Cómo funciona?
+              {t('for_providers.how_title')}
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Tres simples pasos para empezar a recibir clientes
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
-            {/* Connector line */}
-            <div className="hidden md:block absolute top-12 left-0 right-0 h-1">
-              <div className="relative max-w-[70%] mx-auto h-full">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-200 via-primary-300 to-primary-200 rounded-full" />
-              </div>
-            </div>
-
-            {steps.map((step) => (
-              <div key={step.number} className="relative text-center">
-                <div className="w-24 h-24 bg-gradient-to-br from-primary-500 to-primary-600 text-white rounded-2xl flex items-center justify-center font-bold text-4xl mx-auto mb-6 shadow-lg relative z-10">
-                  {step.number}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {steps.map((step) => {
+              const Icon = step.icon;
+              return (
+                <div key={step.number} className="text-center relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-2xl flex items-center justify-center font-bold text-2xl mx-auto mb-4 shadow-lg">
+                    {step.number}
+                  </div>
+                  <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <Icon className="w-6 h-6 text-purple-600" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">{t(step.titleKey)}</h3>
+                  <p className="text-gray-600 text-sm">{t(step.descKey)}</p>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  {step.title}
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Registration Form */}
+      <section id="registro" className="py-20 bg-white">
+        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              {t('for_providers.form_title')}
+            </h2>
+          </div>
+
+          {success ? (
+            <Card>
+              <CardContent className="p-8 text-center">
+                <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <CheckCircle className="w-10 h-10 text-green-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  {locale === 'en' ? 'Application sent!' : '¡Solicitud enviada!'}
                 </h3>
                 <p className="text-gray-600">
-                  {step.description}
+                  {locale === 'en'
+                    ? 'We\'ll contact you within 24-48 hours to verify your information.'
+                    : 'Te contactaremos en las próximas 24-48 horas para verificar tu información.'}
                 </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              </CardContent>
+            </Card>
+          ) : (
+            <Card className="shadow-xl border-2 border-gray-100">
+              <CardContent className="p-6 sm:p-8">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                  <div>
+                    <Label htmlFor="fp-name">{t('register.name')} *</Label>
+                    <Input id="fp-name" {...register('name')} className="mt-1" placeholder="Ej: Juan García" />
+                    {errors.name && <p className="text-sm text-red-500 mt-1">{errors.name.message}</p>}
+                  </div>
 
-      {/* Why It's Free Section */}
-      <section className="py-16 bg-primary-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-              100% Gratis — Sin Letra Pequeña
-            </h2>
-            <p className="text-xl text-primary-100 mb-10">
-              Estamos construyendo la mejor red de profesionales en Cuenca. 
-              Por eso el registro es completamente gratis — sin comisiones, sin cuotas, sin sorpresas.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-4xl sm:text-5xl font-bold mb-2">$0</div>
-                <div className="text-primary-200">Para registrarte</div>
-              </div>
-              <div>
-                <div className="text-4xl sm:text-5xl font-bold mb-2">0%</div>
-                <div className="text-primary-200">Comisiones</div>
-              </div>
-              <div>
-                <div className="text-4xl sm:text-5xl font-bold mb-2">100%</div>
-                <div className="text-primary-200">Contacto directo</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+                  <div>
+                    <Label htmlFor="fp-service">{t('register.services')} *</Label>
+                    <select
+                      id="fp-service"
+                      {...register('service')}
+                      className="mt-1 w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      <option value="">{locale === 'en' ? 'Select a service' : 'Selecciona un servicio'}</option>
+                      {services.map((s) => (
+                        <option key={s.slug} value={s.slug}>
+                          {getLocalizedField(s, 'name', locale)}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.service && <p className="text-sm text-red-500 mt-1">{errors.service.message}</p>}
+                  </div>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-accent-500 to-accent-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-            ¿Listo para crecer tu negocio?
-          </h2>
-          <p className="text-xl text-accent-100 mb-10 max-w-2xl mx-auto">
-            Únete a EcuaCasa hoy y empieza a conectar con clientes que buscan
-            exactamente lo que ofreces
-          </p>
-          <Link
-            href="/register"
-            className="inline-block px-10 py-4 bg-white text-accent-600 font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-105 text-lg"
-          >
-            Registrarme ahora
-          </Link>
-        </div>
-      </section>
+                  <div>
+                    <Label htmlFor="fp-phone">{t('register.phone')} *</Label>
+                    <div className="flex mt-1">
+                      <span className="inline-flex items-center px-4 bg-gray-100 border border-r-0 border-gray-300 rounded-l-md text-gray-600 font-medium">
+                        +593
+                      </span>
+                      <Input id="fp-phone" type="tel" {...register('phone')} className="rounded-l-none" placeholder="99 123 4567" />
+                    </div>
+                    {errors.phone && <p className="text-sm text-red-500 mt-1">{errors.phone.message}</p>}
+                  </div>
 
-      {/* FAQ Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Preguntas frecuentes
-            </h2>
-          </div>
+                  <div>
+                    <Label htmlFor="fp-desc">{t('register.message')}</Label>
+                    <Textarea id="fp-desc" {...register('description')} className="mt-1" rows={3} placeholder={locale === 'en' ? 'Brief description of your experience...' : 'Breve descripción de tu experiencia...'} />
+                  </div>
 
-          <div className="space-y-6">
-            {[
-              {
-                q: '¿Cuánto cuesta registrarse?',
-                a: 'El registro es completamente gratis. No cobramos comisiones ni cuotas mensuales.',
-              },
-              {
-                q: '¿Cómo me contactan los clientes?',
-                a: 'Los clientes te contactan directamente por WhatsApp. Tú decides si aceptas el trabajo.',
-              },
-              {
-                q: '¿Qué significa ser "verificado"?',
-                a: 'Los profesionales verificados han pasado nuestro proceso de revisión, lo que genera más confianza con los clientes.',
-              },
-              {
-                q: '¿Necesito hablar inglés?',
-                a: 'No es obligatorio, pero si hablas inglés tendrás acceso a más clientes expatriados.',
-              },
-            ].map((faq, idx) => (
-              <div key={idx} className="bg-gray-50 rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{faq.q}</h3>
-                <p className="text-gray-600">{faq.a}</p>
-              </div>
-            ))}
-          </div>
+                  <Button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full py-6 text-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+                  >
+                    {submitting ? (
+                      <><Loader2 className="w-5 h-5 mr-2 animate-spin" />{locale === 'en' ? 'Sending...' : 'Enviando...'}</>
+                    ) : (
+                      t('for_providers.cta')
+                    )}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </section>
     </div>

@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LanguageToggle } from '@/components/shared/language-toggle';
+import { useTranslation } from '@/hooks/use-translation';
 import { useEffect } from 'react';
 
 interface MobileMenuProps {
@@ -15,6 +16,7 @@ interface MobileMenuProps {
 
 export function MobileMenu({ open, onClose, navLinks }: MobileMenuProps) {
   const pathname = usePathname();
+  const { t } = useTranslation();
   // Close menu on route change
   useEffect(() => {
     onClose();
@@ -77,6 +79,16 @@ export function MobileMenu({ open, onClose, navLinks }: MobileMenuProps) {
                 </li>
               ))}
             </ul>
+
+            {/* Solicitar CTA */}
+            <div className="mt-4">
+              <Link
+                href="/solicitar"
+                className="block w-full text-center px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all"
+              >
+                {t('nav.request_service')}
+              </Link>
+            </div>
           </nav>
 
           {/* Footer Actions */}

@@ -1,21 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import { TrendingUp } from 'lucide-react';
+import { TrendingUp, ClipboardList, Zap, CheckCircle } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
-import { SearchBar } from '@/components/shared/search-bar';
-import { getLocalizedField } from '@/lib/i18n/helpers';
 
-interface HeroSectionProps {
-  services: Array<{
-    slug: string;
-    name_es: string;
-    name_en: string;
-  }>;
-}
+export function HeroSection() {
+  const { t } = useTranslation();
 
-export function HeroSection({ services }: HeroSectionProps) {
-  const { t, locale } = useTranslation();
+  const steps = [
+    { icon: ClipboardList, text: t('hero.step1'), number: '1' },
+    { icon: Zap, text: t('hero.step2'), number: '2' },
+    { icon: CheckCircle, text: t('hero.step3'), number: '3' },
+  ];
 
   return (
     <section className="pt-16 relative overflow-hidden">
@@ -35,37 +31,53 @@ export function HeroSection({ services }: HeroSectionProps) {
             {t('hero.badge')}
           </div>
 
-          {/* Heading with Gradient Text */}
-          <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-6">
-            {t('hero.title')}{' '}
+          {/* Heading */}
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-gray-900 mb-6">
+            {t('hero.new_title')}{' '}
             <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
               {t('hero.cuenca')}
             </span>
           </h1>
 
           <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-            {t('hero.subtitle')}
+            {t('hero.new_subtitle')}
           </p>
 
-          {/* Search Bar - Glassmorphism Style */}
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-2xl p-4 border border-white/50">
-              <SearchBar services={services} />
-            </div>
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <Link
+              href="/solicitar"
+              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg rounded-xl hover:shadow-xl hover:scale-105 transition-all"
+            >
+              {t('hero.cta_request')}
+            </Link>
+            <Link
+              href="/providers"
+              className="px-8 py-4 bg-white text-gray-800 font-bold text-lg rounded-xl border-2 border-gray-200 hover:border-purple-300 hover:shadow-lg transition-all"
+            >
+              {t('hero.cta_providers')}
+            </Link>
+            <Link
+              href="/propiedades"
+              className="px-8 py-4 bg-white text-gray-800 font-bold text-lg rounded-xl border-2 border-gray-200 hover:border-purple-300 hover:shadow-lg transition-all"
+            >
+              {t('hero.cta_properties')}
+            </Link>
           </div>
 
-          {/* Popular Services */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-            <span className="text-sm text-gray-500">{t('hero.popular')}:</span>
-            {services.slice(0, 4).map((service) => (
-              <Link
-                key={service.slug}
-                href={`/services/${service.slug}`}
-                className="px-3 py-1.5 bg-white/80 hover:bg-purple-50 hover:text-purple-700 text-gray-700 text-sm font-medium rounded-full transition-all shadow-sm hover:shadow"
-              >
-                {getLocalizedField(service, 'name', locale)}
-              </Link>
-            ))}
+          {/* 3-Step Visual */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
+            {steps.map((step) => {
+              const Icon = step.icon;
+              return (
+                <div key={step.number} className="flex flex-col items-center">
+                  <div className="w-16 h-16 bg-white/80 backdrop-blur rounded-2xl flex items-center justify-center mb-3 shadow-lg border border-white/50">
+                    <Icon className="w-8 h-8 text-purple-600" />
+                  </div>
+                  <p className="text-gray-700 font-medium text-sm">{step.text}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

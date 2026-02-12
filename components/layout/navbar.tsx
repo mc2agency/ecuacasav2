@@ -17,9 +17,6 @@ export function Navbar() {
     { href: '/services', label: t('nav.services') },
     { href: '/propiedades', label: t('nav.properties') },
     { href: '/blog', label: t('nav.blog') },
-    { href: '/providers', label: t('nav.providers') },
-    { href: '/how-it-works', label: t('nav.how_it_works') },
-    { href: '/for-providers', label: t('nav.for_providers') },
   ];
 
   const toggleLanguage = () => {
@@ -54,6 +51,12 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              <Link
+                href="/solicitar"
+                className="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all text-sm"
+              >
+                {t('nav.request_service')}
+              </Link>
             </div>
 
             {/* Right Side Actions */}
