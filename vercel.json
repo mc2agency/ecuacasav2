@@ -1,7 +1,22 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" }
+      ]
+    }
+  ],
   "redirects": [
+    {
+      "source": "/:path((?!_next|api|favicon\\.ico|icons|manifest\\.json|robots\\.txt|sitemap\\.xml).*)",
+      "has": [{ "type": "host", "value": "www.ecuacasa.com" }],
+      "destination": "https://ecuacasa.com/:path",
+      "permanent": true
+    },
     {
       "source": "/servicios/:slug*",
       "destination": "/services/:slug*",

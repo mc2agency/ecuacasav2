@@ -32,6 +32,9 @@ const nextConfig = {
       { source: '/cerrajeria', destination: '/services/cerrajeria', permanent: true },
       { source: '/climatizacion', destination: '/services/climatizacion', permanent: true },
       { source: '/electrodomesticos', destination: '/services/electrodomesticos', permanent: true },
+      // Catch-all for /servicios/xxx -> /services/xxx
+      { source: '/servicios/:slug', destination: '/services/:slug', permanent: true },
+      { source: '/servicios', destination: '/services', permanent: true },
     ]
   },
 }

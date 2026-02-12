@@ -78,20 +78,15 @@ export const es = {
 
   // Trust Signals
   'trust.title': '¿Por Qué Elegir EcuaCasa?',
-  'trust.subtitle': 'Tu mercado confiable para servicios del hogar en Cuenca',
+  'trust.subtitle': 'Tu servicio de confianza para el hogar en Cuenca',
+  'trust.concierge_title': 'Tú Pides, Nosotros Resolvemos',
+  'trust.concierge_desc': 'Envía tu solicitud y nos encargamos de encontrar al profesional ideal',
+  'trust.fast_title': 'Respuesta en Menos de 2 Horas',
+  'trust.fast_desc': 'Te conectamos rápido para que no pierdas tiempo buscando',
   'trust.verified_title': 'Profesionales Verificados',
-  'trust.verified_desc': 'Todos los profesionales son evaluados y verificados',
-  'trust.local_title': 'Expertos Locales',
-  'trust.local_desc': 'Conecta con profesionales locales de confianza',
-  'trust.rated_title': 'Calificados y Revisados',
-  'trust.rated_desc': 'Reseñas reales de clientes reales',
-  'trust.whatsapp_title': 'Contacto Directo',
-  'trust.whatsapp_desc': 'Envía mensajes instantáneamente por WhatsApp',
-  'trust.stat_providers': 'Profesionales Verificados',
-  'trust.stat_rating': 'Calificación Promedio',
-  'trust.stat_connections': 'Conexiones Realizadas',
-  'trust.stat_response': 'Tiempo de Respuesta Promedio',
-  'trust.testimonials_title': 'Lo Que Dicen Nuestros Usuarios',
+  'trust.verified_desc': 'Cada profesional es evaluado antes de entrar a nuestra red',
+  'trust.free_title': 'Sin Compromiso',
+  'trust.free_desc': 'Solicita sin costo. Solo pagas si decides contratar',
 
   // Providers
   'providers.title': 'Profesionales',

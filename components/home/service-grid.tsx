@@ -68,7 +68,7 @@ export function ServiceGrid({ services }: ServiceGridProps) {
           {services.slice(0, 5).map((service) => (
             <Link
               key={service.slug}
-              href={`/providers?service=${service.slug}`}
+              href={`/solicitar?servicio=${service.slug}`}
               className={`bg-gradient-to-br ${getGradient(service.slug)} text-white rounded-xl p-4 hover:shadow-lg transition-all cursor-pointer group text-center hover:scale-105`}
             >
               <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">

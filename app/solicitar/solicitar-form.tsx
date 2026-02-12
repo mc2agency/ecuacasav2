@@ -39,7 +39,7 @@ const SECTORS = [
 export function SolicitarForm() {
   const { t, locale } = useTranslation();
   const searchParams = useSearchParams();
-  const preSelectedService = searchParams.get('service') || '';
+  const preSelectedService = searchParams.get('service') || searchParams.get('servicio') || '';
 
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);

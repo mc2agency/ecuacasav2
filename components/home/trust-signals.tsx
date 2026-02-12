@@ -1,32 +1,31 @@
 'use client';
 
 import { useTranslation } from '@/hooks/use-translation';
-import { Shield, Users, Star, MessageCircle } from 'lucide-react';
-import Link from 'next/link';
+import { ClipboardList, Clock, Shield, Heart } from 'lucide-react';
 
 export function TrustSignals() {
   const { t } = useTranslation();
 
   const signals = [
     {
+      icon: ClipboardList,
+      titleKey: 'trust.concierge_title',
+      descKey: 'trust.concierge_desc',
+    },
+    {
+      icon: Clock,
+      titleKey: 'trust.fast_title',
+      descKey: 'trust.fast_desc',
+    },
+    {
       icon: Shield,
       titleKey: 'trust.verified_title',
       descKey: 'trust.verified_desc',
     },
     {
-      icon: Users,
-      titleKey: 'trust.local_title',
-      descKey: 'trust.local_desc',
-    },
-    {
-      icon: Star,
-      titleKey: 'trust.rated_title',
-      descKey: 'trust.rated_desc',
-    },
-    {
-      icon: MessageCircle,
-      titleKey: 'trust.whatsapp_title',
-      descKey: 'trust.whatsapp_desc',
+      icon: Heart,
+      titleKey: 'trust.free_title',
+      descKey: 'trust.free_desc',
     },
   ];
 
@@ -59,28 +58,6 @@ export function TrustSignals() {
               </div>
             );
           })}
-        </div>
-
-        {/* Community CTA instead of fake testimonials */}
-        <div className="mt-16 pt-12 border-t border-gray-200">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="w-16 h-16 bg-accent-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Star className="w-8 h-8 text-accent-500" />
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
-              Be Our First Reviewer!
-            </h3>
-            <p className="text-gray-600 mb-8 text-lg">
-              We&apos;re a new platform building trust one connection at a time. 
-              Used our service? We&apos;d love to hear about your experience.
-            </p>
-            <Link
-              href="mailto:info@ecuacasa.com?subject=My EcuaCasa Experience"
-              className="inline-block px-8 py-3 bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-xl transition-all shadow-md hover:shadow-lg"
-            >
-              Share Your Experience
-            </Link>
-          </div>
         </div>
       </div>
     </section>
