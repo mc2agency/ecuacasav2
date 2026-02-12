@@ -15,7 +15,7 @@ export default async function HomePage() {
   return (
     <>
       <OrganizationJsonLd />
-      <HeroSection services={services.slice(0, 10)} />
+      <HeroSection />
       <ServiceGrid services={services.slice(0, 6)} />
       <HowItWorks />
       <TrustSignals />

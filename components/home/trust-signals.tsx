@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslation } from '@/hooks/use-translation';
-import { ClipboardList, Clock, ShieldCheck, Heart } from 'lucide-react';
+import { ClipboardList, Clock, Shield, Heart } from 'lucide-react';
 
 export function TrustSignals() {
   const { t } = useTranslation();
@@ -9,23 +9,23 @@ export function TrustSignals() {
   const signals = [
     {
       icon: ClipboardList,
-      titleKey: 'trust.request_title',
-      descKey: 'trust.request_desc',
+      titleKey: 'trust.concierge_title',
+      descKey: 'trust.concierge_desc',
     },
     {
       icon: Clock,
-      titleKey: 'trust.response_title',
-      descKey: 'trust.response_desc',
+      titleKey: 'trust.fast_title',
+      descKey: 'trust.fast_desc',
     },
     {
-      icon: ShieldCheck,
+      icon: Shield,
       titleKey: 'trust.verified_title',
       descKey: 'trust.verified_desc',
     },
     {
       icon: Heart,
-      titleKey: 'trust.commitment_title',
-      descKey: 'trust.commitment_desc',
+      titleKey: 'trust.free_title',
+      descKey: 'trust.free_desc',
     },
   ];
 

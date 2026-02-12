@@ -12,10 +12,14 @@ export function Footer() {
     services: [
       { href: '/services', label: t('nav.services') },
       { href: '/providers', label: t('nav.providers') },
+      { href: '/propiedades', label: t('nav.properties') },
+      { href: '/solicitar', label: t('nav.request_service') },
     ],
     company: [
       { href: '/how-it-works', label: t('nav.how_it_works') },
       { href: '/for-providers', label: t('nav.for_providers') },
+      { href: '/recomendar', label: t('nav.recommend') },
+      { href: '/blog', label: t('nav.blog') },
     ],
     legal: [
       { href: '/privacy', label: locale === 'en' ? 'Privacy Policy' : 'Política de Privacidad' },

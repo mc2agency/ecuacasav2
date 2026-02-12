@@ -193,6 +193,28 @@ export default async function ProviderPage({ params }: ProviderPageProps) {
           <ProviderReviews providerId={provider.id} />
         </div>
 
+        {/* Cross-links */}
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Link
+            href="/solicitar"
+            className="p-6 bg-purple-50 rounded-2xl text-center hover:bg-purple-100 transition-colors group"
+          >
+            <h3 className="font-bold text-gray-900 mb-1 group-hover:text-purple-700">
+              ¿Necesitas este servicio? Solicítalo
+            </h3>
+            <p className="text-sm text-gray-600">Solicita cualquier servicio para el hogar</p>
+          </Link>
+          <Link
+            href="/recomendar"
+            className="p-6 bg-pink-50 rounded-2xl text-center hover:bg-pink-100 transition-colors group"
+          >
+            <h3 className="font-bold text-gray-900 mb-1 group-hover:text-pink-700">
+              ¿Conoces otro profesional? Recomiéndalo
+            </h3>
+            <p className="text-sm text-gray-600">Ayuda a la comunidad recomendando profesionales</p>
+          </Link>
+        </div>
+
         {/* Back to Providers */}
         <div className="text-center mt-8">
           <Link

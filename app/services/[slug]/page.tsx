@@ -59,6 +59,24 @@ export default async function ServicePage({ params }: ServicePageProps) {
           Todos los servicios
         </Link>
 
+        {/* Request Service Banner */}
+        <div className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-100 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <h2 className="text-lg font-bold text-gray-900">
+              ¿Necesitas {service.name_es}?
+            </h2>
+            <p className="text-gray-600 text-sm">
+              Solicita y te conectamos con un profesional verificado en 2 horas
+            </p>
+          </div>
+          <Link
+            href={`/solicitar?service=${service.slug}`}
+            className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all whitespace-nowrap"
+          >
+            Solicitar Servicio
+          </Link>
+        </div>
+
         {/* Service Header */}
         <div className="flex items-start gap-6 mb-12">
           <div className="w-20 h-20 bg-gradient-to-br from-primary-50 to-blue-100 rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -167,10 +185,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
               Aún no tenemos profesionales registrados para este servicio.
             </p>
             <Link
-              href="/register"
-              className="inline-block px-6 py-3 bg-accent-500 hover:bg-accent-600 text-white font-medium rounded-lg transition-colors"
+              href={`/solicitar?service=${service.slug}`}
+              className="inline-block px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium rounded-lg transition-colors"
             >
-              ¿Eres profesional? Regístrate
+              Solicitar este servicio
             </Link>
           </div>
         )}

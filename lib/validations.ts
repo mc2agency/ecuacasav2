@@ -51,3 +51,30 @@ export const reviewFormSchema = z.object({
 });
 
 export type ReviewFormValues = z.infer<typeof reviewFormSchema>;
+
+// Service request form validation schema
+export const serviceRequestSchema = z.object({
+  service_slug: z.string().min(1, 'Selecciona un servicio'),
+  service_other: z.string().optional(),
+  description: z.string().max(1000).optional(),
+  sector: z.string().min(1, 'Selecciona tu sector'),
+  urgency: z.string().min(1, 'Selecciona cuándo lo necesitas'),
+  client_name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
+  client_whatsapp: z.string().min(9, 'Ingresa un número válido').max(10),
+  client_email: z.string().email('Email inválido').optional().or(z.literal('')),
+});
+
+export type ServiceRequestFormValues = z.infer<typeof serviceRequestSchema>;
+
+// Recommendation form validation schema
+export const recommendationSchema = z.object({
+  pro_name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
+  pro_service_type: z.string().min(1, 'Selecciona un tipo de servicio'),
+  pro_phone: z.string().min(9, 'Ingresa un número válido').max(10),
+  relationship: z.string().min(1, 'Selecciona cómo lo conoces'),
+  why_recommend: z.string().min(10, 'Cuéntanos por qué lo recomiendas').max(500),
+  recommender_name: z.string().optional(),
+  recommender_email: z.string().email('Email inválido').optional().or(z.literal('')),
+});
+
+export type RecommendationFormValues = z.infer<typeof recommendationSchema>;
