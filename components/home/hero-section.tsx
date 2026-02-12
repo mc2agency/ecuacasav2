@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { TrendingUp, ClipboardList, Zap, CheckCircle } from 'lucide-react';
+import { MapPin, ClipboardList, Zap, CheckCircle } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 
 export function HeroSection() {
@@ -26,9 +26,9 @@ export function HeroSection() {
       <div className="relative max-w-7xl mx-auto px-4 py-24 lg:py-32">
         <div className="text-center max-w-4xl mx-auto">
           {/* Trending Badge */}
-          <div className="inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-full text-sm font-medium mb-8">
-            <TrendingUp className="w-4 h-4" />
-            {t('hero.badge')}
+          <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur text-gray-700 px-4 py-2 rounded-full text-sm font-medium mb-8 border border-gray-200">
+            <MapPin className="w-4 h-4 text-purple-600" />
+            Cuenca, Ecuador
           </div>
 
           {/* Heading */}
