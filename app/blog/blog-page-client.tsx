@@ -8,20 +8,18 @@ import { getAllBlogPosts } from '@/lib/blog/content';
 import { BlogCategory, BLOG_CATEGORY_LABELS } from '@/lib/blog/types';
 import { BookOpen } from 'lucide-react';
 
-const CATEGORIES: (BlogCategory | 'all')[] = [
-  'all',
-  'guia-comprador',
-  'sectores',
-  'legal',
-  'finanzas',
-  'visa',
-];
-
 export function BlogPageClient() {
   const { locale, t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<BlogCategory | 'all'>('all');
 
   const allPosts = useMemo(() => getAllBlogPosts(), []);
+
+  // Only show categories that have at least 1 post
+  const categoriesWithPosts = useMemo(() => {
+    const cats = new Set<BlogCategory>();
+    allPosts.forEach((post) => cats.add(post.category));
+    return ['all' as const, ...Array.from(cats)] as (BlogCategory | 'all')[];
+  }, [allPosts]);
 
   const filteredPosts = useMemo(() => {
     if (selectedCategory === 'all') return allPosts;
@@ -65,7 +63,7 @@ export function BlogPageClient() {
       <div className="bg-white border-b border-gray-200 sticky top-16 z-40">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex flex-wrap gap-2 justify-center">
-            {CATEGORIES.map((category) => (
+            {categoriesWithPosts.map((category) => (
               <Button
                 key={category}
                 variant={selectedCategory === category ? 'default' : 'outline'}
