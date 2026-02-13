@@ -18,16 +18,24 @@ export interface PropertyDocuments {
   levantamientoTopografico: boolean;
 }
 
+export type AgentRole = 'propietario' | 'agente';
+
 export interface PropertyAgent {
   id: string;
   name: string;
   phone: string;
   photo?: string;
+  role?: AgentRole;
   verified: boolean;
   responseTime: string;
   rating: number;
   totalSales: number;
 }
+
+export const AGENT_ROLE_LABELS: Record<AgentRole, { es: string; en: string }> = {
+  propietario: { es: 'Propietario', en: 'Owner' },
+  agente: { es: 'Agente Inmobiliario', en: 'Real Estate Agent' },
+};
 
 export interface Property {
   id: string;

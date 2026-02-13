@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { Property, PROPERTY_TYPE_LABELS, LISTING_TYPE_LABELS } from '@/lib/properties/types';
+import { Property, PROPERTY_TYPE_LABELS, LISTING_TYPE_LABELS, AGENT_ROLE_LABELS } from '@/lib/properties/types';
 import { useTranslation } from '@/hooks/use-translation';
 import { getLocalizedField } from '@/lib/i18n/helpers';
 import { PropertyDocuments } from '@/components/properties/property-documents';
@@ -275,7 +275,11 @@ export function PropertyDetailClient({ property }: PropertyDetailClientProps) {
                         <CheckCircle className="w-5 h-5 text-green-300" />
                       )}
                     </h3>
-                    <p className="text-white/80 text-sm">{t('properties.detail.agent')}</p>
+                    <p className="text-white/80 text-sm">
+                      {property.agent.role
+                        ? (locale === 'en' ? AGENT_ROLE_LABELS[property.agent.role].en : AGENT_ROLE_LABELS[property.agent.role].es)
+                        : t('properties.detail.agent')}
+                    </p>
                   </div>
                 </div>
               </div>

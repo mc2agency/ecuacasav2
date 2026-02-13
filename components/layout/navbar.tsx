@@ -5,13 +5,14 @@ import { usePathname } from 'next/navigation';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { MobileMenu } from './mobile-menu';
 
 export function Navbar() {
   const pathname = usePathname();
   const { t, locale, setLocale } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const closeMobileMenu = useCallback(() => setMobileMenuOpen(false), []);
 
   const navLinks = [
     { href: '/services', label: t('nav.services') },
@@ -96,7 +97,7 @@ export function Navbar() {
       {/* Mobile Menu */}
       <MobileMenu
         open={mobileMenuOpen}
-        onClose={() => setMobileMenuOpen(false)}
+        onClose={closeMobileMenu}
         navLinks={navLinks}
       />
     </>

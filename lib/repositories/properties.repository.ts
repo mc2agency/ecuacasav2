@@ -1,6 +1,6 @@
 import { cache } from 'react';
 import { createClient } from '@/lib/supabase/server';
-import type { Property, PropertyType, ListingType } from '@/lib/properties/types';
+import type { Property, PropertyType, ListingType, AgentRole } from '@/lib/properties/types';
 
 // Map a Supabase row (with joined agent + photos) to the frontend Property type
 function mapProperty(row: any): Property {
@@ -47,6 +47,7 @@ function mapProperty(row: any): Property {
           name: agent.name,
           phone: agent.phone,
           photo: agent.photo_url || undefined,
+          role: (agent.role as AgentRole) || 'propietario',
           verified: agent.verified || false,
           responseTime: agent.response_time || '',
           rating: Number(agent.rating) || 0,
@@ -56,6 +57,7 @@ function mapProperty(row: any): Property {
           id: '',
           name: 'EcuaCasa',
           phone: '+19143973750',
+          role: 'propietario' as AgentRole,
           verified: true,
           responseTime: '< 2 horas',
           rating: 0,

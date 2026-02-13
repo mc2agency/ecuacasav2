@@ -199,12 +199,12 @@ export const es = {
   'properties.docs.levantamiento_topografico': 'Levantamiento Topográfico',
 
   // EcuaCasa Guarantee
-  'properties.guarantee.title': 'Garantía EcuaCasa',
-  'properties.guarantee.desc': 'Esta propiedad ha sido verificada por nuestro equipo. Confirmamos la ubicación GPS exacta, autenticidad de documentos e identidad del agente.',
-  'properties.guarantee.gps': 'Ubicación GPS exacta verificada',
-  'properties.guarantee.docs': 'Documentos legales revisados',
-  'properties.guarantee.agent': 'Identidad del agente confirmada',
-  'properties.guarantee.photos': 'Fotos verificadas en sitio',
+  'properties.guarantee.title': 'Información EcuaCasa',
+  'properties.guarantee.desc': 'Estamos en proceso de verificar esta propiedad. A continuación la información proporcionada por el propietario.',
+  'properties.guarantee.gps': 'Ubicación GPS proporcionada por el propietario',
+  'properties.guarantee.docs': 'Documentos legales: verificación en proceso',
+  'properties.guarantee.agent': 'Identidad del propietario confirmada',
+  'properties.guarantee.photos': 'Fotos proporcionadas por el propietario',
 
   // Map
   'properties.map.zoom_in': 'Acercar',

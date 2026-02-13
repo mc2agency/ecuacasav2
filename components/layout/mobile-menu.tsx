@@ -6,7 +6,7 @@ import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LanguageToggle } from '@/components/shared/language-toggle';
 import { useTranslation } from '@/hooks/use-translation';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface MobileMenuProps {
   open: boolean;
@@ -17,9 +17,14 @@ interface MobileMenuProps {
 export function MobileMenu({ open, onClose, navLinks }: MobileMenuProps) {
   const pathname = usePathname();
   const { t } = useTranslation();
-  // Close menu on route change
+  const prevPathname = useRef(pathname);
+
+  // Close menu on route change (only when pathname actually changes)
   useEffect(() => {
-    onClose();
+    if (prevPathname.current !== pathname) {
+      prevPathname.current = pathname;
+      onClose();
+    }
   }, [pathname, onClose]);
 
   // Prevent body scroll when menu is open
