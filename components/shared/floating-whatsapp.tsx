@@ -4,13 +4,13 @@ import { useState } from 'react';
 import { MessageCircle, X } from 'lucide-react';
 import { trackWhatsAppClick } from '@/lib/analytics';
 
-const SUPPORT_PHONE = '593939451457';
+const SUPPORT_PHONE = '19143973750';
 
 export function FloatingWhatsApp() {
   const [isOpen, setIsOpen] = useState(false);
 
   const message = encodeURIComponent(
-    'Hola! Necesito ayuda con EcuaCasa. / Hi! I need help with EcuaCasa.'
+    'Hola, necesito ayuda con EcuaCasa.'
   );
 
   return (

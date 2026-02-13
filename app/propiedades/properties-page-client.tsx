@@ -7,7 +7,7 @@ import { Property, PROPERTY_TYPE_LABELS, LISTING_TYPE_LABELS } from '@/lib/prope
 import { getLocalizedField } from '@/lib/i18n/helpers';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Home, Mail, MessageCircle, MapPin, Maximize2, CheckCircle, BedDouble, Bath } from 'lucide-react';
+import { Home, Mail, MapPin, Maximize2, CheckCircle, BedDouble, Bath } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
 
 interface PropertiesPageClientProps {
@@ -58,13 +58,11 @@ export function PropertiesPageClient({ properties }: PropertiesPageClientProps) 
               : 'We list your property for free with full verification'}
           </p>
           <a
-            href="https://wa.me/593939451457?text=Hola%2C%20tengo%20una%20propiedad%20para%20listar%20en%20EcuaCasa"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#25D366] hover:bg-[#128C7E] text-white font-semibold rounded-xl transition-colors"
+            href="mailto:info@ecuacasa.com?subject=Tengo%20una%20propiedad%20para%20listar%20en%20EcuaCasa"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl transition-colors"
           >
-            <MessageCircle className="w-5 h-5" />
-            {locale === 'es' ? 'Contáctanos por WhatsApp' : 'Contact us on WhatsApp'}
+            <Mail className="w-5 h-5" />
+            info@ecuacasa.com
           </a>
         </div>
       </div>
@@ -215,13 +213,11 @@ function EmptyState({ locale }: { locale: string }) {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/593939451457?text=Hola%2C%20tengo%20una%20propiedad%20para%20listar"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#25D366] hover:bg-[#128C7E] text-white font-semibold rounded-xl transition-colors"
+              href="mailto:info@ecuacasa.com?subject=Tengo%20una%20propiedad%20para%20listar"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl transition-colors"
             >
-              <MessageCircle className="w-5 h-5" />
-              {locale === 'es' ? 'Contáctanos por WhatsApp' : 'Contact us on WhatsApp'}
+              <Mail className="w-5 h-5" />
+              info@ecuacasa.com
             </a>
             <a
               href="mailto:info@ecuacasa.com?subject=Tengo%20una%20propiedad%20para%20listar"

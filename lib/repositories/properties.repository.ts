@@ -55,7 +55,7 @@ function mapProperty(row: any): Property {
       : {
           id: '',
           name: 'EcuaCasa',
-          phone: '+593939451457',
+          phone: '+19143973750',
           verified: true,
           responseTime: '< 2 horas',
           rating: 0,

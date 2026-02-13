@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Facebook, MessageCircle, Mail, MapPin } from 'lucide-react';
+import { Facebook, Mail, MapPin } from 'lucide-react';
 import { useTranslation } from '@/hooks/use-translation';
 
 export function Footer() {
@@ -55,13 +55,11 @@ export function Footer() {
                 <Facebook className="w-5 h-5" />
               </a>
               <a
-                href="https://wa.me/593939451457"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-green-600 hover:text-white transition-all"
-                aria-label="WhatsApp"
+                href="mailto:info@ecuacasa.com"
+                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-purple-600 hover:text-white transition-all"
+                aria-label="Email"
               >
-                <MessageCircle className="w-5 h-5" />
+                <Mail className="w-5 h-5" />
               </a>
             </div>
           </div>

@@ -4,7 +4,7 @@ import "./globals.css";
 import { TranslationProvider } from "@/hooks/use-translation";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { FloatingWhatsApp } from "@/components/shared/floating-whatsapp";
+
 import { ServiceWorkerRegister } from "@/components/shared/sw-register";
 import { InstallPrompt } from "@/components/shared/install-prompt";
 import { AnalyticsProvider } from "@/components/shared/analytics-provider";
@@ -75,7 +75,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
-          <FloatingWhatsApp />
+
           <InstallPrompt />
           <ServiceWorkerRegister />
           <AnalyticsProvider />
