@@ -25,6 +25,7 @@ export const providersRepository = {
    */
   getAll: cache(async () => {
     const supabase = await createClient();
+    if (!supabase) return [];
     const { data, error } = await supabase
       .from('providers')
       .select(`
@@ -65,6 +66,7 @@ export const providersRepository = {
    */
   getFeatured: cache(async (limit = 6) => {
     const supabase = await createClient();
+    if (!supabase) return [];
     const { data, error } = await supabase
       .from('providers')
       .select(`
@@ -107,6 +109,7 @@ export const providersRepository = {
    */
   getByService: cache(async (serviceSlug: string) => {
     const supabase = await createClient();
+    if (!supabase) return [];
     const { data, error } = await supabase
       .from('providers')
       .select(`
@@ -146,6 +149,7 @@ export const providersRepository = {
    */
   getBySlug: cache(async (slug: string) => {
     const supabase = await createClient();
+    if (!supabase) return null;
     const { data, error } = await supabase
       .from('providers')
       .select(`

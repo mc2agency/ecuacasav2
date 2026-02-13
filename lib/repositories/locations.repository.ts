@@ -7,6 +7,7 @@ export const locationsRepository = {
    */
   getActive: cache(async () => {
     const supabase = await createClient();
+    if (!supabase) return [];
     const { data, error } = await supabase
       .from('locations')
       .select('slug, name')
@@ -25,6 +26,7 @@ export const locationsRepository = {
    */
   getBySlug: cache(async (slug: string) => {
     const supabase = await createClient();
+    if (!supabase) return null;
     const { data, error } = await supabase
       .from('locations')
       .select('*')

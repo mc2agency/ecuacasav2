@@ -15,6 +15,7 @@ export const servicesRepository = {
   getActive: async (): Promise<Service[]> => {
     try {
       const supabase = await createClient();
+      if (!supabase) return [];
       const { data, error } = await supabase
         .from('services')
         .select('slug, name_es, name_en, description_es, description_en')
@@ -39,6 +40,7 @@ export const servicesRepository = {
   getBySlug: async (slug: string): Promise<Service | null> => {
     try {
       const supabase = await createClient();
+      if (!supabase) return null;
       const { data, error } = await supabase
         .from('services')
         .select('*')

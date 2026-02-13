@@ -8,6 +8,9 @@ export async function GET(request: NextRequest) {
   }
 
   const supabase = await createClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database unavailable' }, { status: 503 });
+  }
   const { data, error } = await supabase
     .from('reviews')
     .select('id, customer_name, rating, comment, created_at')
@@ -56,6 +59,9 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = await createClient();
+    if (!supabase) {
+      return NextResponse.json({ error: 'Database unavailable' }, { status: 503 });
+    }
     const { error } = await supabase.from('reviews').insert({
       provider_id,
       customer_name: customer_name.trim(),

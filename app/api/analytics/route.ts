@@ -35,6 +35,9 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = await createClient();
+    if (!supabase) {
+      return NextResponse.json({ error: 'Database unavailable' }, { status: 503 });
+    }
     await supabase.from('analytics_events').insert({
       event_type,
       page: page || null,

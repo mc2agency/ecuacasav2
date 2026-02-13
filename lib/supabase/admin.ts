@@ -5,13 +5,21 @@ import { createClient } from '@supabase/supabase-js';
 /**
  * Create a Supabase client for server components/route handlers using cookies (anon key).
  * Used for auth session validation.
+ * Returns null if environment variables are missing.
  */
 export async function createAuthClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!url || !anonKey) {
+    return null;
+  }
+
   const cookieStore = cookies();
 
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    url,
+    anonKey,
     {
       cookies: {
         get(name: string) {
@@ -38,12 +46,17 @@ export async function createAuthClient() {
 
 /**
  * Create a Supabase admin client (service role) for server-side only operations.
+ * Returns null if environment variables are missing.
  */
 export function createAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !serviceKey) {
+    return null;
+  }
+
+  return createClient(url, serviceKey);
 }
 
 /**
@@ -52,6 +65,9 @@ export function createAdminClient() {
  */
 export async function validateAdminSession() {
   const supabase = await createAuthClient();
+  if (!supabase) {
+    return null;
+  }
 
   const { data: { user }, error } = await supabase.auth.getUser();
   if (error || !user?.email) {
@@ -60,6 +76,10 @@ export async function validateAdminSession() {
 
   // Check if user is in admin_users table
   const adminClient = createAdminClient();
+  if (!adminClient) {
+    return null;
+  }
+
   const { data: adminUser, error: adminError } = await adminClient
     .from('admin_users')
     .select('id')
