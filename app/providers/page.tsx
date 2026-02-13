@@ -17,27 +17,33 @@ export default async function ProvidersPage({ searchParams }: ProvidersPageProps
   const { service: initialService } = await searchParams;
   const supabase = await createClient();
 
-  const [{ data: providersData }, { data: servicesData }] = await Promise.all([
-    supabase
-      .from('providers')
-      .select(`
-        id, slug, name, description_es, description_en,
-        rating, review_count, price_range, response_time,
-        verified, speaks_english, featured, phone,
-        services:provider_services(service:services(slug, name_es, name_en))
-      `)
-      .eq('status', 'active')
-      .order('rating', { ascending: false }),
-    supabase
-      .from('services')
-      .select('slug, name_es, name_en')
-      .order('name_en'),
-  ]);
+  let providers: any[] = [];
+  let servicesData: any[] = [];
 
-  const providers = (providersData || []).map((p: any) => ({
-    ...p,
-    services: p.services?.map((ps: any) => ps.service) || [],
-  }));
+  if (supabase) {
+    const [{ data: providersData }, { data: svcData }] = await Promise.all([
+      supabase
+        .from('providers')
+        .select(`
+          id, slug, name, description_es, description_en,
+          rating, review_count, price_range, response_time,
+          verified, speaks_english, featured, phone,
+          services:provider_services(service:services(slug, name_es, name_en))
+        `)
+        .eq('status', 'active')
+        .order('rating', { ascending: false }),
+      supabase
+        .from('services')
+        .select('slug, name_es, name_en')
+        .order('name_en'),
+    ]);
+
+    providers = (providersData || []).map((p: any) => ({
+      ...p,
+      services: p.services?.map((ps: any) => ps.service) || [],
+    }));
+    servicesData = svcData || [];
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">

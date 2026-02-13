@@ -8,6 +8,9 @@ export async function GET(request: NextRequest) {
 
   try {
     const supabase = await createClient();
+    if (!supabase) {
+      return NextResponse.json({ error: 'Database unavailable' }, { status: 503 });
+    }
     const now = new Date();
     const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
     const weekAgo = new Date(now.getTime() - 7 * 86400000).toISOString();

@@ -38,6 +38,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic pages from Supabase
   try {
     const supabase = await createClient();
+    if (!supabase) {
+      // Return static + blog pages if Supabase not available
+      return [...staticPages, ...blogPages];
+    }
 
     const [{ data: services }, { data: providers }, { data: properties }] = await Promise.all([
       supabase.from('services').select('slug'),

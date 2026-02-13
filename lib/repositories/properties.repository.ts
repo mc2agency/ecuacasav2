@@ -79,6 +79,8 @@ const PROPERTY_SELECT = `
 export const propertiesRepository = {
   getAll: cache(async (): Promise<Property[]> => {
     const supabase = await createClient();
+    if (!supabase) return [];
+
     const { data, error } = await supabase
       .from('properties')
       .select(PROPERTY_SELECT)
@@ -96,6 +98,8 @@ export const propertiesRepository = {
 
   getBySlug: cache(async (slug: string): Promise<Property | null> => {
     const supabase = await createClient();
+    if (!supabase) return null;
+
     const { data, error } = await supabase
       .from('properties')
       .select(PROPERTY_SELECT)
@@ -113,6 +117,8 @@ export const propertiesRepository = {
 
   getAllSlugs: cache(async (): Promise<string[]> => {
     const supabase = await createClient();
+    if (!supabase) return [];
+
     const { data, error } = await supabase
       .from('properties')
       .select('slug')
