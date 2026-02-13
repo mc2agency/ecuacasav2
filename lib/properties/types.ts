@@ -41,6 +41,8 @@ export interface Property {
   price: number;
   pricePerM2: number;
   size: number; // in m²
+  bedrooms?: number;
+  bathrooms?: number;
   sector: string;
   address: string;
   coordinates: {
@@ -74,6 +76,7 @@ export interface PropertyFilter {
 
 // Cuenca sectors
 export const CUENCA_SECTORS = [
+  'El Centro',
   'San Joaquín',
   'Baños',
   'Ricaurte',

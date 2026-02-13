@@ -1,5 +1,8 @@
 import { Metadata } from 'next';
+import { propertiesRepository } from '@/lib/repositories';
 import { PropertiesPageClient } from './properties-page-client';
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Propiedades en Cuenca Ecuador | Casas, Departamentos, Terrenos en Venta y Arriendo',
@@ -15,6 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PropertiesPage() {
-  return <PropertiesPageClient />;
+export default async function PropertiesPage() {
+  const properties = await propertiesRepository.getAll();
+  return <PropertiesPageClient properties={properties} />;
 }
