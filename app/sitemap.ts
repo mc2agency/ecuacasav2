@@ -28,19 +28,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       supabase.from('providers').select('slug').eq('status', 'active'),
     ]);
 
-    const servicePages: MetadataRoute.Sitemap = (services || []).map((s) => ({
-      url: `${baseUrl}/services/${s.slug}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    }));
+    const servicePages: MetadataRoute.Sitemap = (services || [])
+      .filter((s) => s.slug && s.slug.trim())
+      .map((s) => ({
+        url: `${baseUrl}/services/${s.slug.trim()}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+      }));
 
-    const providerPages: MetadataRoute.Sitemap = (providers || []).map((p) => ({
-      url: `${baseUrl}/providers/${p.slug}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    }));
+    const providerPages: MetadataRoute.Sitemap = (providers || [])
+      .filter((p) => p.slug && p.slug.trim())
+      .map((p) => ({
+        url: `${baseUrl}/providers/${p.slug.trim()}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+      }));
 
     return [...staticPages, ...servicePages, ...providerPages];
   } catch (error) {
