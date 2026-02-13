@@ -28,7 +28,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/icons/icon-192.png",
-    apple: "/icons/icon-192.png",
+    apple: [
+      { url: "/icons/icon-152.png", sizes: "152x152" },
+      { url: "/icons/icon-192.png", sizes: "192x192" },
+    ],
   },
   alternates: {
     canonical: "/",
