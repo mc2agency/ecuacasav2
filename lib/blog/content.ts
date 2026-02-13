@@ -989,6 +989,344 @@ El mejor sector es el que coincide con tu estilo de vida, presupuesto y planes. 
     tags: ['sectores', 'precios', 'san-joaquin', 'ricaurte', 'challuabamba', 'guia', 'inversion'],
     relatedSlugs: ['5-documentos-verificar-comprar-terreno-ecuador'],
   },
+  {
+    slug: 'precios-servicios-hogar-cuenca-2025',
+    title: {
+      en: 'Home Service Prices in Cuenca Ecuador 2025: Complete Guide',
+      es: 'Precios de Servicios para el Hogar en Cuenca Ecuador 2025: Guía Completa',
+    },
+    excerpt: {
+      en: 'Updated pricing guide for home services in Cuenca. Learn what to expect to pay for plumbers, electricians, cleaners, painters, and other home service professionals.',
+      es: 'Guía actualizada de precios para servicios del hogar en Cuenca. Conoce cuánto pagar por plomeros, electricistas, servicios de limpieza, pintores y otros profesionales.',
+    },
+    content: {
+      en: `## Home Service Pricing in Cuenca
+
+Finding reliable home service professionals in Cuenca is one thing—knowing what to pay them is another. This guide provides realistic price ranges based on current market rates in 2025.
+
+**Important note:** Prices vary based on job complexity, materials needed, and whether you're in an urban or rural area. These are typical ranges for standard residential work.
+
+---
+
+## Plumbing (Plomería)
+
+| Service | Price Range |
+|---------|-------------|
+| Minor repair (leaky faucet, toilet fix) | $15-$30 |
+| Pipe repair/replacement | $30-$80 |
+| Water heater installation | $50-$100 + equipment |
+| Full bathroom plumbing | $200-$500 |
+| Emergency call (after hours) | +50% surcharge |
+
+**What affects price:**
+- Accessibility of pipes
+- Need to break walls/floors
+- Quality of replacement parts
+
+---
+
+## Electrical (Electricidad)
+
+| Service | Price Range |
+|---------|-------------|
+| Outlet/switch installation | $10-$25 |
+| Light fixture installation | $15-$40 |
+| Electrical panel upgrade | $100-$300 |
+| Full house rewiring | $500-$1,500+ |
+| 220V appliance connection | $30-$60 |
+
+**What affects price:**
+- Wire gauge requirements
+- Distance from panel
+- Need for permits
+
+---
+
+## Cleaning (Limpieza)
+
+| Service | Price Range |
+|---------|-------------|
+| Regular house cleaning (per visit) | $15-$30 |
+| Deep cleaning | $40-$80 |
+| Post-construction cleaning | $50-$150 |
+| Window cleaning (per window) | $2-$5 |
+| Monthly service (weekly visits) | $60-$120/month |
+
+**What affects price:**
+- House size (square meters)
+- Frequency of service
+- Special requirements (pets, allergies)
+
+---
+
+## Painting (Pintura)
+
+| Service | Price Range |
+|---------|-------------|
+| Interior room (materials included) | $80-$150 |
+| Full interior (small house) | $400-$800 |
+| Exterior house painting | $500-$1,500+ |
+| Decorative finishes | +30-50% |
+
+**What affects price:**
+- Wall condition (prep work needed)
+- Paint quality chosen
+- Number of coats
+- Height/accessibility
+
+---
+
+## Carpentry (Carpintería)
+
+| Service | Price Range |
+|---------|-------------|
+| Door repair | $20-$50 |
+| Custom shelving (per meter) | $40-$80 |
+| Kitchen cabinet repair | $30-$100 |
+| Custom furniture | $200-$1,000+ |
+| Closet build-out | $300-$800 |
+
+**What affects price:**
+- Wood type (pine vs. hardwood)
+- Complexity of design
+- Hardware quality
+
+---
+
+## Gardening (Jardinería)
+
+| Service | Price Range |
+|---------|-------------|
+| Basic lawn maintenance (per visit) | $15-$30 |
+| Tree trimming | $30-$100 |
+| Garden design | $100-$500 |
+| Monthly maintenance | $50-$120/month |
+| Sprinkler system installation | $200-$600 |
+
+**What affects price:**
+- Property size
+- Plant types
+- Equipment needed
+
+---
+
+## Handyman Services (Servicios Generales)
+
+| Service | Price Range |
+|---------|-------------|
+| Hourly rate | $8-$15/hour |
+| Half day (4 hours) | $30-$50 |
+| Full day (8 hours) | $50-$80 |
+| Minor repairs (multiple) | $25-$60 |
+
+**What affects price:**
+- Skill level required
+- Tools/materials needed
+- Travel distance
+
+---
+
+## Tips for Hiring
+
+1. **Get multiple quotes** — At least 2-3 for any job over $50
+2. **Ask for references** — Especially for larger projects
+3. **Clarify materials** — Who provides them and what quality
+4. **Agree on timeline** — When will work start and end
+5. **Payment terms** — Typically 50% upfront, 50% on completion
+
+---
+
+## Payment Methods
+
+Most service providers in Cuenca prefer:
+- **Cash** — Most common
+- **Bank transfer** — For larger jobs
+- **Mobile payment** — Increasingly accepted
+
+Credit cards are rarely accepted for home services.
+
+---
+
+## Finding Reliable Professionals
+
+The challenge in Cuenca isn't finding someone—it's finding someone reliable who responds promptly. Many expats report difficulty getting callbacks or follow-through.
+
+EcuaCasa connects you with verified professionals who commit to responding within 2 hours.
+
+---
+
+*Need a home service professional? [Request a service on EcuaCasa](/solicitar)*`,
+      es: `## Precios de Servicios del Hogar en Cuenca
+
+Encontrar profesionales confiables para servicios del hogar en Cuenca es una cosa—saber cuánto pagarles es otra. Esta guía proporciona rangos de precios realistas basados en tarifas actuales del mercado en 2025.
+
+**Nota importante:** Los precios varían según la complejidad del trabajo, materiales necesarios y si estás en zona urbana o rural. Estos son rangos típicos para trabajo residencial estándar.
+
+---
+
+## Plomería
+
+| Servicio | Rango de Precio |
+|----------|-----------------|
+| Reparación menor (grifo, inodoro) | $15-$30 |
+| Reparación/reemplazo de tubería | $30-$80 |
+| Instalación de calentador de agua | $50-$100 + equipo |
+| Plomería completa de baño | $200-$500 |
+| Llamada de emergencia (fuera de horario) | +50% recargo |
+
+**Qué afecta el precio:**
+- Accesibilidad de las tuberías
+- Necesidad de romper paredes/pisos
+- Calidad de repuestos
+
+---
+
+## Electricidad
+
+| Servicio | Rango de Precio |
+|----------|-----------------|
+| Instalación de tomacorriente/interruptor | $10-$25 |
+| Instalación de luminaria | $15-$40 |
+| Actualización de panel eléctrico | $100-$300 |
+| Reinstalación eléctrica completa | $500-$1,500+ |
+| Conexión de electrodoméstico 220V | $30-$60 |
+
+**Qué afecta el precio:**
+- Calibre de cable requerido
+- Distancia desde el panel
+- Necesidad de permisos
+
+---
+
+## Limpieza
+
+| Servicio | Rango de Precio |
+|----------|-----------------|
+| Limpieza regular de casa (por visita) | $15-$30 |
+| Limpieza profunda | $40-$80 |
+| Limpieza post-construcción | $50-$150 |
+| Limpieza de ventanas (por ventana) | $2-$5 |
+| Servicio mensual (visitas semanales) | $60-$120/mes |
+
+**Qué afecta el precio:**
+- Tamaño de la casa (metros cuadrados)
+- Frecuencia del servicio
+- Requisitos especiales (mascotas, alergias)
+
+---
+
+## Pintura
+
+| Servicio | Rango de Precio |
+|----------|-----------------|
+| Habitación interior (materiales incluidos) | $80-$150 |
+| Interior completo (casa pequeña) | $400-$800 |
+| Pintura exterior de casa | $500-$1,500+ |
+| Acabados decorativos | +30-50% |
+
+**Qué afecta el precio:**
+- Condición de paredes (preparación necesaria)
+- Calidad de pintura elegida
+- Número de capas
+- Altura/accesibilidad
+
+---
+
+## Carpintería
+
+| Servicio | Rango de Precio |
+|----------|-----------------|
+| Reparación de puerta | $20-$50 |
+| Estantería a medida (por metro) | $40-$80 |
+| Reparación de gabinetes de cocina | $30-$100 |
+| Muebles a medida | $200-$1,000+ |
+| Construcción de closet | $300-$800 |
+
+**Qué afecta el precio:**
+- Tipo de madera (pino vs. madera dura)
+- Complejidad del diseño
+- Calidad de herrajes
+
+---
+
+## Jardinería
+
+| Servicio | Rango de Precio |
+|----------|-----------------|
+| Mantenimiento básico de jardín (por visita) | $15-$30 |
+| Poda de árboles | $30-$100 |
+| Diseño de jardín | $100-$500 |
+| Mantenimiento mensual | $50-$120/mes |
+| Instalación de sistema de riego | $200-$600 |
+
+**Qué afecta el precio:**
+- Tamaño de la propiedad
+- Tipos de plantas
+- Equipo necesario
+
+---
+
+## Servicios de Mantenimiento General
+
+| Servicio | Rango de Precio |
+|----------|-----------------|
+| Tarifa por hora | $8-$15/hora |
+| Medio día (4 horas) | $30-$50 |
+| Día completo (8 horas) | $50-$80 |
+| Reparaciones menores (varias) | $25-$60 |
+
+**Qué afecta el precio:**
+- Nivel de habilidad requerido
+- Herramientas/materiales necesarios
+- Distancia de viaje
+
+---
+
+## Consejos para Contratar
+
+1. **Obtén múltiples cotizaciones** — Al menos 2-3 para trabajos mayores a $50
+2. **Pide referencias** — Especialmente para proyectos grandes
+3. **Aclara los materiales** — Quién los proporciona y qué calidad
+4. **Acuerda el cronograma** — Cuándo comienza y termina el trabajo
+5. **Términos de pago** — Típicamente 50% adelanto, 50% al completar
+
+---
+
+## Métodos de Pago
+
+La mayoría de proveedores de servicios en Cuenca prefieren:
+- **Efectivo** — Más común
+- **Transferencia bancaria** — Para trabajos grandes
+- **Pago móvil** — Cada vez más aceptado
+
+Las tarjetas de crédito rara vez se aceptan para servicios del hogar.
+
+---
+
+## Encontrando Profesionales Confiables
+
+El desafío en Cuenca no es encontrar a alguien—es encontrar a alguien confiable que responda rápidamente. Muchos expatriados reportan dificultad para obtener respuestas o seguimiento.
+
+EcuaCasa te conecta con profesionales verificados que se comprometen a responder en menos de 2 horas.
+
+---
+
+*¿Necesitas un profesional de servicios del hogar? [Solicita un servicio en EcuaCasa](/solicitar)*`,
+    },
+    category: 'precios',
+    featuredImage: 'https://picsum.photos/seed/homeservices/1200/630',
+    publishedAt: '2025-01-15',
+    author: {
+      name: 'EcuaCasa',
+      role: {
+        en: 'Research Team',
+        es: 'Equipo de Investigación',
+      },
+    },
+    readingTime: 6,
+    tags: ['precios', 'servicios', 'plomeria', 'electricidad', 'limpieza', 'guia'],
+    relatedSlugs: ['5-documentos-verificar-comprar-terreno-ecuador'],
+  },
 ];
 
 // Get all blog posts
