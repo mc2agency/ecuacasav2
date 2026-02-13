@@ -2,6 +2,11 @@ import { MetadataRoute } from 'next';
 import { createClient } from '@/lib/supabase/server';
 import { BLOG_POSTS } from '@/lib/blog/content';
 
+/** Strip all whitespace from a URL to prevent broken <loc> tags */
+function cleanUrl(url: string): string {
+  return url.replace(/\s+/g, '');
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://ecuacasa.com';
 
@@ -23,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Blog post pages
   const blogPages: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug.trim()}`,
+    url: cleanUrl(`${baseUrl}/blog/${post.slug}`),
     lastModified: new Date(post.publishedAt),
     changeFrequency: 'monthly' as const,
     priority: 0.6,
@@ -40,21 +45,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ]);
 
     const servicePages: MetadataRoute.Sitemap = (services || []).map((s) => ({
-      url: `${baseUrl}/services/${s.slug.trim()}`,
+      url: cleanUrl(`${baseUrl}/services/${s.slug}`),
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     }));
 
     const providerPages: MetadataRoute.Sitemap = (providers || []).map((p) => ({
-      url: `${baseUrl}/providers/${p.slug.trim()}`,
+      url: cleanUrl(`${baseUrl}/providers/${p.slug}`),
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     }));
 
     const propertyPages: MetadataRoute.Sitemap = (properties || []).map((p) => ({
-      url: `${baseUrl}/propiedades/${p.slug.trim()}`,
+      url: cleanUrl(`${baseUrl}/propiedades/${p.slug}`),
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.8,

@@ -27,9 +27,9 @@ export async function sendRegistrationNotification(data: RegistrationData) {
 
   try {
     const result = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'EcuaCasa <noreply@ecuacasa.com>',
+      from: process.env.RESEND_FROM_EMAIL ? `EcuaCasa <${process.env.RESEND_FROM_EMAIL}>` : 'EcuaCasa <noreply@ecuacasa.com>',
       to: adminEmail,
-      subject: `🏠 Nuevo profesional: ${data.name}`,
+      subject: `Nuevo profesional: ${data.name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #9333ea, #ec4899); padding: 20px; border-radius: 8px 8px 0 0;">
@@ -146,9 +146,9 @@ export async function sendServiceRequestNotification(data: ServiceRequestData) {
 
   try {
     const result = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'EcuaCasa <noreply@ecuacasa.com>',
+      from: process.env.RESEND_FROM_EMAIL ? `EcuaCasa <${process.env.RESEND_FROM_EMAIL}>` : 'EcuaCasa <noreply@ecuacasa.com>',
       to: adminEmail,
-      subject: `🔔 Nueva Solicitud: ${serviceName} - ${data.request_number}`,
+      subject: `Nueva Solicitud: ${serviceName} - ${data.request_number}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #9333ea, #ec4899); padding: 20px; border-radius: 8px 8px 0 0;">
@@ -234,11 +234,14 @@ export async function sendServiceRequestNotification(data: ServiceRequestData) {
 
     if (result.error) {
       console.error('Resend API error:', result.error);
+      return { success: false, error: result.error };
     } else {
       console.log('Service request email sent, ID:', result.data?.id);
+      return { success: true, id: result.data?.id };
     }
   } catch (error) {
     console.error('Failed to send service request email:', error);
+    return { success: false, error: String(error) };
   }
 }
 
@@ -270,9 +273,9 @@ export async function sendRecommendationNotification(data: RecommendationData) {
 
   try {
     const result = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'EcuaCasa <noreply@ecuacasa.com>',
+      from: process.env.RESEND_FROM_EMAIL ? `EcuaCasa <${process.env.RESEND_FROM_EMAIL}>` : 'EcuaCasa <noreply@ecuacasa.com>',
       to: adminEmail,
-      subject: `⭐ Nueva Recomendación: ${data.pro_name}`,
+      subject: `Nueva Recomendación: ${data.pro_name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #9333ea, #ec4899); padding: 20px; border-radius: 8px 8px 0 0;">
@@ -355,10 +358,13 @@ export async function sendRecommendationNotification(data: RecommendationData) {
 
     if (result.error) {
       console.error('Resend API error:', result.error);
+      return { success: false, error: result.error };
     } else {
       console.log('Recommendation email sent, ID:', result.data?.id);
+      return { success: true, id: result.data?.id };
     }
   } catch (error) {
     console.error('Failed to send recommendation email:', error);
+    return { success: false, error: String(error) };
   }
 }

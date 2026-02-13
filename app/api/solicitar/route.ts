@@ -64,8 +64,8 @@ export async function POST(request: NextRequest) {
       console.error('Database insert failed (non-fatal):', dbErr);
     }
 
-    // Send email notification (non-blocking)
-    await sendServiceRequestNotification({
+    // Send email notification
+    const emailResult = await sendServiceRequestNotification({
       request_number: requestNumber,
       service_slug: data.service_slug,
       service_other: data.service_other,
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
       client_email: data.client_email,
     });
 
-    return NextResponse.json({ success: true, request_number: requestNumber });
+    return NextResponse.json({ success: true, request_number: requestNumber, email: emailResult });
   } catch (error) {
     console.error('Service request error:', error);
     return NextResponse.json(
