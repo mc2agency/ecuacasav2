@@ -52,12 +52,6 @@ export function HeroSection() {
               {t('hero.cta_request')}
             </Link>
             <Link
-              href="/providers"
-              className="px-8 py-4 bg-white text-gray-800 font-bold text-lg rounded-xl border-2 border-gray-200 hover:border-purple-300 hover:shadow-lg transition-all"
-            >
-              {t('hero.cta_providers')}
-            </Link>
-            <Link
               href="/propiedades"
               className="px-8 py-4 bg-white text-gray-800 font-bold text-lg rounded-xl border-2 border-gray-200 hover:border-purple-300 hover:shadow-lg transition-all"
             >

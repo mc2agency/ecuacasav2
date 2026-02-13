@@ -40,7 +40,7 @@ export function Footer() {
               <span className="text-xl font-black text-white">EcuaCasa</span>
             </Link>
             <p className="mt-4 text-sm text-gray-400 leading-relaxed">
-              {t('hero.subtitle')}
+              {t('hero.new_subtitle')}
             </p>
 
             {/* Social Icons */}

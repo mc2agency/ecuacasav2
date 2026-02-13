@@ -3,11 +3,11 @@ import { Suspense } from 'react';
 import { SolicitarForm } from './solicitar-form';
 
 export const metadata: Metadata = {
-  title: 'Solicitar Servicio | EcuaCasa',
-  description: 'Solicita un servicio para el hogar en Cuenca. Te conectamos con un profesional verificado en menos de 2 horas.',
+  title: 'Solicitar Servicio para el Hogar en Cuenca',
+  description: 'Dinos qué necesitas y te conectamos con un profesional verificado en Cuenca en menos de 2 horas. Sin compromiso.',
   openGraph: {
-    title: 'Solicitar Servicio | EcuaCasa',
-    description: 'Solicita un servicio para el hogar en Cuenca. Te conectamos con un profesional verificado en menos de 2 horas.',
+    title: 'Solicitar Servicio para el Hogar en Cuenca | EcuaCasa',
+    description: 'Dinos qué necesitas y te conectamos con un profesional verificado en Cuenca en menos de 2 horas. Sin compromiso.',
   },
 };
 

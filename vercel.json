@@ -66,6 +66,31 @@
       "source": "/cerrajeria",
       "destination": "/services/cerrajeria",
       "permanent": true
+    },
+    {
+      "source": "/how",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/sign-up",
+      "destination": "/for-providers",
+      "permanent": true
+    },
+    {
+      "source": "/sign-in",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }
