@@ -30,8 +30,13 @@ export async function generateMetadata({ params }: PropertyPageProps): Promise<M
 }
 
 export async function generateStaticParams() {
-  const slugs = await propertiesRepository.getAllSlugs();
-  return slugs.map((slug) => ({ slug }));
+  try {
+    const slugs = await propertiesRepository.getAllSlugs();
+    return slugs.map((slug) => ({ slug }));
+  } catch {
+    // Return empty array if Supabase is not available at build time
+    return [];
+  }
 }
 
 export default async function PropertyPage({ params }: PropertyPageProps) {

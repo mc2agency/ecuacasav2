@@ -3,7 +3,8 @@ export type BlogCategory =
   | 'sectores'
   | 'legal'
   | 'finanzas'
-  | 'visa';
+  | 'visa'
+  | 'precios';
 
 export const BLOG_CATEGORY_LABELS: Record<BlogCategory, { en: string; es: string }> = {
   'guia-comprador': { en: "Buyer's Guide", es: 'Guía del Comprador' },
@@ -11,6 +12,7 @@ export const BLOG_CATEGORY_LABELS: Record<BlogCategory, { en: string; es: string
   'legal': { en: 'Legal', es: 'Legal' },
   'finanzas': { en: 'Finance', es: 'Finanzas' },
   'visa': { en: 'Visa', es: 'Visa' },
+  'precios': { en: 'Pricing', es: 'Precios' },
 };
 
 export interface BlogPost {
