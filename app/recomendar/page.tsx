@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import { RecomendarForm } from './recomendar-form';
 
 export const metadata: Metadata = {
-  title: 'Recomendar Profesional | EcuaCasa',
-  description: '¿Conoces un buen profesional? Recomiéndalo y ayúdanos a crecer nuestra red de servicios verificados en Cuenca.',
+  title: 'Recomendar un Profesional en Cuenca',
+  description: '¿Conoces un buen profesional en Cuenca? Recomiéndalo y ayúdanos a crecer nuestra red verificada.',
   openGraph: {
-    title: 'Recomendar Profesional | EcuaCasa',
-    description: '¿Conoces un buen profesional? Recomiéndalo y ayúdanos a crecer nuestra red de servicios verificados en Cuenca.',
+    title: 'Recomendar un Profesional en Cuenca | EcuaCasa',
+    description: '¿Conoces un buen profesional en Cuenca? Recomiéndalo y ayúdanos a crecer nuestra red verificada.',
   },
 };
 

@@ -38,6 +38,12 @@ const nextConfig = {
       // Catch-all for /servicios/xxx -> /services/xxx
       { source: '/servicios/:slug', destination: '/services/:slug', permanent: true },
       { source: '/servicios', destination: '/services', permanent: true },
+      // Old misc pages
+      { source: '/how', destination: '/how-it-works', permanent: true },
+      { source: '/contact', destination: '/', permanent: true },
+      { source: '/sign-up', destination: '/for-providers', permanent: true },
+      { source: '/sign-in', destination: '/', permanent: true },
+      { source: '/about', destination: '/', permanent: true },
     ]
   },
 }

@@ -1,6 +1,7 @@
 // Property types for the real estate marketplace
 
 export type PropertyType = 'terreno' | 'casa' | 'departamento';
+export type ListingType = 'venta' | 'arriendo';
 
 export interface PropertyUtilities {
   agua: boolean;
@@ -17,16 +18,24 @@ export interface PropertyDocuments {
   levantamientoTopografico: boolean;
 }
 
+export type AgentRole = 'propietario' | 'agente';
+
 export interface PropertyAgent {
   id: string;
   name: string;
   phone: string;
   photo?: string;
+  role?: AgentRole;
   verified: boolean;
   responseTime: string;
   rating: number;
   totalSales: number;
 }
+
+export const AGENT_ROLE_LABELS: Record<AgentRole, { es: string; en: string }> = {
+  propietario: { es: 'Propietario', en: 'Owner' },
+  agente: { es: 'Agente Inmobiliario', en: 'Real Estate Agent' },
+};
 
 export interface Property {
   id: string;
@@ -36,9 +45,12 @@ export interface Property {
   description_es: string;
   description_en: string;
   type: PropertyType;
+  listingType?: ListingType;
   price: number;
   pricePerM2: number;
   size: number; // in m²
+  bedrooms?: number;
+  bathrooms?: number;
   sector: string;
   address: string;
   coordinates: {
@@ -57,6 +69,7 @@ export interface Property {
 
 export interface PropertyFilter {
   type?: PropertyType | '';
+  listingType?: ListingType | '';
   priceMin?: number;
   priceMax?: number;
   sizeMin?: number;
@@ -71,6 +84,7 @@ export interface PropertyFilter {
 
 // Cuenca sectors
 export const CUENCA_SECTORS = [
+  'El Centro',
   'San Joaquín',
   'Baños',
   'Ricaurte',
@@ -88,4 +102,9 @@ export const PROPERTY_TYPE_LABELS: Record<PropertyType, { es: string; en: string
   terreno: { es: 'Terreno', en: 'Land' },
   casa: { es: 'Casa', en: 'House' },
   departamento: { es: 'Departamento', en: 'Apartment' },
+};
+
+export const LISTING_TYPE_LABELS: Record<ListingType, { es: string; en: string }> = {
+  venta: { es: 'En Venta', en: 'For Sale' },
+  arriendo: { es: 'En Arriendo', en: 'For Rent' },
 };

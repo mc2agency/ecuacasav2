@@ -199,12 +199,12 @@ export const en = {
   'properties.docs.levantamiento_topografico': 'Land Survey',
 
   // EcuaCasa Guarantee
-  'properties.guarantee.title': 'EcuaCasa Guarantee',
-  'properties.guarantee.desc': 'This property has been verified by our team. We confirm the exact GPS location, document authenticity, and agent identity.',
-  'properties.guarantee.gps': 'Exact GPS location verified',
-  'properties.guarantee.docs': 'Legal documents reviewed',
-  'properties.guarantee.agent': 'Agent identity confirmed',
-  'properties.guarantee.photos': 'Photos verified on-site',
+  'properties.guarantee.title': 'EcuaCasa Info',
+  'properties.guarantee.desc': 'We are in the process of verifying this property. Below is the information provided by the owner.',
+  'properties.guarantee.gps': 'GPS location provided by owner',
+  'properties.guarantee.docs': 'Legal documents: verification in progress',
+  'properties.guarantee.agent': 'Owner identity confirmed',
+  'properties.guarantee.photos': 'Photos provided by owner',
 
   // Map
   'properties.map.zoom_in': 'Zoom In',
@@ -237,10 +237,10 @@ export const en = {
   'solicitar.submit': 'Send Request',
   'solicitar.submitting': 'Sending...',
   'solicitar.success_title': 'Request Received!',
-  'solicitar.success_message': 'We\'ll contact you via WhatsApp within 2 hours with a verified professional.',
+  'solicitar.success_message': 'We\'ll contact you within 2 hours with a verified professional.',
   'solicitar.success_request_number': 'Request number',
   'solicitar.success_back': 'Back to Home',
-  'solicitar.success_browse': 'Browse Professionals',
+  'solicitar.success_browse': 'View Properties',
   'solicitar.trust_verified': 'Verified professionals',
   'solicitar.trust_fast': 'Response in under 2 hours',
   'solicitar.trust_free': 'No obligation',

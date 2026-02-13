@@ -15,6 +15,38 @@ interface ServicePageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Custom SEO titles/descriptions per service slug
+const SERVICE_SEO: Record<string, { title: string; description: string }> = {
+  carpinteria: {
+    title: 'Carpinteros en Cuenca Ecuador | Carpintería a Domicilio',
+    description: 'Encuentra carpinteros verificados en Cuenca. Muebles a medida, puertas, closets, reparaciones. Servicio a domicilio, presupuesto sin compromiso. Respuesta en 2 horas.',
+  },
+  plomeria: {
+    title: 'Plomeros en Cuenca Ecuador | Plomería a Domicilio',
+    description: 'Plomeros verificados en Cuenca. Reparaciones, instalaciones, emergencias 24h. Servicio a domicilio, presupuesto sin compromiso. Respuesta en 2 horas.',
+  },
+  limpieza: {
+    title: 'Limpieza de Casas en Cuenca Ecuador | Servicio a Domicilio',
+    description: 'Servicio de limpieza de casas y departamentos en Cuenca. Personal verificado, limpieza profunda, mantenimiento. Presupuesto sin compromiso.',
+  },
+  electricidad: {
+    title: 'Electricistas en Cuenca Ecuador | Servicio Eléctrico a Domicilio',
+    description: 'Electricistas verificados en Cuenca. Instalaciones, reparaciones, emergencias. Servicio a domicilio profesional. Respuesta en 2 horas.',
+  },
+  jardineria: {
+    title: 'Jardineros en Cuenca Ecuador | Jardinería y Mantenimiento',
+    description: 'Jardineros verificados en Cuenca. Mantenimiento de jardines, paisajismo, poda, limpieza. Servicio a domicilio. Presupuesto sin compromiso.',
+  },
+  pintura: {
+    title: 'Pintores en Cuenca Ecuador | Pintura de Casas y Fachadas',
+    description: 'Pintores verificados en Cuenca. Pintura interior, exterior, fachadas. Servicio profesional a domicilio. Presupuesto sin compromiso.',
+  },
+  handyman: {
+    title: 'Handyman Services in Cuenca Ecuador | Verified Professionals',
+    description: 'Verified handyman services in Cuenca. Home repairs, maintenance, installations. Response in under 2 hours. No commitment.',
+  },
+};
+
 export async function generateMetadata({ params }: ServicePageProps) {
   const { slug } = await params;
   const service = await servicesRepository.getBySlug(slug);
@@ -23,9 +55,15 @@ export async function generateMetadata({ params }: ServicePageProps) {
     return { title: 'Servicio no encontrado | EcuaCasa' };
   }
 
+  const customSeo = SERVICE_SEO[slug];
+
   return {
-    title: `${service.name_es} en Cuenca | EcuaCasa`,
-    description: service.description_es,
+    title: customSeo?.title || `${service.name_es} en Cuenca | EcuaCasa`,
+    description: customSeo?.description || service.description_es,
+    openGraph: {
+      title: (customSeo?.title || `${service.name_es} en Cuenca`) + ' | EcuaCasa',
+      description: customSeo?.description || service.description_es,
+    },
   };
 }
 

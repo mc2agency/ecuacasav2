@@ -2,6 +2,11 @@ import { MetadataRoute } from 'next';
 import { createClient } from '@/lib/supabase/server';
 import { getAllBlogPosts } from '@/lib/blog/content';
 
+/** Strip all whitespace from a URL to prevent broken <loc> tags */
+function cleanUrl(url: string): string {
+  return url.replace(/\s+/g, '');
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://ecuacasa.com';
 
@@ -24,7 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Blog posts from local content
   const blogPosts = getAllBlogPosts();
   const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug.trim()}`,
+    url: cleanUrl(`${baseUrl}/blog/${post.slug}`),
     lastModified: new Date(post.publishedAt),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
@@ -34,15 +39,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const supabase = await createClient();
 
-    const [{ data: services }, { data: providers }] = await Promise.all([
+    const [{ data: services }, { data: providers }, { data: properties }] = await Promise.all([
       supabase.from('services').select('slug'),
       supabase.from('providers').select('slug').eq('status', 'active'),
+      supabase.from('properties').select('slug').eq('status', 'active'),
     ]);
 
     const servicePages: MetadataRoute.Sitemap = (services || [])
       .filter((s) => s.slug && s.slug.trim())
       .map((s) => ({
-        url: `${baseUrl}/services/${s.slug.trim()}`,
+        url: cleanUrl(`${baseUrl}/services/${s.slug}`),
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.8,
@@ -51,13 +57,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const providerPages: MetadataRoute.Sitemap = (providers || [])
       .filter((p) => p.slug && p.slug.trim())
       .map((p) => ({
-        url: `${baseUrl}/providers/${p.slug.trim()}`,
+        url: cleanUrl(`${baseUrl}/providers/${p.slug}`),
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.8,
       }));
 
-    return [...staticPages, ...blogPages, ...servicePages, ...providerPages];
+    const propertyPages: MetadataRoute.Sitemap = (properties || [])
+      .filter((p) => p.slug && p.slug.trim())
+      .map((p) => ({
+        url: cleanUrl(`${baseUrl}/propiedades/${p.slug}`),
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+      }));
+
+    return [...staticPages, ...blogPages, ...servicePages, ...providerPages, ...propertyPages];
   } catch (error) {
     console.error('Error generating sitemap:', error);
     return [...staticPages, ...blogPages];

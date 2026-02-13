@@ -41,8 +41,8 @@ export async function POST(request: NextRequest) {
       console.error('Database insert failed (non-fatal):', dbErr);
     }
 
-    // Send email notification (non-blocking)
-    await sendRecommendationNotification({
+    // Send email notification
+    const emailResult = await sendRecommendationNotification({
       pro_name: data.pro_name,
       pro_service_type: data.pro_service_type,
       pro_phone: data.pro_phone,
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
       recommender_email: data.recommender_email,
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, email: emailResult });
   } catch (error) {
     console.error('Recommendation error:', error);
     return NextResponse.json(
