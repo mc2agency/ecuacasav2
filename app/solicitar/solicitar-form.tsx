@@ -157,7 +157,7 @@ export function SolicitarForm() {
                 {t('solicitar.success_back')}
               </Link>
               <Link
-                href="/providers"
+                href="/propiedades"
                 className="flex-1 inline-block px-6 py-3 border-2 border-gray-200 hover:border-primary-300 text-gray-700 font-medium rounded-lg transition-colors text-center"
               >
                 {t('solicitar.success_browse')}
