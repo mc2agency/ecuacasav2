@@ -2,7 +2,6 @@ import { createClient } from '@/lib/supabase/server';
 import { getAllBlogPosts } from '@/lib/blog/content';
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 3600;
 
 interface SitemapEntry {
   url: string;
