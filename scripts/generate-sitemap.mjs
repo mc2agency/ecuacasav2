@@ -59,7 +59,7 @@ async function getSupabaseEntries() {
       const res = await fetch(`${url}/rest/v1/${table}?select=slug${filter}`, { headers });
       if (!res.ok) return [];
       const data = await res.json();
-      return data.filter((r) => r.slug && r.slug.trim()).map((r) => r.slug);
+      return data.filter((r) => r.slug && r.slug.trim()).map((r) => r.slug.trim());
     } catch {
       return [];
     }
@@ -76,10 +76,10 @@ async function getSupabaseEntries() {
 
 function toXml(entries) {
   const urls = entries
-    .map(
-      (e) =>
-        `<url><loc>${e.loc}</loc><changefreq>${e.changefreq}</changefreq><priority>${e.priority}</priority></url>`
-    )
+    .map((e) => {
+      const loc = e.loc.trim().replace(/\s+/g, '');
+      return `<url><loc>${loc}</loc><changefreq>${e.changefreq}</changefreq><priority>${e.priority}</priority></url>`;
+    })
     .join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
