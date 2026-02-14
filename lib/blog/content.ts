@@ -373,7 +373,7 @@ El mercado inmobiliario de Cuenca ofrece oportunidades genuinas para compradores
     },
     readingTime: 8,
     tags: ['documentos', 'legal', 'verificacion', 'iprus', 'escritura', 'guia'],
-    relatedSlugs: ['san-joaquin-vs-ricaurte-vs-challuabamba-guia-precios-2026'],
+    relatedSlugs: ['san-joaquin-vs-ricaurte-vs-challuabamba-guia-precios-2026', 'guia-arrendar-departamento-cuenca-que-verificar-servicios'],
   },
   {
     slug: 'san-joaquin-vs-ricaurte-vs-challuabamba-guia-precios-2026',
@@ -987,7 +987,335 @@ El mejor sector es el que coincide con tu estilo de vida, presupuesto y planes. 
     },
     readingTime: 12,
     tags: ['sectores', 'precios', 'san-joaquin', 'ricaurte', 'challuabamba', 'guia', 'inversion'],
-    relatedSlugs: ['5-documentos-verificar-comprar-terreno-ecuador'],
+    relatedSlugs: ['5-documentos-verificar-comprar-terreno-ecuador', 'guia-arrendar-departamento-cuenca-que-verificar-servicios'],
+  },
+  {
+    slug: 'guia-arrendar-departamento-cuenca-que-verificar-servicios',
+    title: {
+      en: 'Complete Guide to Renting Your First Apartment in Cuenca: What to Verify and What Services You\'ll Need',
+      es: 'Guía Completa para Arrendar tu Primer Departamento en Cuenca: Qué Verificar y Qué Servicios Necesitarás',
+    },
+    excerpt: {
+      en: 'Everything you need to know about renting an apartment in Cuenca, Ecuador. What to verify before signing, prices by sector, and what services to hire in your first week.',
+      es: 'Todo lo que necesitas saber para arrendar un departamento en Cuenca, Ecuador. Qué verificar antes de firmar, precios por sector, y qué servicios contratar la primera semana.',
+    },
+    content: {
+      en: `Cuenca has become one of Ecuador's most attractive cities to live in — for locals and expats alike who come seeking quality of life at reasonable costs. If you're thinking about renting your first apartment in the city, this guide will save you time, money, and headaches.
+
+## How Much Does It Cost to Rent an Apartment in Cuenca in 2026?
+
+Prices vary significantly depending on the sector and type of apartment. Here are real ranges based on the current market:
+
+| Sector | 1 bedroom | 2 bedrooms | 3 bedrooms |
+|--------|-----------|------------|------------|
+| El Centro / San Sebastián | $200–$350 | $280–$450 | $400–$600 |
+| Yanuncay / El Vergel | $250–$400 | $350–$500 | $450–$700 |
+| Ricaurte / Challuabamba | $300–$450 | $400–$600 | $500–$800 |
+| Misicata / Baños | $200–$350 | $300–$450 | $400–$600 |
+
+**Important note:** Furnished apartments can cost 30–50% more than unfurnished ones. Many expats prefer to rent unfurnished and furnish gradually — it's more economical in the long run.
+
+## Where to Look for Rentals in Cuenca
+
+The search for rentals in Cuenca can be chaotic. Facebook Marketplace is full of posts without decent photos, no exact address, and often no price. Here are the most reliable options:
+
+1. **Verified platforms** like [EcuaCasa](/propiedades) where each property includes real photos, map location, and direct contact with the owner
+2. **Facebook groups** — search for "Arriendos Cuenca" or "Departamentos Cuenca". Filter a lot.
+3. **Street signs** — in El Centro and San Sebastián it's common to see "For Rent" signs in windows
+4. **Local real estate agencies** — they charge a commission (usually one month's rent)
+
+## 5 Things You MUST Verify Before Signing the Lease
+
+### 1. Condition of Basic Utilities
+
+Before signing anything, personally verify:
+
+- **Water:** Open all faucets. Does water come out with good pressure? Is there hot water? In Cuenca many apartments have gas water heaters (calefón) — check that it works.
+- **Electricity:** Test all switches and outlets. Bring a phone charger to test.
+- **Gas:** If it has a gas stove, verify that the burners ignite and there's no smell of leaks.
+- **Internet:** Ask which internet providers have coverage in the area. In some parts of El Centro, fiber optic doesn't reach well.
+
+### 2. Owner's Documents
+
+The owner should be able to show you:
+
+- **Property deed** or authorization contract if it's an intermediary
+- **Identity card** (cédula) of the owner
+- **Utility payment receipts** up to date (water, electricity) — this confirms there are no outstanding debts that could cut your services
+
+For a complete guide on property documents in Ecuador, read our [Guide to the 5 Documents You Must Verify](/blog/5-documentos-verificar-comprar-terreno-ecuador).
+
+### 3. The Lease Agreement
+
+Every rental must be formalized with a written contract. Key points:
+
+- **Duration:** The standard in Ecuador is 1 year, renewable
+- **Amount and payment method:** Monthly, wire transfer or cash
+- **Deposit:** Usually 1 month's deposit. Some ask for 2 months
+- **Who pays what:** Water, electricity, internet, condo fees — all of this must be in writing
+- **Exit conditions:** How many days' notice you must give to vacate
+
+### 4. The Neighborhood
+
+Don't fall in love with the apartment without knowing the neighborhood:
+
+- **Walk around the area at different hours** — during the day and at night
+- **Ask the neighbors** — they're the best source of information about safety and noise
+- **Check distance to transportation** — is there a bus or tram stop nearby?
+- **Location of markets and stores** — in El Centro everything is within walking distance, in other sectors you need a car
+
+To compare sectors in detail, check our [Sector Guide: San Joaquín vs Ricaurte vs Challuabamba](/blog/san-joaquin-vs-ricaurte-vs-challuabamba-guia-precios-2026).
+
+### 5. Physical Condition of the Apartment
+
+Document everything with photos BEFORE moving in:
+
+- Cracks in walls or ceilings
+- Moisture stains
+- Condition of floors and windows
+- How locks work
+- Condition of kitchen and bathroom
+
+Send these photos via WhatsApp to the owner with the date. If there are pre-existing damages, note them in the contract. This protects you when you return the apartment.
+
+## Your First Week: 4 Services You'll Need
+
+Once you sign and receive the keys, there are services you'll need almost immediately. Don't wait for something to break — it's better to prevent.
+
+### 1. Deep Cleaning
+
+Even if the apartment looks clean, a deep cleaning before moving in is essential. Previous tenants may have left dust buildup in ducts, grease in the kitchen, or mold in the bathroom that isn't visible at first glance.
+
+**Approximate cost:** $40–$80 depending on size
+
+[Request cleaning service →](/solicitar?servicio=limpieza)
+
+### 2. Plumbing Inspection
+
+The most common problem in Cuenca apartments — especially in El Centro where buildings are old — is plumbing. A preventive inspection can detect:
+
+- Hidden leaks under sinks
+- Low water pressure from calcified pipes
+- Water heater (calefón) in poor condition (safety risk)
+- Slow drains
+
+**Approximate cost:** $25–$50 per inspection
+
+[Request plumbing service →](/solicitar?servicio=plomeria)
+
+### 3. Electrical Inspection
+
+Many older apartments in Cuenca have electrical installations that don't meet current standards. An electrician can verify:
+
+- That outlets have ground connections
+- That the main breaker is in good condition
+- That there are no exposed wires or improvised connections
+- Sufficient electrical capacity for your appliances
+
+**Approximate cost:** $25–$45 per inspection
+
+[Request electrical service →](/solicitar?servicio=electricidad)
+
+### 4. Locksmith
+
+If you're renting an apartment where previous tenants lived, changing the locks is a basic security measure. You don't know how many key copies exist.
+
+**Approximate cost:** $30–$60 per lock change
+
+[Request locksmith service →](/solicitar?servicio=cerrajeria)
+
+## Extra Tips for Expats
+
+If you come from the United States, Canada, or Europe, there are some specific things you should know:
+
+- **You don't need an Ecuadorian ID to rent** — your passport is sufficient
+- **Contracts are usually in Spanish** — if you don't speak Spanish fluently, bring someone who can translate or request a translation
+- **Bank transfers** are the preferred payment method. Many landlords accept transfers from Ecuadorian accounts (Banco del Pacífico, Banco del Austro are the most common in Cuenca)
+- **Fiber optic internet** is available in most sectors. The main providers are Netlife, CNT, and ETAPANet
+- **Cuenca's water is potable** — yes, you can drink from the tap. It's one of the few cities in Ecuador where this is safe
+
+## Summary: Your Checklist for Renting in Cuenca
+
+- Define your budget (include utilities + internet)
+- Visit at least 3 apartments before deciding
+- Verify water, electricity, gas, and internet personally
+- Ask for the owner's documents
+- Sign a written contract with all conditions clearly stated
+- Document the apartment's condition with photos
+- Hire deep cleaning before moving in
+- Get a plumbing and electrical inspection in your first week
+- Change the locks
+
+---
+
+**Looking for an apartment in Cuenca?** Check out the [verified properties on EcuaCasa](/propiedades) — real photos, map location, and direct contact with the owner. No middlemen.
+
+**Already have an apartment and need a service?** [Request here](/solicitar) and we'll connect you with a verified professional in under 2 hours.`,
+      es: `Cuenca se ha convertido en una de las ciudades más atractivas de Ecuador para vivir — tanto para locales como para expatriados que llegan buscando calidad de vida a costos razonables. Si estás pensando en arrendar tu primer departamento en la ciudad, esta guía te va a ahorrar tiempo, dinero y dolores de cabeza.
+
+## ¿Cuánto cuesta arrendar un departamento en Cuenca en 2026?
+
+Los precios varían mucho según el sector y el tipo de departamento. Aquí van rangos reales basados en el mercado actual:
+
+| Sector | 1 dormitorio | 2 dormitorios | 3 dormitorios |
+|--------|-------------|---------------|---------------|
+| El Centro / San Sebastián | $200–$350 | $280–$450 | $400–$600 |
+| Yanuncay / El Vergel | $250–$400 | $350–$500 | $450–$700 |
+| Ricaurte / Challuabamba | $300–$450 | $400–$600 | $500–$800 |
+| Misicata / Baños | $200–$350 | $300–$450 | $400–$600 |
+
+**Nota importante:** Los departamentos amoblados pueden costar 30–50% más que los vacíos. Muchos expatriados prefieren arrendar vacío y amueblar poco a poco — sale más económico a largo plazo.
+
+## Dónde buscar arriendos en Cuenca
+
+La búsqueda de arriendo en Cuenca puede ser caótica. Facebook Marketplace está lleno de publicaciones sin fotos decentes, sin dirección exacta, y muchas veces sin precio. Estas son las opciones más confiables:
+
+1. **Plataformas verificadas** como [EcuaCasa](/propiedades) donde cada propiedad incluye fotos reales, ubicación en mapa, y contacto directo con el propietario
+2. **Grupos de Facebook** — busca "Arriendos Cuenca" o "Departamentos Cuenca". Filtra mucho.
+3. **Letreros en la calle** — en el Centro y San Sebastián es común ver carteles de "Se Arrienda" en las ventanas
+4. **Inmobiliarias locales** — cobran comisión (generalmente un mes de arriendo)
+
+## 5 cosas que DEBES verificar antes de firmar el contrato
+
+### 1. Estado de los servicios básicos
+
+Antes de firmar cualquier cosa, verifica personalmente:
+
+- **Agua:** Abre todas las llaves. ¿Sale agua con buena presión? ¿Sale caliente? En Cuenca muchos departamentos tienen calefón a gas — revisa que funcione.
+- **Luz:** Prueba todos los interruptores y enchufes. Lleva un cargador de celular para probar.
+- **Gas:** Si tiene cocina a gas, verifica que las hornillas enciendan y que no haya olor a fuga.
+- **Internet:** Pregunta qué proveedores de internet tienen cobertura en la zona. En algunos sectores del Centro, la fibra óptica no llega bien.
+
+### 2. Documentos del propietario
+
+El propietario debe poder mostrarte:
+
+- **Escritura de la propiedad** o contrato de autorización si es un intermediario
+- **Cédula de identidad** del propietario
+- **Recibo de pago de servicios** al día (agua, luz) — esto confirma que no hay deudas pendientes que podrían cortarte los servicios
+
+Para una guía completa sobre documentos de propiedad en Ecuador, lee nuestra [Guía de los 5 Documentos que Debes Verificar](/blog/5-documentos-verificar-comprar-terreno-ecuador).
+
+### 3. El contrato de arriendo
+
+Todo arriendo debe formalizarse con un contrato escrito. Puntos clave:
+
+- **Duración:** Lo estándar en Ecuador es 1 año, renovable
+- **Monto y forma de pago:** Mensual, transferencia o efectivo
+- **Garantía:** Normalmente 1 mes de depósito. Algunos piden 2 meses
+- **Quién paga qué:** Agua, luz, internet, alícuotas de condominio — todo esto debe quedar por escrito
+- **Condiciones de salida:** Cuántos días de anticipación debes dar para desocupar
+
+### 4. El sector y sus alrededores
+
+No te enamores del departamento sin conocer el barrio:
+
+- **Camina por la zona a diferentes horas** — de día y de noche
+- **Pregunta a los vecinos** — son la mejor fuente de información sobre seguridad y ruido
+- **Revisa distancia a transporte** — ¿hay parada de bus o tranvía cerca?
+- **Ubicación de mercados y tiendas** — en el Centro tienes todo a pie, en otros sectores necesitas carro
+
+Para comparar sectores en detalle, consulta nuestra [Guía de Sectores: San Joaquín vs Ricaurte vs Challuabamba](/blog/san-joaquin-vs-ricaurte-vs-challuabamba-guia-precios-2026).
+
+### 5. Estado físico del departamento
+
+Documenta todo con fotos ANTES de mudarte:
+
+- Grietas en paredes o techos
+- Manchas de humedad
+- Estado de pisos y ventanas
+- Funcionamiento de cerraduras
+- Estado de la cocina y baño
+
+Envía estas fotos por WhatsApp al propietario con fecha. Si hay daños preexistentes, anótalos en el contrato. Esto te protege cuando entregues el departamento.
+
+## Tu primera semana: 4 servicios que vas a necesitar
+
+Una vez que firmas y recibes las llaves, hay servicios que vas a necesitar casi de inmediato. No esperes a que algo falle — es mejor prevenir.
+
+### 1. Limpieza profunda
+
+Aunque el departamento se vea limpio, una limpieza profunda antes de mudarte es indispensable. Los anteriores inquilinos pueden haber dejado acumulación de polvo en ductos, grasa en la cocina, o moho en el baño que no se ve a simple vista.
+
+**Costo aproximado:** $40–$80 dependiendo del tamaño
+
+[Solicitar servicio de limpieza →](/solicitar?servicio=limpieza)
+
+### 2. Revisión de plomería
+
+El problema más común en departamentos de Cuenca — especialmente en el Centro donde los edificios son antiguos — es la plomería. Una revisión preventiva puede detectar:
+
+- Fugas ocultas bajo lavabos
+- Presión de agua baja por tuberías calcificadas
+- Calefón en mal estado (riesgo de seguridad)
+- Desagües lentos
+
+**Costo aproximado:** $25–$50 por revisión
+
+[Solicitar servicio de plomería →](/solicitar?servicio=plomeria)
+
+### 3. Revisión eléctrica
+
+Muchos departamentos antiguos en Cuenca tienen instalaciones eléctricas que no cumplen estándares actuales. Un electricista puede verificar:
+
+- Que los tomacorrientes tengan conexión a tierra
+- Que el breaker principal esté en buen estado
+- Que no haya cables expuestos o conexiones improvisadas
+- Capacidad eléctrica suficiente para tus electrodomésticos
+
+**Costo aproximado:** $25–$45 por revisión
+
+[Solicitar servicio de electricidad →](/solicitar?servicio=electricidad)
+
+### 4. Cerrajería
+
+Si estás arrendando un departamento donde vivieron inquilinos anteriores, cambiar las cerraduras es una medida de seguridad básica. No sabes cuántas copias de llaves existen.
+
+**Costo aproximado:** $30–$60 por cambio de cerradura
+
+[Solicitar servicio de cerrajería →](/solicitar?servicio=cerrajeria)
+
+## Consejos extra para expatriados
+
+Si vienes de Estados Unidos, Canadá, o Europa, hay algunas cosas específicas que debes saber:
+
+- **No necesitas cédula ecuatoriana para arrendar** — tu pasaporte es suficiente
+- **Los contratos suelen ser en español** — si no hablas español con fluidez, lleva a alguien que traduzca o pide una traducción
+- **Las transferencias bancarias** son el método de pago preferido. Muchos propietarios aceptan transferencia desde cuentas ecuatorianas (Banco del Pacífico, Banco del Austro son los más comunes en Cuenca)
+- **Internet de fibra óptica** está disponible en la mayoría de sectores. Los proveedores principales son Netlife, CNT, y ETAPANet
+- **El agua en Cuenca es potable** — sí, puedes tomar del grifo. Es una de las pocas ciudades en Ecuador donde esto es seguro
+
+## Resumen: Tu checklist para arrendar en Cuenca
+
+- Define tu presupuesto (incluye servicios básicos + internet)
+- Visita al menos 3 departamentos antes de decidir
+- Verifica agua, luz, gas e internet personalmente
+- Pide documentos al propietario
+- Firma contrato escrito con todas las condiciones claras
+- Documenta el estado del departamento con fotos
+- Contrata limpieza profunda antes de mudarte
+- Haz una revisión de plomería y electricidad la primera semana
+- Cambia las cerraduras
+
+---
+
+**¿Buscando departamento en Cuenca?** Revisa las [propiedades verificadas en EcuaCasa](/propiedades) — fotos reales, ubicación en mapa, y contacto directo con el propietario. Sin intermediarios.
+
+**¿Ya tienes departamento y necesitas un servicio?** [Solicita aquí](/solicitar) y te conectamos con un profesional verificado en menos de 2 horas.`,
+    },
+    category: 'guia-comprador',
+    featuredImage: '/images/blog/arrendar-departamento-cuenca.jpg',
+    publishedAt: '2026-02-13',
+    author: {
+      name: 'EcuaCasa',
+      role: {
+        en: 'Research Team',
+        es: 'Equipo de Investigación',
+      },
+    },
+    readingTime: 10,
+    tags: ['arriendo', 'departamento', 'cuenca', 'guia', 'expatriados', 'servicios', 'verificacion'],
+    relatedSlugs: ['5-documentos-verificar-comprar-terreno-ecuador', 'san-joaquin-vs-ricaurte-vs-challuabamba-guia-precios-2026'],
   },
   {
     slug: 'precios-servicios-hogar-cuenca-2025',
