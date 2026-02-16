@@ -12,21 +12,52 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { createClient } from '@/lib/supabase/client';
 import { COVERAGE_SECTORS } from '@/lib/constants';
+import { isValidEcuadorCedula, isValidEcuadorPhone, normalizeEcuadorPhone } from '@/lib/validations';
 import { CheckCircle, ArrowLeft, Loader2, Upload } from 'lucide-react';
 
 const registrationSchema = z.object({
   name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
   phone: z.string().min(9, 'Ingresa un número de teléfono válido').max(10, 'Número demasiado largo'),
   email: z.string().email('Ingresa un email válido').optional().or(z.literal('')),
-  cedula_number: z.string().min(5, 'Ingresa tu número de cédula'),
+  cedula_number: z.string()
+    .regex(/^\d{10}$/, 'La cédula debe tener exactamente 10 dígitos')
+    .refine(isValidEcuadorCedula, 'Número de cédula inválido'),
   services: z.array(z.string()).min(1, 'Selecciona al menos un servicio'),
   areas_served: z.array(z.string()).min(1, 'Selecciona al menos un sector'),
   speaks_english: z.boolean(),
   reference1_name: z.string().min(2, 'Ingresa el nombre de la referencia'),
-  reference1_phone: z.string().min(7, 'Ingresa el teléfono de la referencia'),
+  reference1_phone: z.string()
+    .refine((v) => isValidEcuadorPhone(v), 'Formato inválido. Usa 09XXXXXXXX o +593XXXXXXXXX'),
   reference2_name: z.string().min(2, 'Ingresa el nombre de la referencia'),
-  reference2_phone: z.string().min(7, 'Ingresa el teléfono de la referencia'),
+  reference2_phone: z.string()
+    .refine((v) => isValidEcuadorPhone(v), 'Formato inválido. Usa 09XXXXXXXX o +593XXXXXXXXX'),
   message: z.string().optional(),
+}).superRefine((data, ctx) => {
+  const ownPhone = normalizeEcuadorPhone(data.phone);
+  const ref1Phone = normalizeEcuadorPhone(data.reference1_phone);
+  const ref2Phone = normalizeEcuadorPhone(data.reference2_phone);
+
+  if (ref1Phone && ownPhone && ref1Phone === ownPhone) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'No puede ser tu propio número',
+      path: ['reference1_phone'],
+    });
+  }
+  if (ref2Phone && ownPhone && ref2Phone === ownPhone) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'No puede ser tu propio número',
+      path: ['reference2_phone'],
+    });
+  }
+  if (ref1Phone && ref2Phone && ref1Phone === ref2Phone) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'Las referencias deben tener números diferentes',
+      path: ['reference2_phone'],
+    });
+  }
 });
 
 type RegistrationForm = z.infer<typeof registrationSchema>;
