@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { sendServiceRequestNotification } from '@/lib/resend';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 function getSupabaseClient() {
   return createClient(
@@ -28,6 +29,16 @@ function normalizePhone(phone: string): string {
 }
 
 export async function POST(request: NextRequest) {
+  // Rate limit: 10 service requests per IP per 15 minutes
+  const ip = getClientIp(request);
+  const { limited } = checkRateLimit(`solicitar:${ip}`, { maxRequests: 10, windowMs: 15 * 60 * 1000 });
+  if (limited) {
+    return NextResponse.json(
+      { error: 'Demasiadas solicitudes. Intente de nuevo en unos minutos.' },
+      { status: 429 }
+    );
+  }
+
   const supabase = getSupabaseClient();
   try {
     const data = await request.json();
