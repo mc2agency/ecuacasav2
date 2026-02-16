@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 function getSupabaseClient() {
   return createClient(
@@ -9,6 +10,13 @@ function getSupabaseClient() {
 }
 
 export async function POST(request: Request) {
+  // Rate limit: 30 contact logs per IP per minute
+  const ip = getClientIp(request);
+  const { limited } = checkRateLimit(`contact-log:${ip}`, { maxRequests: 30, windowMs: 60 * 1000 });
+  if (limited) {
+    return NextResponse.json({ success: false, error: 'Rate limited' }, { status: 429 });
+  }
+
   const supabase = getSupabaseClient();
   try {
     const body = await request.json();

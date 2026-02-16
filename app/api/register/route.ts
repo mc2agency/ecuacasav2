@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { sendRegistrationNotification } from '@/lib/resend';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 function getSupabaseClient() {
   return createClient(
@@ -9,12 +10,49 @@ function getSupabaseClient() {
   );
 }
 
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+
 function getFileExtension(filename: string): string {
   const ext = filename.split('.').pop()?.toLowerCase();
-  return ext || 'jpg';
+  if (!ext || !['jpg', 'jpeg', 'png', 'webp', 'heic', 'heif'].includes(ext)) {
+    return 'jpg';
+  }
+  return ext;
+}
+
+function validateFile(file: File): string | null {
+  if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+    return `Tipo de archivo no permitido: ${file.type}. Solo se aceptan imágenes (JPEG, PNG, WebP).`;
+  }
+  if (file.size > MAX_FILE_SIZE) {
+    return `Archivo demasiado grande (${(file.size / 1024 / 1024).toFixed(1)}MB). Máximo 5MB.`;
+  }
+  return null;
+}
+
+function safeJsonParse(value: string | null): string[] {
+  if (!value) return [];
+  try {
+    const parsed = JSON.parse(value);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((item: unknown) => typeof item === 'string');
+  } catch {
+    return [];
+  }
 }
 
 export async function POST(request: NextRequest) {
+  // Rate limit: 5 registrations per IP per 15 minutes
+  const ip = getClientIp(request);
+  const { limited } = checkRateLimit(`register:${ip}`, { maxRequests: 5, windowMs: 15 * 60 * 1000 });
+  if (limited) {
+    return NextResponse.json(
+      { error: 'Demasiadas solicitudes. Intente de nuevo en unos minutos.' },
+      { status: 429 }
+    );
+  }
+
   const supabase = getSupabaseClient();
 
   try {
@@ -41,8 +79,8 @@ export async function POST(request: NextRequest) {
       name = formData.get('name') as string;
       phone = formData.get('phone') as string;
       email = (formData.get('email') as string) || null;
-      services = JSON.parse(formData.get('services') as string);
-      areas_served = JSON.parse(formData.get('areas_served') as string);
+      services = safeJsonParse(formData.get('services') as string);
+      areas_served = safeJsonParse(formData.get('areas_served') as string);
       speaks_english = formData.get('speaks_english') === 'true';
       message = (formData.get('message') as string) || null;
       cedula_number = (formData.get('cedula_number') as string) || null;
@@ -52,6 +90,20 @@ export async function POST(request: NextRequest) {
       reference2_phone = (formData.get('reference2_phone') as string) || null;
       cedulaPhotoFile = formData.get('cedula_photo') as File | null;
       profilePhotoFile = formData.get('profile_photo') as File | null;
+
+      // Validate uploaded files
+      if (cedulaPhotoFile && cedulaPhotoFile.size > 0) {
+        const fileError = validateFile(cedulaPhotoFile);
+        if (fileError) {
+          return NextResponse.json({ error: fileError }, { status: 400 });
+        }
+      }
+      if (profilePhotoFile && profilePhotoFile.size > 0) {
+        const fileError = validateFile(profilePhotoFile);
+        if (fileError) {
+          return NextResponse.json({ error: fileError }, { status: 400 });
+        }
+      }
     } else {
       // JSON fallback (for /for-providers or legacy clients)
       const data = await request.json();

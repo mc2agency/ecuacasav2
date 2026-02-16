@@ -1,5 +1,16 @@
 import { Resend } from 'resend';
 
+/** Escape user input for safe HTML rendering in emails */
+function escapeHtml(str: string | null | undefined): string {
+  if (!str) return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 interface RegistrationData {
   name: string;
   phone: string;
@@ -37,7 +48,7 @@ export async function sendRegistrationNotification(data: RegistrationData) {
     const result = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL ? `EcuaCasa <${process.env.RESEND_FROM_EMAIL}>` : 'EcuaCasa <noreply@ecuacasa.com>',
       to: adminEmail,
-      subject: `Nuevo profesional: ${data.name}`,
+      subject: `Nuevo profesional: ${escapeHtml(data.name)}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #9333ea, #ec4899); padding: 20px; border-radius: 8px 8px 0 0;">
@@ -50,7 +61,7 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                   <strong style="color: #6b7280;">Nombre:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.name}
+                  ${escapeHtml(data.name)}
                 </td>
               </tr>
               <tr>
@@ -59,7 +70,7 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
                   <a href="https://wa.me/${data.phone.replace(/[^0-9]/g, '')}" style="color: #9333ea; text-decoration: none;">
-                    ${data.phone}
+                    ${escapeHtml(data.phone)}
                   </a>
                 </td>
               </tr>
@@ -68,7 +79,7 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                   <strong style="color: #6b7280;">Email:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.email || 'No proporcionado'}
+                  ${escapeHtml(data.email) || 'No proporcionado'}
                 </td>
               </tr>
               ${data.cedula_number ? `
@@ -77,7 +88,7 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                   <strong style="color: #6b7280;">Cédula:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.cedula_number}
+                  ${escapeHtml(data.cedula_number)}
                 </td>
               </tr>
               ` : ''}
@@ -86,7 +97,7 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                   <strong style="color: #6b7280;">Servicios:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.services.join(', ')}
+                  ${data.services.map(s => escapeHtml(s)).join(', ')}
                 </td>
               </tr>
               ${data.areas_served && data.areas_served.length > 0 ? `
@@ -95,7 +106,7 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                   <strong style="color: #6b7280;">Sectores:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.areas_served.join(', ')}
+                  ${data.areas_served.map(s => escapeHtml(s)).join(', ')}
                 </td>
               </tr>
               ` : ''}
@@ -104,7 +115,7 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                   <strong style="color: #6b7280;">Habla inglés:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.speaks_english ? '✅ Sí' : '❌ No'}
+                  ${data.speaks_english ? 'Si' : 'No'}
                 </td>
               </tr>
               ${data.reference1_name ? `
@@ -113,7 +124,7 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                   <strong style="color: #6b7280;">Referencia 1:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.reference1_name} — ${data.reference1_phone || 'Sin teléfono'}
+                  ${escapeHtml(data.reference1_name)} — ${escapeHtml(data.reference1_phone) || 'Sin teléfono'}
                 </td>
               </tr>
               ` : ''}
@@ -123,7 +134,7 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                   <strong style="color: #6b7280;">Referencia 2:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.reference2_name} — ${data.reference2_phone || 'Sin teléfono'}
+                  ${escapeHtml(data.reference2_name)} — ${escapeHtml(data.reference2_phone) || 'Sin teléfono'}
                 </td>
               </tr>
               ` : ''}
@@ -133,7 +144,7 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                   <strong style="color: #6b7280;">Foto de perfil:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
-                  <a href="${data.profile_photo_url}" style="color: #9333ea; text-decoration: none;">Ver foto</a>
+                  <a href="${escapeHtml(data.profile_photo_url)}" style="color: #9333ea; text-decoration: none;">Ver foto</a>
                 </td>
               </tr>
               ` : ''}
@@ -143,7 +154,7 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                   <strong style="color: #6b7280;">Foto de cédula:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
-                  <a href="${data.cedula_photo_url}" style="color: #9333ea; text-decoration: none;">Ver foto</a>
+                  <a href="${escapeHtml(data.cedula_photo_url)}" style="color: #9333ea; text-decoration: none;">Ver foto</a>
                 </td>
               </tr>
               ` : ''}
@@ -153,7 +164,7 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                   <strong style="color: #6b7280;">Mensaje:</strong>
                 </td>
                 <td style="padding: 12px 0; color: #111827;">
-                  ${data.message}
+                  ${escapeHtml(data.message)}
                 </td>
               </tr>
               ` : ''}
@@ -216,12 +227,12 @@ export async function sendServiceRequestNotification(data: ServiceRequestData) {
     const result = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL ? `EcuaCasa <${process.env.RESEND_FROM_EMAIL}>` : 'EcuaCasa <noreply@ecuacasa.com>',
       to: adminEmail,
-      subject: `Nueva Solicitud: ${serviceName} - ${data.request_number}`,
+      subject: `Nueva Solicitud: ${escapeHtml(serviceName)} - ${escapeHtml(data.request_number)}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #9333ea, #ec4899); padding: 20px; border-radius: 8px 8px 0 0;">
             <h1 style="color: white; margin: 0; font-size: 24px;">Nueva Solicitud de Servicio</h1>
-            <p style="color: rgba(255,255,255,0.9); margin: 4px 0 0; font-size: 14px;">${data.request_number}</p>
+            <p style="color: rgba(255,255,255,0.9); margin: 4px 0 0; font-size: 14px;">${escapeHtml(data.request_number)}</p>
           </div>
           <div style="background: #f9fafb; padding: 24px; border-radius: 0 0 8px 8px;">
             <table style="width: 100%; border-collapse: collapse;">
@@ -230,7 +241,7 @@ export async function sendServiceRequestNotification(data: ServiceRequestData) {
                   <strong style="color: #6b7280;">Servicio:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${serviceName}
+                  ${escapeHtml(serviceName)}
                 </td>
               </tr>
               ${data.description ? `
@@ -239,7 +250,7 @@ export async function sendServiceRequestNotification(data: ServiceRequestData) {
                   <strong style="color: #6b7280;">Descripción:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.description}
+                  ${escapeHtml(data.description)}
                 </td>
               </tr>
               ` : ''}
@@ -248,7 +259,7 @@ export async function sendServiceRequestNotification(data: ServiceRequestData) {
                   <strong style="color: #6b7280;">Sector:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.sector}
+                  ${escapeHtml(data.sector)}
                 </td>
               </tr>
               <tr>
@@ -256,7 +267,7 @@ export async function sendServiceRequestNotification(data: ServiceRequestData) {
                   <strong style="color: #6b7280;">Urgencia:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.urgency}
+                  ${escapeHtml(data.urgency)}
                 </td>
               </tr>
               <tr>
@@ -264,7 +275,7 @@ export async function sendServiceRequestNotification(data: ServiceRequestData) {
                   <strong style="color: #6b7280;">Cliente:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.client_name}
+                  ${escapeHtml(data.client_name)}
                 </td>
               </tr>
               <tr>
@@ -273,7 +284,7 @@ export async function sendServiceRequestNotification(data: ServiceRequestData) {
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
                   <a href="https://wa.me/${data.client_whatsapp.replace(/[^0-9]/g, '')}" style="color: #9333ea; text-decoration: none;">
-                    ${data.client_whatsapp}
+                    ${escapeHtml(data.client_whatsapp)}
                   </a>
                 </td>
               </tr>
@@ -282,7 +293,7 @@ export async function sendServiceRequestNotification(data: ServiceRequestData) {
                   <strong style="color: #6b7280;">Email:</strong>
                 </td>
                 <td style="padding: 12px 0; color: #111827;">
-                  ${data.client_email || 'No proporcionado'}
+                  ${escapeHtml(data.client_email) || 'No proporcionado'}
                 </td>
               </tr>
             </table>
@@ -343,7 +354,7 @@ export async function sendRecommendationNotification(data: RecommendationData) {
     const result = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL ? `EcuaCasa <${process.env.RESEND_FROM_EMAIL}>` : 'EcuaCasa <noreply@ecuacasa.com>',
       to: adminEmail,
-      subject: `Nueva Recomendación: ${data.pro_name}`,
+      subject: `Nueva Recomendación: ${escapeHtml(data.pro_name)}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #9333ea, #ec4899); padding: 20px; border-radius: 8px 8px 0 0;">
@@ -356,7 +367,7 @@ export async function sendRecommendationNotification(data: RecommendationData) {
                   <strong style="color: #6b7280;">Profesional:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.pro_name}
+                  ${escapeHtml(data.pro_name)}
                 </td>
               </tr>
               <tr>
@@ -364,7 +375,7 @@ export async function sendRecommendationNotification(data: RecommendationData) {
                   <strong style="color: #6b7280;">Servicio:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.pro_service_type}
+                  ${escapeHtml(data.pro_service_type)}
                 </td>
               </tr>
               <tr>
@@ -372,8 +383,8 @@ export async function sendRecommendationNotification(data: RecommendationData) {
                   <strong style="color: #6b7280;">Teléfono:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
-                  <a href="https://wa.me/593${data.pro_phone.replace(/^0/, '')}" style="color: #9333ea; text-decoration: none;">
-                    ${data.pro_phone}
+                  <a href="https://wa.me/593${data.pro_phone.replace(/[^0-9]/g, '')}" style="color: #9333ea; text-decoration: none;">
+                    ${escapeHtml(data.pro_phone)}
                   </a>
                 </td>
               </tr>
@@ -382,7 +393,7 @@ export async function sendRecommendationNotification(data: RecommendationData) {
                   <strong style="color: #6b7280;">Relación:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.relationship}
+                  ${escapeHtml(data.relationship)}
                 </td>
               </tr>
               <tr>
@@ -390,7 +401,7 @@ export async function sendRecommendationNotification(data: RecommendationData) {
                   <strong style="color: #6b7280;">Por qué lo recomienda:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.why_recommend}
+                  ${escapeHtml(data.why_recommend)}
                 </td>
               </tr>
               <tr>
@@ -398,7 +409,7 @@ export async function sendRecommendationNotification(data: RecommendationData) {
                   <strong style="color: #6b7280;">Recomendado por:</strong>
                 </td>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
-                  ${data.recommender_name || 'Anónimo'}
+                  ${escapeHtml(data.recommender_name) || 'Anónimo'}
                 </td>
               </tr>
               <tr>
@@ -406,7 +417,7 @@ export async function sendRecommendationNotification(data: RecommendationData) {
                   <strong style="color: #6b7280;">Email del recomendador:</strong>
                 </td>
                 <td style="padding: 12px 0; color: #111827;">
-                  ${data.recommender_email || 'No proporcionado'}
+                  ${escapeHtml(data.recommender_email) || 'No proporcionado'}
                 </td>
               </tr>
             </table>
