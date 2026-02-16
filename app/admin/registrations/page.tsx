@@ -88,6 +88,23 @@ export default function AdminRegistrationsPage() {
     }
   }
 
+  async function approveRegistration(id: string) {
+    if (!confirm('¿Aprobar esta solicitud y crear el perfil de profesional?')) return;
+    try {
+      const response = await fetch(`/api/admin/registrations/${id}/approve`, {
+        method: 'POST',
+      });
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || 'Failed to approve');
+      }
+      fetchRegistrations();
+    } catch (error) {
+      console.error('Error approving registration:', error);
+      alert('Error al aprobar la solicitud');
+    }
+  }
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'pending':
@@ -331,15 +348,14 @@ export default function AdminRegistrationsPage() {
                           <Phone className="w-4 h-4 mr-1" />
                           Contactado
                         </Button>
-                        <Link href={`/admin/providers/new?from=registration&id=${reg.id}`}>
-                          <Button
-                            size="sm"
-                            className="bg-green-600 hover:bg-green-700 w-full"
-                          >
-                            <Check className="w-4 h-4 mr-1" />
-                            Aprobar
-                          </Button>
-                        </Link>
+                        <Button
+                          size="sm"
+                          onClick={() => approveRegistration(reg.id)}
+                          className="bg-green-600 hover:bg-green-700"
+                        >
+                          <Check className="w-4 h-4 mr-1" />
+                          Aprobar
+                        </Button>
                         <Button
                           size="sm"
                           variant="outline"
@@ -353,15 +369,14 @@ export default function AdminRegistrationsPage() {
                     )}
                     {reg.status === 'contacted' && (
                       <>
-                        <Link href={`/admin/providers/new?from=registration&id=${reg.id}`}>
-                          <Button
-                            size="sm"
-                            className="bg-green-600 hover:bg-green-700 w-full"
-                          >
-                            <Check className="w-4 h-4 mr-1" />
-                            Aprobar
-                          </Button>
-                        </Link>
+                        <Button
+                          size="sm"
+                          onClick={() => approveRegistration(reg.id)}
+                          className="bg-green-600 hover:bg-green-700"
+                        >
+                          <Check className="w-4 h-4 mr-1" />
+                          Aprobar
+                        </Button>
                         <Button
                           size="sm"
                           variant="outline"
