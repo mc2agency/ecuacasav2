@@ -2,6 +2,10 @@ import { MetadataRoute } from 'next';
 import { createClient } from '@/lib/supabase/server';
 import { getAllBlogPosts } from '@/lib/blog/content';
 
+// Force dynamic generation at request time
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // Revalidate every hour
+
 /** Strip all whitespace from a URL to prevent broken <loc> tags */
 function cleanUrl(url: string): string {
   return url.replace(/\s+/g, '');
