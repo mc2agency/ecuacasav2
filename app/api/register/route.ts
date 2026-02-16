@@ -9,13 +9,63 @@ function getSupabaseClient() {
   );
 }
 
+function getFileExtension(filename: string): string {
+  const ext = filename.split('.').pop()?.toLowerCase();
+  return ext || 'jpg';
+}
+
 export async function POST(request: NextRequest) {
   const supabase = getSupabaseClient();
+
   try {
-    const data = await request.json();
+    const contentType = request.headers.get('content-type') || '';
+    const isFormData = contentType.includes('multipart/form-data');
+
+    let name: string;
+    let phone: string;
+    let email: string | null;
+    let services: string[];
+    let areas_served: string[];
+    let speaks_english: boolean;
+    let message: string | null;
+    let cedula_number: string | null = null;
+    let reference1_name: string | null = null;
+    let reference1_phone: string | null = null;
+    let reference2_name: string | null = null;
+    let reference2_phone: string | null = null;
+    let cedulaPhotoFile: File | null = null;
+    let profilePhotoFile: File | null = null;
+
+    if (isFormData) {
+      const formData = await request.formData();
+      name = formData.get('name') as string;
+      phone = formData.get('phone') as string;
+      email = (formData.get('email') as string) || null;
+      services = JSON.parse(formData.get('services') as string);
+      areas_served = JSON.parse(formData.get('areas_served') as string);
+      speaks_english = formData.get('speaks_english') === 'true';
+      message = (formData.get('message') as string) || null;
+      cedula_number = (formData.get('cedula_number') as string) || null;
+      reference1_name = (formData.get('reference1_name') as string) || null;
+      reference1_phone = (formData.get('reference1_phone') as string) || null;
+      reference2_name = (formData.get('reference2_name') as string) || null;
+      reference2_phone = (formData.get('reference2_phone') as string) || null;
+      cedulaPhotoFile = formData.get('cedula_photo') as File | null;
+      profilePhotoFile = formData.get('profile_photo') as File | null;
+    } else {
+      // JSON fallback (for /for-providers or legacy clients)
+      const data = await request.json();
+      name = data.name;
+      phone = data.phone;
+      email = data.email || null;
+      services = data.services || [];
+      areas_served = data.areas_served || [];
+      speaks_english = data.speaks_english || false;
+      message = data.message || null;
+    }
 
     // Validate required fields
-    if (!data.name || !data.phone || !data.services?.length) {
+    if (!name || !phone || !services?.length) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -23,17 +73,27 @@ export async function POST(request: NextRequest) {
     }
 
     // Insert into database
-    const { error: dbError } = await supabase.from('registration_requests').insert({
-      name: data.name,
-      phone: data.phone,
-      email: data.email || null,
-      services_interested: data.services,
-      speaks_english: data.speaks_english || false,
-      message: data.message || null,
-      status: 'pending',
-    });
+    const { data: insertedRow, error: dbError } = await supabase
+      .from('registration_requests')
+      .insert({
+        name,
+        phone,
+        email,
+        services_interested: services,
+        areas_served: areas_served.length > 0 ? areas_served : null,
+        speaks_english,
+        message,
+        cedula_number,
+        reference1_name,
+        reference1_phone,
+        reference2_name,
+        reference2_phone,
+        status: 'pending',
+      })
+      .select('id')
+      .single();
 
-    if (dbError) {
+    if (dbError || !insertedRow) {
       console.error('Database error:', dbError);
       return NextResponse.json(
         { error: 'Failed to save registration' },
@@ -41,14 +101,87 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const recordId = insertedRow.id;
+    let cedula_photo_url: string | null = null;
+    let profile_photo_url: string | null = null;
+
+    // Upload files to Supabase Storage
+    if (cedulaPhotoFile && cedulaPhotoFile.size > 0) {
+      const ext = getFileExtension(cedulaPhotoFile.name);
+      const path = `${recordId}/cedula.${ext}`;
+      const buffer = Buffer.from(await cedulaPhotoFile.arrayBuffer());
+
+      const { error: uploadError } = await supabase.storage
+        .from('registration-uploads')
+        .upload(path, buffer, {
+          contentType: cedulaPhotoFile.type,
+          upsert: true,
+        });
+
+      if (uploadError) {
+        console.error('Cedula photo upload error:', uploadError);
+      } else {
+        const { data: urlData } = supabase.storage
+          .from('registration-uploads')
+          .getPublicUrl(path);
+        cedula_photo_url = urlData.publicUrl;
+      }
+    }
+
+    if (profilePhotoFile && profilePhotoFile.size > 0) {
+      const ext = getFileExtension(profilePhotoFile.name);
+      const path = `${recordId}/profile.${ext}`;
+      const buffer = Buffer.from(await profilePhotoFile.arrayBuffer());
+
+      const { error: uploadError } = await supabase.storage
+        .from('registration-uploads')
+        .upload(path, buffer, {
+          contentType: profilePhotoFile.type,
+          upsert: true,
+        });
+
+      if (uploadError) {
+        console.error('Profile photo upload error:', uploadError);
+      } else {
+        const { data: urlData } = supabase.storage
+          .from('registration-uploads')
+          .getPublicUrl(path);
+        profile_photo_url = urlData.publicUrl;
+      }
+    }
+
+    // Update record with photo URLs if uploaded
+    if (cedula_photo_url || profile_photo_url) {
+      const updateData: Record<string, string> = {};
+      if (cedula_photo_url) updateData.cedula_photo_url = cedula_photo_url;
+      if (profile_photo_url) updateData.profile_photo_url = profile_photo_url;
+
+      const { error: updateError } = await supabase
+        .from('registration_requests')
+        .update(updateData)
+        .eq('id', recordId);
+
+      if (updateError) {
+        console.error('Failed to update photo URLs:', updateError);
+      }
+    }
+
     // Send email notification (non-blocking)
     await sendRegistrationNotification({
-      name: data.name,
-      phone: data.phone,
-      email: data.email,
-      services: data.services,
-      speaks_english: data.speaks_english || false,
-      message: data.message,
+      name,
+      phone,
+      email,
+      services,
+      speaks_english,
+      message,
+      cedula_number,
+      areas_served,
+      reference1_name,
+      reference1_phone,
+      reference2_name,
+      reference2_phone,
+      cedula_photo_url,
+      profile_photo_url,
     });
 
     return NextResponse.json({ success: true });

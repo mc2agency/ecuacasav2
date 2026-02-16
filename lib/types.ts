@@ -58,6 +58,13 @@ export interface RegistrationRequest {
   areas_served?: string[];
   speaks_english: boolean;
   message?: string;
+  cedula_number?: string;
+  cedula_photo_url?: string;
+  profile_photo_url?: string;
+  reference1_name?: string;
+  reference1_phone?: string;
+  reference2_name?: string;
+  reference2_phone?: string;
   status: RegistrationStatus;
   admin_notes?: string;
   reviewed_by?: string;
@@ -110,6 +117,11 @@ export interface RegistrationFormData {
   areas_served: string[];
   speaks_english: boolean;
   message?: string;
+  cedula_number: string;
+  reference1_name: string;
+  reference1_phone: string;
+  reference2_name: string;
+  reference2_phone: string;
 }
 
 // Filter types

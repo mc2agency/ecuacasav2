@@ -26,9 +26,14 @@ export const registrationFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   phone: z.string().regex(/^\+593[0-9]{9}$/, 'Phone must be in format +593XXXXXXXXX'),
   email: z.string().email('Invalid email address').optional().or(z.literal('')),
+  cedula_number: z.string().min(5, 'Cédula number is required'),
   services_interested: z.array(z.string()).min(1, 'Select at least one service'),
   areas_served: z.array(z.string()).min(1, 'Select at least one area'),
   speaks_english: z.boolean().default(false),
+  reference1_name: z.string().min(2, 'Reference name is required'),
+  reference1_phone: z.string().min(7, 'Reference phone is required'),
+  reference2_name: z.string().min(2, 'Reference name is required'),
+  reference2_phone: z.string().min(7, 'Reference phone is required'),
   message: z.string().max(500, 'Message must be less than 500 characters').optional(),
 });
 

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Check, X, Phone, Mail, MessageSquare, Filter, Pencil } from 'lucide-react';
+import { Check, X, Phone, Mail, MessageSquare, Filter, Pencil, User, CreditCard } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
 interface Registration {
@@ -14,8 +14,16 @@ interface Registration {
   phone: string;
   email: string | null;
   services_interested: string[];
+  areas_served: string[] | null;
   speaks_english: boolean;
   message: string | null;
+  cedula_number: string | null;
+  cedula_photo_url: string | null;
+  profile_photo_url: string | null;
+  reference1_name: string | null;
+  reference1_phone: string | null;
+  reference2_name: string | null;
+  reference2_phone: string | null;
   status: string;
   created_at: string;
   provider_id?: string; // Associated provider ID if approved
@@ -225,6 +233,68 @@ export default function AdminRegistrationsPage() {
                             </Badge>
                           ))}
                         </div>
+                      </div>
+                    )}
+
+                    {reg.areas_served && reg.areas_served.length > 0 && (
+                      <div className="mb-4">
+                        <p className="text-sm font-medium text-gray-700 mb-1">Sectores:</p>
+                        <div className="flex flex-wrap gap-1">
+                          {reg.areas_served.map((sector, idx) => (
+                            <Badge key={idx} variant="outline" className="text-xs">
+                              {sector}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {reg.cedula_number && (
+                      <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
+                        <CreditCard className="w-4 h-4" />
+                        <span className="font-medium">Cédula:</span> {reg.cedula_number}
+                      </div>
+                    )}
+
+                    {/* Photos */}
+                    {(reg.profile_photo_url || reg.cedula_photo_url) && (
+                      <div className="flex gap-4 mb-4">
+                        {reg.profile_photo_url && (
+                          <a href={reg.profile_photo_url} target="_blank" rel="noopener noreferrer" className="block">
+                            <div className="w-16 h-16 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-primary-400 transition-colors">
+                              <img src={reg.profile_photo_url} alt="Foto de perfil" className="w-full h-full object-cover" />
+                            </div>
+                            <p className="text-xs text-gray-500 mt-1 text-center">Perfil</p>
+                          </a>
+                        )}
+                        {reg.cedula_photo_url && (
+                          <a href={reg.cedula_photo_url} target="_blank" rel="noopener noreferrer" className="block">
+                            <div className="w-16 h-16 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-primary-400 transition-colors">
+                              <img src={reg.cedula_photo_url} alt="Foto de cédula" className="w-full h-full object-cover" />
+                            </div>
+                            <p className="text-xs text-gray-500 mt-1 text-center">Cédula</p>
+                          </a>
+                        )}
+                      </div>
+                    )}
+
+                    {/* References */}
+                    {(reg.reference1_name || reg.reference2_name) && (
+                      <div className="bg-blue-50 rounded-lg p-3 mb-4">
+                        <p className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                          <User className="w-4 h-4" />
+                          Referencias:
+                        </p>
+                        {reg.reference1_name && (
+                          <p className="text-sm text-gray-600">
+                            1. {reg.reference1_name} — {reg.reference1_phone || 'Sin teléfono'}
+                          </p>
+                        )}
+                        {reg.reference2_name && (
+                          <p className="text-sm text-gray-600">
+                            2. {reg.reference2_name} — {reg.reference2_phone || 'Sin teléfono'}
+                          </p>
+                        )}
                       </div>
                     )}
 

@@ -11,14 +11,21 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { createClient } from '@/lib/supabase/client';
-import { CheckCircle, ArrowLeft, Loader2 } from 'lucide-react';
+import { COVERAGE_SECTORS } from '@/lib/constants';
+import { CheckCircle, ArrowLeft, Loader2, Upload } from 'lucide-react';
 
 const registrationSchema = z.object({
   name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
   phone: z.string().min(9, 'Ingresa un número de teléfono válido').max(10, 'Número demasiado largo'),
   email: z.string().email('Ingresa un email válido').optional().or(z.literal('')),
+  cedula_number: z.string().min(5, 'Ingresa tu número de cédula'),
   services: z.array(z.string()).min(1, 'Selecciona al menos un servicio'),
+  areas_served: z.array(z.string()).min(1, 'Selecciona al menos un sector'),
   speaks_english: z.boolean(),
+  reference1_name: z.string().min(2, 'Ingresa el nombre de la referencia'),
+  reference1_phone: z.string().min(7, 'Ingresa el teléfono de la referencia'),
+  reference2_name: z.string().min(2, 'Ingresa el nombre de la referencia'),
+  reference2_phone: z.string().min(7, 'Ingresa el teléfono de la referencia'),
   message: z.string().optional(),
 });
 
@@ -34,6 +41,9 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [cedulaPhoto, setCedulaPhoto] = useState<File | null>(null);
+  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
 
   const {
     register,
@@ -47,13 +57,20 @@ export default function RegisterPage() {
       name: '',
       phone: '',
       email: '',
+      cedula_number: '',
       services: [],
+      areas_served: [],
       speaks_english: false,
+      reference1_name: '',
+      reference1_phone: '',
+      reference2_name: '',
+      reference2_phone: '',
       message: '',
     },
   });
 
   const selectedServices = watch('services');
+  const selectedSectors = watch('areas_served');
 
   useEffect(() => {
     async function fetchData() {
@@ -75,11 +92,31 @@ export default function RegisterPage() {
     }
   };
 
+  const toggleSector = (sector: string) => {
+    const current = selectedSectors || [];
+    if (current.includes(sector)) {
+      setValue('areas_served', current.filter((s) => s !== sector));
+    } else {
+      setValue('areas_served', [...current, sector]);
+    }
+  };
+
   const onSubmit = async (data: RegistrationForm) => {
+    setFileError(null);
+
+    if (!cedulaPhoto) {
+      setFileError('La foto de cédula es obligatoria');
+      return;
+    }
+    if (!profilePhoto) {
+      setFileError('La foto de perfil es obligatoria');
+      return;
+    }
+
     setSubmitting(true);
 
     try {
-      // Normalize phone number: strip spaces, leading 0, and ensure +593 prefix
+      // Normalize phone number
       let fullPhone = data.phone.replace(/\s/g, '');
       if (fullPhone.startsWith('+593')) {
         // Already has prefix
@@ -92,17 +129,25 @@ export default function RegisterPage() {
         fullPhone = `+593${fullPhone}`;
       }
 
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('phone', fullPhone);
+      formData.append('email', data.email || '');
+      formData.append('cedula_number', data.cedula_number);
+      formData.append('services', JSON.stringify(data.services));
+      formData.append('areas_served', JSON.stringify(data.areas_served));
+      formData.append('speaks_english', String(data.speaks_english));
+      formData.append('reference1_name', data.reference1_name);
+      formData.append('reference1_phone', data.reference1_phone);
+      formData.append('reference2_name', data.reference2_name);
+      formData.append('reference2_phone', data.reference2_phone);
+      formData.append('message', data.message || '');
+      formData.append('cedula_photo', cedulaPhoto);
+      formData.append('profile_photo', profilePhoto);
+
       const response = await fetch('/api/register', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: data.name,
-          phone: fullPhone,
-          email: data.email || null,
-          services: data.services,
-          speaks_english: data.speaks_english,
-          message: data.message || null,
-        }),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -228,6 +273,79 @@ export default function RegisterPage() {
                 )}
               </div>
 
+              {/* Cédula Number */}
+              <div>
+                <Label htmlFor="cedula_number">Número de cédula *</Label>
+                <Input
+                  id="cedula_number"
+                  {...register('cedula_number')}
+                  className="mt-1"
+                  placeholder="0101234567"
+                />
+                {errors.cedula_number && (
+                  <p className="text-sm text-red-500 mt-1">{errors.cedula_number.message}</p>
+                )}
+              </div>
+
+              {/* Cédula Photo Upload */}
+              <div>
+                <Label htmlFor="cedula_photo">Foto de cédula *</Label>
+                <p className="text-sm text-gray-500 mb-2">Sube una foto clara de tu cédula de identidad</p>
+                <label
+                  htmlFor="cedula_photo"
+                  className={`flex items-center gap-3 px-4 py-3 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
+                    cedulaPhoto ? 'border-green-400 bg-green-50' : 'border-gray-300 hover:border-primary-400'
+                  }`}
+                >
+                  <Upload className="w-5 h-5 text-gray-400" />
+                  <span className="text-sm text-gray-600">
+                    {cedulaPhoto ? cedulaPhoto.name : 'Seleccionar archivo...'}
+                  </span>
+                  <input
+                    id="cedula_photo"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      setCedulaPhoto(e.target.files?.[0] || null);
+                      setFileError(null);
+                    }}
+                  />
+                </label>
+              </div>
+
+              {/* Profile Photo Upload */}
+              <div>
+                <Label htmlFor="profile_photo">Foto de perfil *</Label>
+                <p className="text-sm text-gray-500 mb-2">Una foto tuya profesional para tu perfil</p>
+                <label
+                  htmlFor="profile_photo"
+                  className={`flex items-center gap-3 px-4 py-3 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
+                    profilePhoto ? 'border-green-400 bg-green-50' : 'border-gray-300 hover:border-primary-400'
+                  }`}
+                >
+                  <Upload className="w-5 h-5 text-gray-400" />
+                  <span className="text-sm text-gray-600">
+                    {profilePhoto ? profilePhoto.name : 'Seleccionar archivo...'}
+                  </span>
+                  <input
+                    id="profile_photo"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      setProfilePhoto(e.target.files?.[0] || null);
+                      setFileError(null);
+                    }}
+                  />
+                </label>
+              </div>
+
+              {/* File Error */}
+              {fileError && (
+                <p className="text-sm text-red-500">{fileError}</p>
+              )}
+
               {/* Services */}
               <div>
                 <Label>Servicios que ofreces *</Label>
@@ -253,6 +371,31 @@ export default function RegisterPage() {
                 )}
               </div>
 
+              {/* Sectors */}
+              <div>
+                <Label>Sectores donde trabajas *</Label>
+                <p className="text-sm text-gray-500 mb-3">Selecciona todos los sectores que cubres</p>
+                <div className="flex flex-wrap gap-2">
+                  {COVERAGE_SECTORS.map((sector) => (
+                    <button
+                      key={sector}
+                      type="button"
+                      onClick={() => toggleSector(sector)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                        selectedSectors?.includes(sector)
+                          ? 'bg-accent-500 text-white'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      {sector}
+                    </button>
+                  ))}
+                </div>
+                {errors.areas_served && (
+                  <p className="text-sm text-red-500 mt-2">{errors.areas_served.message}</p>
+                )}
+              </div>
+
               {/* Speaks English */}
               <div className="flex items-center gap-3">
                 <input
@@ -264,6 +407,66 @@ export default function RegisterPage() {
                 <Label htmlFor="speaks_english" className="cursor-pointer">
                   Hablo inglés
                 </Label>
+              </div>
+
+              {/* Reference 1 */}
+              <div className="border rounded-lg p-4 space-y-4">
+                <h3 className="font-semibold text-gray-900">Referencia 1 *</h3>
+                <div>
+                  <Label htmlFor="reference1_name">Nombre completo</Label>
+                  <Input
+                    id="reference1_name"
+                    {...register('reference1_name')}
+                    className="mt-1"
+                    placeholder="Nombre de tu referencia"
+                  />
+                  {errors.reference1_name && (
+                    <p className="text-sm text-red-500 mt-1">{errors.reference1_name.message}</p>
+                  )}
+                </div>
+                <div>
+                  <Label htmlFor="reference1_phone">Teléfono</Label>
+                  <Input
+                    id="reference1_phone"
+                    type="tel"
+                    {...register('reference1_phone')}
+                    className="mt-1"
+                    placeholder="09X XXX XXXX"
+                  />
+                  {errors.reference1_phone && (
+                    <p className="text-sm text-red-500 mt-1">{errors.reference1_phone.message}</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Reference 2 */}
+              <div className="border rounded-lg p-4 space-y-4">
+                <h3 className="font-semibold text-gray-900">Referencia 2 *</h3>
+                <div>
+                  <Label htmlFor="reference2_name">Nombre completo</Label>
+                  <Input
+                    id="reference2_name"
+                    {...register('reference2_name')}
+                    className="mt-1"
+                    placeholder="Nombre de tu referencia"
+                  />
+                  {errors.reference2_name && (
+                    <p className="text-sm text-red-500 mt-1">{errors.reference2_name.message}</p>
+                  )}
+                </div>
+                <div>
+                  <Label htmlFor="reference2_phone">Teléfono</Label>
+                  <Input
+                    id="reference2_phone"
+                    type="tel"
+                    {...register('reference2_phone')}
+                    className="mt-1"
+                    placeholder="09X XXX XXXX"
+                  />
+                  {errors.reference2_phone && (
+                    <p className="text-sm text-red-500 mt-1">{errors.reference2_phone.message}</p>
+                  )}
+                </div>
               </div>
 
               {/* Message */}

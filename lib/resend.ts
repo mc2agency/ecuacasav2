@@ -7,6 +7,14 @@ interface RegistrationData {
   services: string[];
   speaks_english: boolean;
   message?: string | null;
+  cedula_number?: string | null;
+  areas_served?: string[] | null;
+  reference1_name?: string | null;
+  reference1_phone?: string | null;
+  reference2_name?: string | null;
+  reference2_phone?: string | null;
+  cedula_photo_url?: string | null;
+  profile_photo_url?: string | null;
 }
 
 export async function sendRegistrationNotification(data: RegistrationData) {
@@ -63,6 +71,16 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                   ${data.email || 'No proporcionado'}
                 </td>
               </tr>
+              ${data.cedula_number ? `
+              <tr>
+                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+                  <strong style="color: #6b7280;">Cédula:</strong>
+                </td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
+                  ${data.cedula_number}
+                </td>
+              </tr>
+              ` : ''}
               <tr>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
                   <strong style="color: #6b7280;">Servicios:</strong>
@@ -71,6 +89,16 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                   ${data.services.join(', ')}
                 </td>
               </tr>
+              ${data.areas_served && data.areas_served.length > 0 ? `
+              <tr>
+                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+                  <strong style="color: #6b7280;">Sectores:</strong>
+                </td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
+                  ${data.areas_served.join(', ')}
+                </td>
+              </tr>
+              ` : ''}
               <tr>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
                   <strong style="color: #6b7280;">Habla inglés:</strong>
@@ -79,6 +107,46 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                   ${data.speaks_english ? '✅ Sí' : '❌ No'}
                 </td>
               </tr>
+              ${data.reference1_name ? `
+              <tr>
+                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+                  <strong style="color: #6b7280;">Referencia 1:</strong>
+                </td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
+                  ${data.reference1_name} — ${data.reference1_phone || 'Sin teléfono'}
+                </td>
+              </tr>
+              ` : ''}
+              ${data.reference2_name ? `
+              <tr>
+                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+                  <strong style="color: #6b7280;">Referencia 2:</strong>
+                </td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
+                  ${data.reference2_name} — ${data.reference2_phone || 'Sin teléfono'}
+                </td>
+              </tr>
+              ` : ''}
+              ${data.profile_photo_url ? `
+              <tr>
+                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+                  <strong style="color: #6b7280;">Foto de perfil:</strong>
+                </td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+                  <a href="${data.profile_photo_url}" style="color: #9333ea; text-decoration: none;">Ver foto</a>
+                </td>
+              </tr>
+              ` : ''}
+              ${data.cedula_photo_url ? `
+              <tr>
+                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+                  <strong style="color: #6b7280;">Foto de cédula:</strong>
+                </td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+                  <a href="${data.cedula_photo_url}" style="color: #9333ea; text-decoration: none;">Ver foto</a>
+                </td>
+              </tr>
+              ` : ''}
               ${data.message ? `
               <tr>
                 <td style="padding: 12px 0;">

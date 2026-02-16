@@ -79,3 +79,22 @@ export const RESPONSE_TIME_OPTIONS = [
   '24 hours',
   '2-3 days',
 ];
+
+// Coverage sectors in Cuenca
+export const COVERAGE_SECTORS = [
+  'El Centro',
+  'San Sebastián',
+  'Challuabamba',
+  'Ricaurte',
+  'Yanuncay',
+  'Misicata',
+  'Baños',
+  'Gringolandia / Ordoñez Lasso',
+  'El Vergel',
+  'San Joaquín',
+  'Turi',
+  'El Valle',
+  'Totoracocha',
+  'Miraflores',
+  'Todas las Zonas',
+];
