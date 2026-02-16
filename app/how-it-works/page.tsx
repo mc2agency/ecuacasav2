@@ -185,7 +185,7 @@ export default function HowItWorksPage() {
               {t('hiw.cta_request')}
             </Link>
             <Link
-              href="/for-providers#registro"
+              href="/register"
               className="inline-block px-8 py-4 border-2 border-white text-white font-bold rounded-xl transition-all hover:bg-white/10"
             >
               {t('hiw.cta_join')}

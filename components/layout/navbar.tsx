@@ -17,6 +17,7 @@ export function Navbar() {
   const navLinks = [
     { href: '/services', label: t('nav.services') },
     { href: '/propiedades', label: t('nav.properties') },
+    { href: '/for-providers', label: t('nav.for_providers') },
     { href: '/blog', label: t('nav.blog') },
   ];
 

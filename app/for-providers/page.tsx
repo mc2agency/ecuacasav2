@@ -1,17 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent } from '@/components/ui/card';
-import { createClient } from '@/lib/supabase/client';
+import Link from 'next/link';
 import { useTranslation } from '@/hooks/use-translation';
-import { getLocalizedField } from '@/lib/i18n/helpers';
 import {
   MessageCircle,
   Shield,
@@ -21,74 +11,10 @@ import {
   ClipboardCheck,
   Send,
   TrendingUp,
-  CheckCircle,
-  Loader2,
 } from 'lucide-react';
-
-const providerSchema = z.object({
-  name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
-  phone: z.string().min(9, 'Ingresa un número válido').max(10),
-  service: z.string().min(1, 'Selecciona un servicio'),
-  description: z.string().optional(),
-});
-
-type ProviderForm = z.infer<typeof providerSchema>;
-
-interface Service {
-  slug: string;
-  name_es: string;
-  name_en: string;
-}
 
 export default function ForProvidersPage() {
   const { t, locale } = useTranslation();
-  const [services, setServices] = useState<Service[]>([]);
-  const [submitting, setSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ProviderForm>({
-    resolver: zodResolver(providerSchema),
-    defaultValues: { name: '', phone: '', service: '', description: '' },
-  });
-
-  useEffect(() => {
-    async function fetchServices() {
-      const supabase = createClient();
-      const { data } = await supabase.from('services').select('slug, name_es, name_en').order('display_order');
-      setServices(data || []);
-    }
-    fetchServices();
-  }, []);
-
-  const onSubmit = async (data: ProviderForm) => {
-    setSubmitting(true);
-    try {
-      let fullPhone = data.phone.replace(/\s/g, '');
-      if (fullPhone.startsWith('0')) fullPhone = fullPhone.substring(1);
-      fullPhone = `+593${fullPhone}`;
-
-      await fetch('/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: data.name,
-          phone: fullPhone,
-          services: [data.service],
-          speaks_english: false,
-          message: data.description || null,
-        }),
-      });
-      setSuccess(true);
-    } catch {
-      alert(locale === 'en' ? 'Error submitting. Please try again.' : 'Error al enviar. Intenta de nuevo.');
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
   const benefits = [
     { icon: MessageCircle, titleKey: 'for_providers.benefit1_title', descKey: 'for_providers.benefit1_desc' },
@@ -116,12 +42,12 @@ export default function ForProvidersPage() {
             <p className="text-xl text-purple-100 mb-10">
               {t('for_providers.subtitle')}
             </p>
-            <a
-              href="#registro"
+            <Link
+              href="/register"
               className="inline-block px-8 py-4 bg-white text-purple-600 font-bold rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-105 text-lg"
             >
               {t('for_providers.cta')}
-            </a>
+            </Link>
             <p className="mt-4 text-purple-200 text-sm">
               {locale === 'en' ? 'No commissions • No monthly fees • 100% free' : 'Sin comisiones • Sin cuotas mensuales • 100% gratis'}
             </p>
@@ -184,91 +110,6 @@ export default function ForProvidersPage() {
         </div>
       </section>
 
-      {/* Registration Form */}
-      <section id="registro" className="py-20 bg-white">
-        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              {t('for_providers.form_title')}
-            </h2>
-          </div>
-
-          {success ? (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle className="w-10 h-10 text-green-500" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  {locale === 'en' ? 'Application sent!' : '¡Solicitud enviada!'}
-                </h3>
-                <p className="text-gray-600">
-                  {locale === 'en'
-                    ? 'We\'ll contact you within 24-48 hours to verify your information.'
-                    : 'Te contactaremos en las próximas 24-48 horas para verificar tu información.'}
-                </p>
-              </CardContent>
-            </Card>
-          ) : (
-            <Card className="shadow-xl border-2 border-gray-100">
-              <CardContent className="p-6 sm:p-8">
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  <div>
-                    <Label htmlFor="fp-name">{t('register.name')} *</Label>
-                    <Input id="fp-name" {...register('name')} className="mt-1" placeholder="Ej: Juan García" />
-                    {errors.name && <p className="text-sm text-red-500 mt-1">{errors.name.message}</p>}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="fp-service">{t('register.services')} *</Label>
-                    <select
-                      id="fp-service"
-                      {...register('service')}
-                      className="mt-1 w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      <option value="">{locale === 'en' ? 'Select a service' : 'Selecciona un servicio'}</option>
-                      {services.map((s) => (
-                        <option key={s.slug} value={s.slug}>
-                          {getLocalizedField(s, 'name', locale)}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.service && <p className="text-sm text-red-500 mt-1">{errors.service.message}</p>}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="fp-phone">{t('register.phone')} *</Label>
-                    <div className="flex mt-1">
-                      <span className="inline-flex items-center px-4 bg-gray-100 border border-r-0 border-gray-300 rounded-l-md text-gray-600 font-medium">
-                        +593
-                      </span>
-                      <Input id="fp-phone" type="tel" {...register('phone')} className="rounded-l-none" placeholder="99 123 4567" />
-                    </div>
-                    {errors.phone && <p className="text-sm text-red-500 mt-1">{errors.phone.message}</p>}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="fp-desc">{t('register.message')}</Label>
-                    <Textarea id="fp-desc" {...register('description')} className="mt-1" rows={3} placeholder={locale === 'en' ? 'Brief description of your experience...' : 'Breve descripción de tu experiencia...'} />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    disabled={submitting}
-                    className="w-full py-6 text-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
-                  >
-                    {submitting ? (
-                      <><Loader2 className="w-5 h-5 mr-2 animate-spin" />{locale === 'en' ? 'Sending...' : 'Enviando...'}</>
-                    ) : (
-                      t('for_providers.cta')
-                    )}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      </section>
     </div>
   );
 }
