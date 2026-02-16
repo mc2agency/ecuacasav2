@@ -157,15 +157,15 @@ export async function POST(request: NextRequest) {
     let cedula_photo_url: string | null = null;
     let profile_photo_url: string | null = null;
 
-    // Upload files to Supabase Storage
+    // Upload files to Supabase Storage (private bucket — paths stored, not public URLs)
     if (cedulaPhotoFile && cedulaPhotoFile.size > 0) {
       const ext = getFileExtension(cedulaPhotoFile.name);
-      const path = `${recordId}/cedula.${ext}`;
+      const storagePath = `${recordId}/cedula.${ext}`;
       const buffer = Buffer.from(await cedulaPhotoFile.arrayBuffer());
 
       const { error: uploadError } = await supabase.storage
         .from('registration-uploads')
-        .upload(path, buffer, {
+        .upload(storagePath, buffer, {
           contentType: cedulaPhotoFile.type,
           upsert: true,
         });
@@ -173,21 +173,18 @@ export async function POST(request: NextRequest) {
       if (uploadError) {
         console.error('Cedula photo upload error:', uploadError);
       } else {
-        const { data: urlData } = supabase.storage
-          .from('registration-uploads')
-          .getPublicUrl(path);
-        cedula_photo_url = urlData.publicUrl;
+        cedula_photo_url = storagePath;
       }
     }
 
     if (profilePhotoFile && profilePhotoFile.size > 0) {
       const ext = getFileExtension(profilePhotoFile.name);
-      const path = `${recordId}/profile.${ext}`;
+      const storagePath = `${recordId}/profile.${ext}`;
       const buffer = Buffer.from(await profilePhotoFile.arrayBuffer());
 
       const { error: uploadError } = await supabase.storage
         .from('registration-uploads')
-        .upload(path, buffer, {
+        .upload(storagePath, buffer, {
           contentType: profilePhotoFile.type,
           upsert: true,
         });
@@ -195,10 +192,7 @@ export async function POST(request: NextRequest) {
       if (uploadError) {
         console.error('Profile photo upload error:', uploadError);
       } else {
-        const { data: urlData } = supabase.storage
-          .from('registration-uploads')
-          .getPublicUrl(path);
-        profile_photo_url = urlData.publicUrl;
+        profile_photo_url = storagePath;
       }
     }
 

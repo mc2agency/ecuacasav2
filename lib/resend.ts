@@ -138,23 +138,14 @@ export async function sendRegistrationNotification(data: RegistrationData) {
                 </td>
               </tr>
               ` : ''}
-              ${data.profile_photo_url ? `
+              ${data.profile_photo_url || data.cedula_photo_url ? `
               <tr>
                 <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
-                  <strong style="color: #6b7280;">Foto de perfil:</strong>
+                  <strong style="color: #6b7280;">Fotos:</strong>
                 </td>
-                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
-                  <a href="${escapeHtml(data.profile_photo_url)}" style="color: #9333ea; text-decoration: none;">Ver foto</a>
-                </td>
-              </tr>
-              ` : ''}
-              ${data.cedula_photo_url ? `
-              <tr>
-                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
-                  <strong style="color: #6b7280;">Foto de cédula:</strong>
-                </td>
-                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
-                  <a href="${escapeHtml(data.cedula_photo_url)}" style="color: #9333ea; text-decoration: none;">Ver foto</a>
+                <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb; color: #111827;">
+                  ${data.profile_photo_url ? 'Perfil' : ''}${data.profile_photo_url && data.cedula_photo_url ? ', ' : ''}${data.cedula_photo_url ? 'Cédula' : ''}
+                  — <em>ver en panel de admin</em>
                 </td>
               </tr>
               ` : ''}
