@@ -10,5 +10,11 @@ ALTER TABLE registration_requests
 
 -- The areas_served TEXT[] column already exists but was unused — it will now be populated.
 
--- Create storage bucket for registration uploads (run via Supabase dashboard if not using CLI)
--- INSERT INTO storage.buckets (id, name, public) VALUES ('registration-uploads', 'registration-uploads', true);
+-- Create PRIVATE storage bucket for registration uploads (run via Supabase dashboard if not using CLI)
+-- INSERT INTO storage.buckets (id, name, public) VALUES ('registration-uploads', 'registration-uploads', false);
+--
+-- IMPORTANT: This bucket is PRIVATE. Files are served through /api/admin/storage (admin-only proxy).
+-- If the bucket was previously created as public, update it:
+-- UPDATE storage.buckets SET public = false WHERE id = 'registration-uploads';
+--
+-- No public RLS policies should exist on this bucket. Only the service_role key can access files.

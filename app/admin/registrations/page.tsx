@@ -8,6 +8,11 @@ import { Button } from '@/components/ui/button';
 import { Check, X, Phone, Mail, MessageSquare, Filter, Pencil, User, CreditCard } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
+/** Converts a storage path (or legacy public URL) to admin-only proxy URL */
+function storageProxyUrl(pathOrUrl: string): string {
+  return `/api/admin/storage?path=${encodeURIComponent(pathOrUrl)}`;
+}
+
 interface Registration {
   id: string;
   name: string;
@@ -273,21 +278,21 @@ export default function AdminRegistrationsPage() {
                       </div>
                     )}
 
-                    {/* Photos */}
+                    {/* Photos (served through admin-only proxy) */}
                     {(reg.profile_photo_url || reg.cedula_photo_url) && (
                       <div className="flex gap-4 mb-4">
                         {reg.profile_photo_url && (
-                          <a href={reg.profile_photo_url} target="_blank" rel="noopener noreferrer" className="block">
+                          <a href={storageProxyUrl(reg.profile_photo_url)} target="_blank" rel="noopener noreferrer" className="block">
                             <div className="w-16 h-16 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-primary-400 transition-colors">
-                              <img src={reg.profile_photo_url} alt="Foto de perfil" className="w-full h-full object-cover" />
+                              <img src={storageProxyUrl(reg.profile_photo_url)} alt="Foto de perfil" className="w-full h-full object-cover" />
                             </div>
                             <p className="text-xs text-gray-500 mt-1 text-center">Perfil</p>
                           </a>
                         )}
                         {reg.cedula_photo_url && (
-                          <a href={reg.cedula_photo_url} target="_blank" rel="noopener noreferrer" className="block">
+                          <a href={storageProxyUrl(reg.cedula_photo_url)} target="_blank" rel="noopener noreferrer" className="block">
                             <div className="w-16 h-16 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-primary-400 transition-colors">
-                              <img src={reg.cedula_photo_url} alt="Foto de cédula" className="w-full h-full object-cover" />
+                              <img src={storageProxyUrl(reg.cedula_photo_url)} alt="Foto de cédula" className="w-full h-full object-cover" />
                             </div>
                             <p className="text-xs text-gray-500 mt-1 text-center">Cédula</p>
                           </a>
