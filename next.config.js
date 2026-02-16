@@ -40,7 +40,9 @@ const nextConfig = {
       { source: '/servicios', destination: '/services', permanent: true },
       // Old misc pages
       { source: '/how', destination: '/how-it-works', permanent: true },
-      { source: '/contact', destination: '/', permanent: true },
+      { source: '/contact', destination: '/solicitar', permanent: true },
+      { source: '/blog/como-elegir-plomero-cuenca', destination: '/services/plomeria', permanent: true },
+      { source: '/blog/mantenimiento-electrico-hogar', destination: '/services/electricidad', permanent: true },
       { source: '/sign-up', destination: '/for-providers', permanent: true },
       { source: '/sign-in', destination: '/', permanent: true },
       { source: '/about', destination: '/', permanent: true },

@@ -12,9 +12,9 @@
   ],
   "redirects": [
     {
-      "source": "/:path((?!_next|api|favicon\\.ico|icons|manifest\\.json|robots\\.txt|sitemap\\.xml).*)",
+      "source": "/:path*",
       "has": [{ "type": "host", "value": "www.ecuacasa.com" }],
-      "destination": "https://ecuacasa.com/:path",
+      "destination": "https://ecuacasa.com/:path*",
       "permanent": true
     },
     {
@@ -74,7 +74,17 @@
     },
     {
       "source": "/contact",
-      "destination": "/",
+      "destination": "/solicitar",
+      "permanent": true
+    },
+    {
+      "source": "/blog/como-elegir-plomero-cuenca",
+      "destination": "/services/plomeria",
+      "permanent": true
+    },
+    {
+      "source": "/blog/mantenimiento-electrico-hogar",
+      "destination": "/services/electricidad",
       "permanent": true
     },
     {
