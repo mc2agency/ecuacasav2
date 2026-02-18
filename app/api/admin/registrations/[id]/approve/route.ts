@@ -49,11 +49,11 @@ export async function POST(
     let providerId: string;
 
     if (existingProvider) {
-      // Update existing provider
+      // Update existing provider — use display_name for public name
       const { error: updateError } = await supabase
         .from('providers')
         .update({
-          name: reg.name,
+          name: reg.display_name || reg.name,
           email: reg.email || null,
           photo_url: reg.profile_photo_url || null,
           description_es: reg.message || null,
@@ -75,13 +75,14 @@ export async function POST(
         .delete()
         .eq('provider_id', providerId);
     } else {
-      // Create new provider
-      const slug = generateSlug(reg.name);
+      // Create new provider — use display_name for public name
+      const providerName = reg.display_name || reg.name;
+      const slug = generateSlug(providerName);
 
       const { data: newProvider, error: createError } = await supabase
         .from('providers')
         .insert({
-          name: reg.name,
+          name: providerName,
           slug,
           phone: reg.phone,
           email: reg.email || null,

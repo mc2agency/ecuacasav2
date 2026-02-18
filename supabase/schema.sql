@@ -88,6 +88,7 @@ CREATE TABLE registration_requests (
 
   -- Applicant Info
   name TEXT NOT NULL,
+  display_name TEXT,
   phone TEXT NOT NULL,
   email TEXT,
 

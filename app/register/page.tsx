@@ -17,6 +17,7 @@ import { CheckCircle, ArrowLeft, Loader2, Upload } from 'lucide-react';
 
 const registrationSchema = z.object({
   name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
+  display_name: z.string().min(2, 'El nombre para mostrar debe tener al menos 2 caracteres'),
   phone: z.string().min(9, 'Ingresa un número de teléfono válido').max(10, 'Número demasiado largo'),
   email: z.string().email('Ingresa un email válido').optional().or(z.literal('')),
   cedula_number: z.string()
@@ -75,6 +76,7 @@ export default function RegisterPage() {
   const [cedulaPhoto, setCedulaPhoto] = useState<File | null>(null);
   const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
 
   const {
     register,
@@ -86,6 +88,7 @@ export default function RegisterPage() {
     resolver: zodResolver(registrationSchema),
     defaultValues: {
       name: '',
+      display_name: '',
       phone: '',
       email: '',
       cedula_number: '',
@@ -134,6 +137,7 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegistrationForm) => {
     setFileError(null);
+    setPhoneError(null);
 
     if (!cedulaPhoto) {
       setFileError('La foto de cédula es obligatoria');
@@ -162,6 +166,7 @@ export default function RegisterPage() {
 
       const formData = new FormData();
       formData.append('name', data.name);
+      formData.append('display_name', data.display_name);
       formData.append('phone', fullPhone);
       formData.append('email', data.email || '');
       formData.append('cedula_number', data.cedula_number);
@@ -182,7 +187,12 @@ export default function RegisterPage() {
       });
 
       if (!response.ok) {
-        throw new Error('Registration failed');
+        const errorData = await response.json();
+        if (errorData.code === 'DUPLICATE_PHONE') {
+          setPhoneError(errorData.error);
+          return;
+        }
+        throw new Error(errorData.error || 'Registration failed');
       }
 
       setSuccess(true);
@@ -257,15 +267,30 @@ export default function RegisterPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Name */}
               <div>
-                <Label htmlFor="name">Nombre completo *</Label>
+                <Label htmlFor="name">Nombre completo (legal) *</Label>
                 <Input
                   id="name"
                   {...register('name')}
                   className="mt-1"
-                  placeholder="Ej: Juan García"
+                  placeholder="Ej: Juan García López"
                 />
                 {errors.name && (
                   <p className="text-sm text-red-500 mt-1">{errors.name.message}</p>
+                )}
+              </div>
+
+              {/* Display Name */}
+              <div>
+                <Label htmlFor="display_name">Nombre para mostrar *</Label>
+                <p className="text-sm text-gray-500 mb-1">Este nombre aparecerá en tu tarjeta y perfil público</p>
+                <Input
+                  id="display_name"
+                  {...register('display_name')}
+                  className="mt-1"
+                  placeholder="Ej: David G. o Genoveva Loja"
+                />
+                {errors.display_name && (
+                  <p className="text-sm text-red-500 mt-1">{errors.display_name.message}</p>
                 )}
               </div>
 
@@ -286,6 +311,9 @@ export default function RegisterPage() {
                 </div>
                 {errors.phone && (
                   <p className="text-sm text-red-500 mt-1">{errors.phone.message}</p>
+                )}
+                {phoneError && (
+                  <p className="text-sm text-red-500 mt-1">{phoneError}</p>
                 )}
               </div>
 
