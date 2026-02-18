@@ -98,7 +98,7 @@ export async function GET() {
   return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
     },
   });
 }
