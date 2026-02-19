@@ -148,6 +148,14 @@ export async function PUT(request: NextRequest) {
         verified: updateData.verified || false,
         featured: updateData.featured || false,
         status: updateData.status || 'active',
+        cedula_number: updateData.cedula_number || null,
+        cedula_photo_url: updateData.cedula_photo_url || null,
+        profile_photo_url: updateData.profile_photo_url || null,
+        reference1_name: updateData.reference1_name || null,
+        reference1_phone: updateData.reference1_phone || null,
+        reference2_name: updateData.reference2_name || null,
+        reference2_phone: updateData.reference2_phone || null,
+        areas_served: updateData.areas_served?.length ? updateData.areas_served : null,
       })
       .eq('id', id);
 
