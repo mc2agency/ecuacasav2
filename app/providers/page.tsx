@@ -25,7 +25,7 @@ export default async function ProvidersPage({ searchParams }: ProvidersPageProps
       supabase
         .from('providers')
         .select(`
-          id, slug, name, description_es, description_en,
+          id, slug, name, photo_url, description_es, description_en,
           rating, review_count, price_range, response_time,
           verified, speaks_english, featured, phone,
           services:provider_services(service:services(slug, name_es, name_en))

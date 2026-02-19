@@ -12,7 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { createClient } from '@/lib/supabase/client';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2, Check, ShieldOff, ImageIcon } from 'lucide-react';
 
 const providerSchema = z.object({
   name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
@@ -39,6 +39,14 @@ interface Service {
   name_es: string;
 }
 
+interface PhotoItem {
+  url: string;
+  storage_path: string;
+  label: string;
+  type: 'profile' | 'cedula';
+  selectable: boolean;
+}
+
 export default function EditProviderPage() {
   const router = useRouter();
   const params = useParams();
@@ -48,6 +56,13 @@ export default function EditProviderPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [notFound, setNotFound] = useState(false);
+
+  // Photo state
+  const [photos, setPhotos] = useState<PhotoItem[]>([]);
+  const [selectedPhotoPath, setSelectedPhotoPath] = useState<string | null>(null);
+  const [photosLoading, setPhotosLoading] = useState(true);
+  const [photoSaving, setPhotoSaving] = useState(false);
+  const [photoSaved, setPhotoSaved] = useState(false);
 
   const {
     register,
@@ -148,6 +163,26 @@ export default function EditProviderPage() {
     fetchData();
   }, [providerId, reset]);
 
+  // Fetch photos separately
+  useEffect(() => {
+    async function fetchPhotos() {
+      try {
+        const res = await fetch(`/api/admin/providers/${providerId}/photos`);
+        if (res.ok) {
+          const data = await res.json();
+          setPhotos(data.photos || []);
+          setSelectedPhotoPath(data.selected_photo_url || null);
+        }
+      } catch {
+        // Photos not available
+      } finally {
+        setPhotosLoading(false);
+      }
+    }
+
+    fetchPhotos();
+  }, [providerId]);
+
   const toggleService = (slug: string) => {
     const current = selectedServices || [];
     if (current.includes(slug)) {
@@ -184,6 +219,38 @@ export default function EditProviderPage() {
     }
   };
 
+  const selectPhoto = (photo: PhotoItem) => {
+    if (!photo.selectable) return;
+    setSelectedPhotoPath(photo.storage_path);
+    setPhotoSaved(false);
+  };
+
+  const savePhoto = async () => {
+    if (!selectedPhotoPath) return;
+    setPhotoSaving(true);
+    setPhotoSaved(false);
+
+    try {
+      const res = await fetch(`/api/admin/providers/${providerId}/photos`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ photo_url: selectedPhotoPath }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Failed');
+      }
+
+      setPhotoSaved(true);
+    } catch (error) {
+      console.error('Error saving photo:', error);
+      alert('Error al guardar la foto');
+    } finally {
+      setPhotoSaving(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -203,6 +270,9 @@ export default function EditProviderPage() {
     );
   }
 
+  const selectablePhotos = photos.filter((p) => p.selectable);
+  const cedulaPhotos = photos.filter((p) => p.type === 'cedula');
+
   return (
     <div>
       <Link
@@ -215,7 +285,12 @@ export default function EditProviderPage() {
 
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Editar Profesional</h1>
 
-      <Card>
+      {/* Step 1: Basic Information */}
+      <div className="mb-4">
+        <h2 className="text-lg font-semibold text-gray-700 mb-2">Paso 1 — Información</h2>
+      </div>
+
+      <Card className="mb-8">
         <CardContent className="p-8">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -387,6 +462,138 @@ export default function EditProviderPage() {
               </Link>
             </div>
           </form>
+        </CardContent>
+      </Card>
+
+      {/* Step 2: Card Photo */}
+      <div className="mb-4">
+        <h2 className="text-lg font-semibold text-gray-700 mb-2">Paso 2 — Foto del perfil (tarjeta)</h2>
+        <p className="text-sm text-gray-500">
+          Selecciona la foto que aparecerá en la tarjeta pública del profesional en /providers
+        </p>
+      </div>
+
+      <Card>
+        <CardContent className="p-8">
+          {photosLoading ? (
+            <div className="flex items-center justify-center h-32">
+              <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
+            </div>
+          ) : photos.length === 0 ? (
+            <div className="text-center py-8">
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <ImageIcon className="w-8 h-8 text-gray-400" />
+              </div>
+              <p className="text-gray-500">
+                No hay fotos disponibles. El profesional no subió fotos al registrarse.
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* Selectable Photos */}
+              {selectablePhotos.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="text-sm font-medium text-gray-700 mb-3">
+                    Fotos disponibles — haz clic para seleccionar
+                  </h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {selectablePhotos.map((photo) => {
+                      const isSelected = selectedPhotoPath === photo.storage_path;
+                      return (
+                        <button
+                          key={photo.storage_path}
+                          type="button"
+                          onClick={() => selectPhoto(photo)}
+                          className={`relative group rounded-xl overflow-hidden border-3 transition-all ${
+                            isSelected
+                              ? 'border-green-500 ring-2 ring-green-200 shadow-lg'
+                              : 'border-gray-200 hover:border-primary-300 hover:shadow-md'
+                          }`}
+                        >
+                          <div className="aspect-square bg-gray-100">
+                            <img
+                              src={photo.url}
+                              alt={photo.label}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          {isSelected && (
+                            <div className="absolute top-2 right-2 bg-green-500 rounded-full p-1 shadow-lg">
+                              <Check className="w-4 h-4 text-white" />
+                            </div>
+                          )}
+                          <div className={`px-3 py-2 text-xs font-medium text-center ${
+                            isSelected ? 'bg-green-50 text-green-700' : 'bg-gray-50 text-gray-600'
+                          }`}>
+                            {photo.label}
+                            {isSelected && ' (seleccionada)'}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Cedula Photos — Verification Only */}
+              {cedulaPhotos.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="text-sm font-medium text-gray-500 mb-3 flex items-center gap-2">
+                    <ShieldOff className="w-4 h-4" />
+                    Cédula — solo verificación (no seleccionable)
+                  </h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {cedulaPhotos.map((photo) => (
+                      <div
+                        key={photo.storage_path}
+                        className="relative rounded-xl overflow-hidden border-2 border-dashed border-gray-300 opacity-75"
+                      >
+                        <div className="aspect-square bg-gray-100">
+                          <img
+                            src={photo.url}
+                            alt={photo.label}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="px-3 py-2 text-xs font-medium text-center bg-gray-100 text-gray-500">
+                          {photo.label}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Save Button */}
+              {selectablePhotos.length > 0 && (
+                <div className="flex items-center gap-3 pt-4 border-t">
+                  <Button
+                    type="button"
+                    onClick={savePhoto}
+                    disabled={!selectedPhotoPath || photoSaving}
+                    className="bg-green-600 hover:bg-green-700"
+                  >
+                    {photoSaving ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Guardando...
+                      </>
+                    ) : (
+                      <>
+                        <Check className="w-4 h-4 mr-2" />
+                        Guardar foto seleccionada
+                      </>
+                    )}
+                  </Button>
+                  {photoSaved && (
+                    <span className="text-sm text-green-600 font-medium">
+                      Foto guardada correctamente
+                    </span>
+                  )}
+                </div>
+              )}
+            </>
+          )}
         </CardContent>
       </Card>
     </div>
