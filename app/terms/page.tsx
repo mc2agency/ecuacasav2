@@ -90,8 +90,60 @@ export default function TermsPage() {
             </p>
           </section>
 
+          <section className="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-xl">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Relación entre usuario y profesional</h2>
+            <p className="text-gray-600">
+              Los profesionales listados en EcuaCasa son contratistas independientes y <strong>no son empleados,
+              representantes ni agentes de EcuaCasa</strong>. No existe relación laboral, de agencia ni de
+              sociedad entre EcuaCasa y los profesionales registrados en la plataforma. Cualquier acuerdo
+              de servicios es celebrado exclusivamente entre el usuario y el profesional.
+            </p>
+          </section>
+
+          <section className="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-xl">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Sin verificación de antecedentes penales</h2>
+            <p className="text-gray-600">
+              Como parte del proceso de registro, EcuaCasa recopila el número de cédula de identidad de los
+              profesionales con fines de identificación. Sin embargo, <strong>EcuaCasa no realiza verificaciones
+              de antecedentes penales, judiciales ni de ningún otro tipo</strong>. La recopilación del número
+              de cédula no constituye garantía alguna sobre la idoneidad, confiabilidad o historial legal del
+              profesional. Los usuarios deben realizar sus propias verificaciones antes de contratar cualquier servicio.
+            </p>
+          </section>
+
+          <section className="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-xl">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Exoneración de responsabilidad</h2>
+            <p className="text-gray-600 mb-4">
+              EcuaCasa <strong>no será responsable por ningún daño, pérdida, robo, lesión personal o perjuicio</strong> que
+              surja de la contratación o prestación de servicios entre usuarios y profesionales, incluyendo
+              pero no limitado a:
+            </p>
+            <ul className="list-disc pl-6 text-gray-600 space-y-2">
+              <li>Daños a la propiedad causados durante la prestación del servicio</li>
+              <li>Robo o hurto de bienes del usuario</li>
+              <li>Lesiones personales sufridas por el usuario, el profesional o terceros</li>
+              <li>Incumplimiento de acuerdos entre el usuario y el profesional</li>
+              <li>Disputas relacionadas con la calidad, precio o alcance del servicio</li>
+            </ul>
+            <p className="text-gray-600 mt-4">
+              Al utilizar EcuaCasa, el usuario acepta que asume la totalidad del riesgo asociado con la
+              contratación de cualquier profesional listado en la plataforma.
+            </p>
+          </section>
+
+          <section className="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-xl">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Resolución de disputas</h2>
+            <p className="text-gray-600">
+              Cualquier disputa, reclamo o controversia que surja entre un usuario y un profesional deberá
+              ser resuelta <strong>directamente entre las partes involucradas</strong>. EcuaCasa no actúa como
+              mediador, árbitro ni parte en ninguna disputa entre usuarios y profesionales. EcuaCasa no tiene
+              obligación de intervenir, investigar ni resolver conflictos derivados de la prestación de servicios
+              contratados a través de la plataforma.
+            </p>
+          </section>
+
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Propiedad intelectual</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Propiedad intelectual</h2>
             <p className="text-gray-600">
               Todo el contenido de EcuaCasa, incluyendo textos, gráficos, logos, y software,
               es propiedad de EcuaCasa o sus licenciantes y está protegido por leyes de
@@ -100,7 +152,7 @@ export default function TermsPage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Suspensión y terminación</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Suspensión y terminación</h2>
             <p className="text-gray-600">
               Nos reservamos el derecho de suspender o terminar el acceso de cualquier usuario
               que viole estos términos de servicio, sin previo aviso.
@@ -108,7 +160,7 @@ export default function TermsPage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Modificaciones</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">13. Modificaciones</h2>
             <p className="text-gray-600">
               Podemos modificar estos términos en cualquier momento. Los cambios serán efectivos
               inmediatamente después de su publicación. El uso continuado del servicio después
@@ -117,7 +169,7 @@ export default function TermsPage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Ley aplicable</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">14. Ley aplicable</h2>
             <p className="text-gray-600">
               Estos términos se rigen por las leyes de la República del Ecuador. Cualquier
               disputa será resuelta en los tribunales competentes de Cuenca, Ecuador.
@@ -125,7 +177,7 @@ export default function TermsPage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Contacto</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">15. Contacto</h2>
             <p className="text-gray-600">
               Para preguntas sobre estos términos de servicio, puede contactarnos a través
               de nuestra plataforma.
