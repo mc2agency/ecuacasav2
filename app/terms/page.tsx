@@ -90,56 +90,41 @@ export default function TermsPage() {
             </p>
           </section>
 
-          <section className="mb-8">
+          <section className="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-xl">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Relación entre usuario y profesional</h2>
             <p className="text-gray-600">
-              Los profesionales listados en EcuaCasa son contratistas independientes, no empleados
-              ni agentes de EcuaCasa. Todos los contratos de servicios se celebran directamente
-              entre el usuario y el profesional. EcuaCasa no es parte de dicho acuerdo ni asume
-              obligación alguna derivada del mismo.
+              EcuaCasa actúa exclusivamente como plataforma de conexión digital. Los profesionales registrados
+              son trabajadores independientes — <strong>no son empleados, agentes ni representantes de EcuaCasa</strong>.
+              Al contactar a un profesional, el usuario establece una relación contractual directa y exclusiva
+              con dicho profesional. EcuaCasa no es parte de ese acuerdo.
             </p>
           </section>
 
           <section className="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-xl">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Sin verificación de antecedentes penales</h2>
-            <p className="text-gray-600 mb-4">
-              <strong>EcuaCasa NO realiza verificaciones de antecedentes penales.</strong>
-            </p>
-            <p className="text-gray-600 mb-4">
-              La recopilación de cédula de identidad y referencias personales no garantiza la honestidad,
-              competencia ni confiabilidad de ningún profesional. Estas medidas son únicamente para fines
-              de identificación interna.
-            </p>
             <p className="text-gray-600">
-              El usuario asume la responsabilidad total al permitir el ingreso de cualquier persona
-              a su hogar o propiedad.
+              EcuaCasa recopila y verifica el número de cédula de cada profesional antes de aprobar su perfil.
+              Sin embargo, <strong>esto no constituye una verificación de antecedentes penales ni garantía de
+              idoneidad, honestidad o competencia</strong>. El usuario asume plena responsabilidad por la decisión
+              de contratar a cualquier profesional y de permitir su acceso a su propiedad.
             </p>
           </section>
 
-          <section className="mb-8 p-6 bg-red-50 border border-red-200 rounded-xl">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Exoneración de responsabilidad</h2>
-            <p className="text-gray-600 mb-4">
-              EcuaCasa no es responsable por:
+          <section className="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-xl">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Exoneración de responsabilidad por daños</h2>
+            <p className="text-gray-600">
+              <strong>EcuaCasa no será responsable por:</strong> daños materiales a la propiedad, robo o hurto,
+              lesiones físicas, trabajos defectuosos o incompletos, disputas económicas entre usuario y profesional,
+              o cualquier pérdida directa o indirecta derivada del uso de la plataforma.
             </p>
-            <ul className="list-disc pl-6 text-gray-600 space-y-2">
-              <li>Daños a la propiedad</li>
-              <li>Robo o hurto</li>
-              <li>Lesiones físicas</li>
-              <li>Trabajo defectuoso o incompleto</li>
-              <li>Disputas de pago entre usuario y profesional</li>
-              <li>Cualquier pérdida directa o indirecta que surja del uso de la plataforma o de los servicios contratados a través de ella</li>
-            </ul>
           </section>
 
-          <section className="mb-8">
+          <section className="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-xl">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Resolución de disputas</h2>
-            <p className="text-gray-600 mb-4">
-              Las disputas que surjan de la prestación de servicios son exclusivamente entre el usuario
-              y el profesional. EcuaCasa no actúa como árbitro ni mediador en ningún conflicto.
-            </p>
             <p className="text-gray-600">
-              EcuaCasa se reserva el derecho, pero no la obligación, de suspender o remover profesionales
-              de la plataforma en base a quejas recibidas, a su entera discreción.
+              Cualquier disputa entre usuario y profesional es responsabilidad exclusiva de las partes.
+              EcuaCasa no actúa como árbitro ni mediador. EcuaCasa se reserva el derecho pero no la obligación
+              de suspender profesionales ante quejas fundadas.
             </p>
           </section>
 

@@ -13,6 +13,7 @@ import { providersRepository } from '@/lib/repositories';
 import { getProviderPlaceholder, getBlurDataURL } from '@/lib/utils/placeholders';
 import { CheckCircle, Clock, DollarSign, ArrowLeft, MapPin, Briefcase } from 'lucide-react';
 import { ProviderReviews } from '@/components/providers/provider-reviews';
+import { TrackProviderView } from '@/components/shared/track-provider-view';
 
 interface ProviderPageProps {
   params: Promise<{ slug: string }>;
@@ -42,6 +43,7 @@ export default async function ProviderPage({ params }: ProviderPageProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+      <TrackProviderView slug={slug} />
       <ProviderJsonLd
         name={provider.name}
         description={provider.description_es || provider.description_en || ''}

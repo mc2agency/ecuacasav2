@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 
 // Simple in-memory rate limiter (per IP, 100 events/min)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
@@ -34,11 +34,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid event_type' }, { status: 400 });
     }
 
-    const supabase = await createClient();
+    console.log('Analytics hit:', event_type, page || '(no page)');
+
+    const supabase = createAdminClient();
     if (!supabase) {
+      console.error('Analytics: createAdminClient returned null — check NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY env vars');
       return NextResponse.json({ error: 'Database unavailable' }, { status: 503 });
     }
-    await supabase.from('analytics_events').insert({
+    const { error: insertError } = await supabase.from('analytics_events').insert({
       event_type,
       page: page || null,
       provider_slug: provider_slug || null,
@@ -49,8 +52,14 @@ export async function POST(request: NextRequest) {
       metadata: metadata || {},
     });
 
+    if (insertError) {
+      console.error('Analytics insert error:', insertError.message, insertError);
+      return NextResponse.json({ error: 'Insert failed' }, { status: 500 });
+    }
+
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (err) {
+    console.error('Analytics unexpected error:', err);
     return NextResponse.json({ error: 'Internal error' }, { status: 500 });
   }
 }
