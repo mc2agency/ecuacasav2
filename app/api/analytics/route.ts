@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 
 // Simple in-memory rate limiter (per IP, 100 events/min)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
@@ -34,11 +34,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid event_type' }, { status: 400 });
     }
 
-    const supabase = await createClient();
+    const supabase = createAdminClient();
     if (!supabase) {
       return NextResponse.json({ error: 'Database unavailable' }, { status: 503 });
     }
-    await supabase.from('analytics_events').insert({
+    const { error: insertError } = await supabase.from('analytics_events').insert({
       event_type,
       page: page || null,
       provider_slug: provider_slug || null,
@@ -48,6 +48,11 @@ export async function POST(request: NextRequest) {
       locale: locale || null,
       metadata: metadata || {},
     });
+
+    if (insertError) {
+      console.error('Analytics insert error:', insertError.message);
+      return NextResponse.json({ error: 'Insert failed' }, { status: 500 });
+    }
 
     return NextResponse.json({ ok: true });
   } catch {

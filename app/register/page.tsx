@@ -75,6 +75,7 @@ export default function RegisterPage() {
   const [cedulaPhoto, setCedulaPhoto] = useState<File | null>(null);
   const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
 
   const {
     register,
@@ -134,6 +135,7 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegistrationForm) => {
     setFileError(null);
+    setPhoneError(null);
     setSubmitting(true);
 
     try {
@@ -159,7 +161,7 @@ export default function RegisterPage() {
         .limit(1);
 
       if (existing && existing.length > 0) {
-        setFileError('Este número de WhatsApp ya tiene una solicitud registrada.');
+        setPhoneError('Este número de WhatsApp ya está registrado en EcuaCasa. Si tienes problemas con tu cuenta contáctanos en info@ecuacasa.com');
         setSubmitting(false);
         return;
       }
@@ -290,6 +292,9 @@ export default function RegisterPage() {
                 </div>
                 {errors.phone && (
                   <p className="text-sm text-red-500 mt-1">{errors.phone.message}</p>
+                )}
+                {phoneError && (
+                  <p className="text-sm text-red-500 mt-1">{phoneError}</p>
                 )}
               </div>
 

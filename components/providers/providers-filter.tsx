@@ -12,6 +12,7 @@ import { useTranslation } from '@/hooks/use-translation';
 import { getLocalizedField } from '@/lib/i18n/helpers';
 import { getProviderPlaceholder, getBlurDataURL } from '@/lib/utils/placeholders';
 import { CheckCircle, Clock, Filter, X } from 'lucide-react';
+import { trackSearch } from '@/lib/analytics';
 
 interface Provider {
   id: string;
@@ -67,7 +68,10 @@ export function ProvidersFilter({ providers, services, initialService = '' }: Pr
         <div className="flex flex-wrap items-center gap-4">
           <select
             value={filters.service}
-            onChange={(e) => setFilters({ ...filters, service: e.target.value })}
+            onChange={(e) => {
+              setFilters({ ...filters, service: e.target.value });
+              if (e.target.value) trackSearch(e.target.value);
+            }}
             className="px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-500"
           >
             <option value="">Todos los servicios</option>
