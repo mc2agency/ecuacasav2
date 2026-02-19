@@ -18,6 +18,7 @@ interface Provider {
   id: string;
   slug: string;
   name: string;
+  photo_url?: string | null;
   description_es: string;
   description_en: string;
   rating: number;
@@ -123,14 +124,22 @@ export function ProvidersFilter({ providers, services, initialService = '' }: Pr
               <CardContent className="p-0">
                 <Link href={`/providers/${provider.slug}`}>
                   <div className="relative h-48 w-full bg-gradient-to-br from-primary-50 to-blue-100 overflow-hidden">
-                    <Image
-                      src={getProviderPlaceholder(provider.name)}
-                      alt={provider.name}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      placeholder="blur"
-                      blurDataURL={getBlurDataURL()}
-                    />
+                    {provider.photo_url ? (
+                      <img
+                        src={`/api/providers/${provider.id}/photo`}
+                        alt={provider.name}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <Image
+                        src={getProviderPlaceholder(provider.name)}
+                        alt={provider.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        placeholder="blur"
+                        blurDataURL={getBlurDataURL()}
+                      />
+                    )}
                     <div className="absolute top-3 right-3 flex flex-col gap-2">
                       {provider.verified && (
                         <div className="bg-success text-white px-2.5 py-1 rounded-full flex items-center gap-1 text-xs font-medium shadow-lg">

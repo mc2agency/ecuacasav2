@@ -60,6 +60,7 @@ export async function POST(request: NextRequest) {
     const isFormData = contentType.includes('multipart/form-data');
 
     let name: string;
+    let display_name: string | null = null;
     let phone: string;
     let email: string | null;
     let services: string[];
@@ -77,6 +78,7 @@ export async function POST(request: NextRequest) {
     if (isFormData) {
       const formData = await request.formData();
       name = formData.get('name') as string;
+      display_name = (formData.get('display_name') as string) || null;
       phone = formData.get('phone') as string;
       email = (formData.get('email') as string) || null;
       services = safeJsonParse(formData.get('services') as string);
@@ -124,11 +126,41 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check for duplicate WhatsApp number in existing providers
+    const { data: existingProvider } = await supabase
+      .from('providers')
+      .select('id')
+      .eq('phone', phone)
+      .maybeSingle();
+
+    if (existingProvider) {
+      return NextResponse.json(
+        { error: 'Este número de WhatsApp ya está registrado en EcuaCasa. Si tienes problemas con tu cuenta contáctanos en info@ecuacasa.com', code: 'DUPLICATE_PHONE' },
+        { status: 409 }
+      );
+    }
+
+    // Also check pending/contacted registration requests
+    const { data: existingRequest } = await supabase
+      .from('registration_requests')
+      .select('id')
+      .eq('phone', phone)
+      .in('status', ['pending', 'contacted'])
+      .maybeSingle();
+
+    if (existingRequest) {
+      return NextResponse.json(
+        { error: 'Este número de WhatsApp ya está registrado en EcuaCasa. Si tienes problemas con tu cuenta contáctanos en info@ecuacasa.com', code: 'DUPLICATE_PHONE' },
+        { status: 409 }
+      );
+    }
+
     // Insert into database
     const { data: insertedRow, error: dbError } = await supabase
       .from('registration_requests')
       .insert({
         name,
+        display_name,
         phone,
         email,
         services_interested: services,

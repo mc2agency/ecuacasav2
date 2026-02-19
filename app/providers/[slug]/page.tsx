@@ -85,15 +85,23 @@ export default async function ProviderPage({ params }: ProviderPageProps) {
               <div className="flex flex-col sm:flex-row items-start gap-6">
                 {/* Photo */}
                 <div className="relative w-32 h-32 rounded-2xl overflow-hidden border-4 border-white/30 flex-shrink-0">
-                  <Image
-                    src={getProviderPlaceholder(provider.name)}
-                    alt={provider.name}
-                    fill
-                    className="object-cover"
-                    placeholder="blur"
-                    blurDataURL={getBlurDataURL()}
-                    priority
-                  />
+                  {provider.photo_url ? (
+                    <img
+                      src={`/api/providers/${provider.id}/photo`}
+                      alt={provider.name}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={getProviderPlaceholder(provider.name)}
+                      alt={provider.name}
+                      fill
+                      className="object-cover"
+                      placeholder="blur"
+                      blurDataURL={getBlurDataURL()}
+                      priority
+                    />
+                  )}
                 </div>
 
                 {/* Info */}
