@@ -1,17 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { createClient } from '@/lib/supabase/client';
-import { Plus, Edit, Trash2, CheckCircle, Star } from 'lucide-react';
+import { Plus, Edit, Trash2, CheckCircle, Star, ImageIcon, X, Check, Lock, Loader2 } from 'lucide-react';
 
 interface Provider {
   id: string;
   name: string;
   phone: string;
+  photo_url: string | null;
   rating: number;
   verified: boolean;
   featured: boolean;
@@ -20,9 +21,218 @@ interface Provider {
   created_at: string;
 }
 
+interface PhotoItem {
+  url: string;
+  storage_path: string;
+  label: string;
+  type: 'profile' | 'cedula';
+  selectable: boolean;
+}
+
+// ─── Photo Panel Modal ─────────────────────────────────────────────
+function PhotoPanel({
+  provider,
+  onClose,
+  onPhotoSaved,
+}: {
+  provider: Provider;
+  onClose: () => void;
+  onPhotoSaved: () => void;
+}) {
+  const [photos, setPhotos] = useState<PhotoItem[]>([]);
+  const [selectedPath, setSelectedPath] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch(`/api/admin/providers/${provider.id}/photos`);
+        if (res.ok) {
+          const data = await res.json();
+          setPhotos(data.photos || []);
+          setSelectedPath(data.selected_photo_url || null);
+        }
+      } catch {
+        // ignore
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, [provider.id]);
+
+  const selectPhoto = useCallback(async (photo: PhotoItem) => {
+    if (!photo.selectable || saving) return;
+    setSaving(photo.storage_path);
+
+    try {
+      const res = await fetch(`/api/admin/providers/${provider.id}/photos`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ photo_url: photo.storage_path }),
+      });
+
+      if (res.ok) {
+        setSelectedPath(photo.storage_path);
+        onPhotoSaved();
+      }
+    } catch {
+      // ignore
+    } finally {
+      setSaving(null);
+    }
+  }, [provider.id, saving, onPhotoSaved]);
+
+  // Close on Escape
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [onClose]);
+
+  const selectablePhotos = photos.filter((p) => p.selectable);
+  const cedulaPhotos = photos.filter((p) => p.type === 'cedula');
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+
+      {/* Panel */}
+      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto">
+        {/* Header */}
+        <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
+          <div>
+            <h2 className="text-lg font-bold text-gray-900">Foto de tarjeta</h2>
+            <p className="text-sm text-gray-500">{provider.name}</p>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            <X className="w-5 h-5 text-gray-500" />
+          </button>
+        </div>
+
+        <div className="p-6">
+          {loading ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
+            </div>
+          ) : photos.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <ImageIcon className="w-7 h-7 text-gray-400" />
+              </div>
+              <p className="text-gray-500 text-sm">No hay fotos disponibles</p>
+            </div>
+          ) : (
+            <>
+              {/* Selectable photos */}
+              {selectablePhotos.length > 0 && (
+                <div className="mb-6">
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">
+                    Haz clic para usar en la tarjeta pública
+                  </p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {selectablePhotos.map((photo) => {
+                      const isSelected = selectedPath === photo.storage_path;
+                      const isSaving = saving === photo.storage_path;
+                      return (
+                        <button
+                          key={photo.storage_path}
+                          type="button"
+                          onClick={() => selectPhoto(photo)}
+                          disabled={!!saving}
+                          className={`relative rounded-xl overflow-hidden transition-all ${
+                            isSelected
+                              ? 'ring-3 ring-green-500 shadow-lg shadow-green-100'
+                              : 'ring-1 ring-gray-200 hover:ring-primary-300 hover:shadow-md'
+                          } ${saving && !isSaving ? 'opacity-50' : ''}`}
+                        >
+                          <div className="aspect-square bg-gray-100">
+                            <img
+                              src={photo.url}
+                              alt={photo.label}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+
+                          {/* Selected checkmark */}
+                          {isSelected && !isSaving && (
+                            <div className="absolute top-2 right-2 bg-green-500 rounded-full p-1.5 shadow-lg">
+                              <Check className="w-3.5 h-3.5 text-white" />
+                            </div>
+                          )}
+
+                          {/* Saving spinner */}
+                          {isSaving && (
+                            <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                              <div className="bg-white rounded-full p-2 shadow-lg">
+                                <Loader2 className="w-5 h-5 animate-spin text-primary-600" />
+                              </div>
+                            </div>
+                          )}
+
+                          <div className={`px-3 py-1.5 text-xs font-medium text-center ${
+                            isSelected ? 'bg-green-50 text-green-700' : 'bg-gray-50 text-gray-600'
+                          }`}>
+                            {isSelected ? 'Foto actual de tarjeta' : photo.label}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Cédula — verification only */}
+              {cedulaPhotos.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <Lock className="w-3.5 h-3.5 text-gray-400" />
+                    <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">
+                      Cédula — verificación privada
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {cedulaPhotos.map((photo) => (
+                      <div
+                        key={photo.storage_path}
+                        className="rounded-xl overflow-hidden ring-1 ring-gray-200 opacity-60"
+                      >
+                        <div className="aspect-square bg-gray-100">
+                          <img
+                            src={photo.url}
+                            alt={photo.label}
+                            className="w-full h-full object-cover grayscale-[30%]"
+                          />
+                        </div>
+                        <div className="px-3 py-1.5 text-xs font-medium text-center bg-gray-100 text-gray-400 flex items-center justify-center gap-1">
+                          <Lock className="w-3 h-3" />
+                          Solo verificación
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main Page ──────────────────────────────────────────────────────
 export default function AdminProvidersPage() {
   const [providers, setProviders] = useState<Provider[]>([]);
   const [loading, setLoading] = useState(true);
+  const [photoPanelProvider, setPhotoPanelProvider] = useState<Provider | null>(null);
 
   useEffect(() => {
     fetchProviders();
@@ -32,7 +242,7 @@ export default function AdminProvidersPage() {
     const supabase = createClient();
     const { data } = await supabase
       .from('providers')
-      .select('id, name, phone, rating, verified, featured, status, speaks_english, created_at')
+      .select('id, name, phone, photo_url, rating, verified, featured, status, speaks_english, created_at')
       .order('created_at', { ascending: false });
 
     setProviders(data || []);
@@ -112,10 +322,28 @@ export default function AdminProvidersPage() {
                 {providers.map((provider) => (
                   <tr key={provider.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4">
-                      <div className="font-medium text-gray-900">{provider.name}</div>
-                      {provider.speaks_english && (
-                        <span className="text-xs text-gray-500">Habla inglés</span>
-                      )}
+                      <div className="flex items-center gap-3">
+                        {/* Thumbnail */}
+                        <div className="w-9 h-9 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                          {provider.photo_url ? (
+                            <img
+                              src={`/api/providers/${provider.id}/photo`}
+                              alt=""
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-xs font-bold">
+                              {provider.name.charAt(0)}
+                            </div>
+                          )}
+                        </div>
+                        <div>
+                          <div className="font-medium text-gray-900">{provider.name}</div>
+                          {provider.speaks_english && (
+                            <span className="text-xs text-gray-500">Habla inglés</span>
+                          )}
+                        </div>
+                      </div>
                     </td>
                     <td className="px-6 py-4 text-gray-600">{provider.phone}</td>
                     <td className="px-6 py-4">
@@ -157,6 +385,15 @@ export default function AdminProvidersPage() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex justify-end gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setPhotoPanelProvider(provider)}
+                          className="text-purple-600 hover:text-purple-700 hover:bg-purple-50"
+                          title="Foto de tarjeta"
+                        >
+                          <ImageIcon className="w-4 h-4" />
+                        </Button>
                         <Link href={`/admin/providers/${provider.id}/edit`}>
                           <Button variant="outline" size="sm">
                             <Edit className="w-4 h-4" />
@@ -178,6 +415,15 @@ export default function AdminProvidersPage() {
             </table>
           </div>
         </div>
+      )}
+
+      {/* Photo Panel Modal */}
+      {photoPanelProvider && (
+        <PhotoPanel
+          provider={photoPanelProvider}
+          onClose={() => setPhotoPanelProvider(null)}
+          onPhotoSaved={fetchProviders}
+        />
       )}
     </div>
   );
