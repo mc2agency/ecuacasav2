@@ -350,8 +350,7 @@ export default function EditProviderPage() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
             {/* ========== STEP 1: Información básica ========== */}
-            {step === 0 && (
-              <>
+            <div className={step !== 0 ? 'hidden' : 'space-y-6'}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <Label htmlFor="name">Nombre *</Label>
@@ -393,12 +392,10 @@ export default function EditProviderPage() {
                     </select>
                   </div>
                 </div>
-              </>
-            )}
+            </div>
 
             {/* ========== STEP 2: Verificación de identidad ========== */}
-            {step === 1 && (
-              <>
+            <div className={step !== 1 ? 'hidden' : 'space-y-6'}>
                 <div>
                   <Label htmlFor="cedula_number">Número de cédula</Label>
                   <Input id="cedula_number" {...register('cedula_number')} className="mt-1" placeholder="0101234567" />
@@ -449,12 +446,10 @@ export default function EditProviderPage() {
                     />
                   </label>
                 </div>
-              </>
-            )}
+            </div>
 
             {/* ========== STEP 3: Servicios y cobertura ========== */}
-            {step === 2 && (
-              <>
+            <div className={step !== 2 ? 'hidden' : 'space-y-6'}>
                 <div>
                   <Label>Servicios *</Label>
                   <div className="flex flex-wrap gap-2 mt-2">
@@ -526,12 +521,10 @@ export default function EditProviderPage() {
                     <span>Destacado</span>
                   </label>
                 </div>
-              </>
-            )}
+            </div>
 
             {/* ========== STEP 4: Últimos detalles ========== */}
-            {step === 3 && (
-              <>
+            <div className={step !== 3 ? 'hidden' : 'space-y-6'}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <Label htmlFor="price_range">Rango de precios</Label>
@@ -606,8 +599,7 @@ export default function EditProviderPage() {
                   <Label htmlFor="description_en">Descripción (English)</Label>
                   <Textarea id="description_en" {...register('description_en')} className="mt-1" rows={3} />
                 </div>
-              </>
-            )}
+            </div>
 
             {/* ========== Navigation Buttons ========== */}
             <div className="flex items-center gap-4 pt-2">
