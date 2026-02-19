@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { X } from 'lucide-react';
+import { X, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LanguageToggle } from '@/components/shared/language-toggle';
 import { useTranslation } from '@/hooks/use-translation';
@@ -12,9 +12,10 @@ interface MobileMenuProps {
   open: boolean;
   onClose: () => void;
   navLinks: { href: string; label: string }[];
+  isAdmin?: boolean;
 }
 
-export function MobileMenu({ open, onClose, navLinks }: MobileMenuProps) {
+export function MobileMenu({ open, onClose, navLinks, isAdmin }: MobileMenuProps) {
   const pathname = usePathname();
   const { t } = useTranslation();
   const prevPathname = useRef(pathname);
@@ -101,13 +102,15 @@ export function MobileMenu({ open, onClose, navLinks }: MobileMenuProps) {
             {/* Language Toggle */}
             <LanguageToggle variant="button" className="w-full justify-center" />
 
-            {/* Admin Link - Only show when authenticated */}
-            {/* TODO: Add auth check in Phase 7 */}
-            {/* <Link href="/admin">
-              <Button variant="outline" className="w-full">
-                {t('nav.admin')}
-              </Button>
-            </Link> */}
+            {/* Admin Link - Only visible to authenticated admins */}
+            {isAdmin && (
+              <Link href="/admin">
+                <Button variant="outline" className="w-full flex items-center justify-center gap-2">
+                  <Settings className="w-4 h-4" />
+                  Admin
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
