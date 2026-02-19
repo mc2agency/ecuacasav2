@@ -1,30 +1,30 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 /**
  * Returns true if the current user is an authenticated admin.
- * Calls the server-side auth check endpoint which validates
- * the session cookie against the admin_users table.
+ * Re-checks on every route change so the gear icon appears
+ * after logging in at /admin and navigating back to the site.
  */
 export function useIsAdmin(): boolean {
   const [isAdmin, setIsAdmin] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     let cancelled = false;
 
     fetch('/api/admin/auth/check')
       .then((res) => {
-        if (!cancelled && res.ok) {
-          setIsAdmin(true);
-        }
+        if (!cancelled) setIsAdmin(res.ok);
       })
       .catch(() => {
-        // Not admin — leave false
+        if (!cancelled) setIsAdmin(false);
       });
 
     return () => { cancelled = true; };
-  }, []);
+  }, [pathname]);
 
   return isAdmin;
 }
