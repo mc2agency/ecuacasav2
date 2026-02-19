@@ -25,17 +25,17 @@ const registrationSchema = z.object({
   services: z.array(z.string()).min(1, 'Selecciona al menos un servicio'),
   areas_served: z.array(z.string()).min(1, 'Selecciona al menos un sector'),
   speaks_english: z.boolean(),
-  reference1_name: z.string().min(2, 'Ingresa el nombre de la referencia'),
-  reference1_phone: z.string()
-    .refine((v) => isValidEcuadorPhone(v), 'Formato inválido. Usa 09XXXXXXXX o +593XXXXXXXXX'),
-  reference2_name: z.string().min(2, 'Ingresa el nombre de la referencia'),
-  reference2_phone: z.string()
-    .refine((v) => isValidEcuadorPhone(v), 'Formato inválido. Usa 09XXXXXXXX o +593XXXXXXXXX'),
+  reference1_name: z.string().optional(),
+  reference1_phone: z.string().optional()
+    .refine((v) => !v || isValidEcuadorPhone(v), 'Formato inválido. Usa 09XXXXXXXX o +593XXXXXXXXX'),
+  reference2_name: z.string().optional(),
+  reference2_phone: z.string().optional()
+    .refine((v) => !v || isValidEcuadorPhone(v), 'Formato inválido. Usa 09XXXXXXXX o +593XXXXXXXXX'),
   message: z.string().optional(),
 }).superRefine((data, ctx) => {
   const ownPhone = normalizeEcuadorPhone(data.phone);
-  const ref1Phone = normalizeEcuadorPhone(data.reference1_phone);
-  const ref2Phone = normalizeEcuadorPhone(data.reference2_phone);
+  const ref1Phone = data.reference1_phone ? normalizeEcuadorPhone(data.reference1_phone) : '';
+  const ref2Phone = data.reference2_phone ? normalizeEcuadorPhone(data.reference2_phone) : '';
 
   if (ref1Phone && ownPhone && ref1Phone === ownPhone) {
     ctx.addIssue({
@@ -134,16 +134,6 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegistrationForm) => {
     setFileError(null);
-
-    if (!cedulaPhoto) {
-      setFileError('La foto de cédula es obligatoria');
-      return;
-    }
-    if (!profilePhoto) {
-      setFileError('La foto de perfil es obligatoria');
-      return;
-    }
-
     setSubmitting(true);
 
     try {
@@ -160,6 +150,20 @@ export default function RegisterPage() {
         fullPhone = `+593${fullPhone}`;
       }
 
+      // Check for duplicate WhatsApp number
+      const supabase = createClient();
+      const { data: existing } = await supabase
+        .from('registration_requests')
+        .select('id')
+        .eq('phone', fullPhone)
+        .limit(1);
+
+      if (existing && existing.length > 0) {
+        setFileError('Este número de WhatsApp ya tiene una solicitud registrada.');
+        setSubmitting(false);
+        return;
+      }
+
       const formData = new FormData();
       formData.append('name', data.name);
       formData.append('phone', fullPhone);
@@ -168,13 +172,13 @@ export default function RegisterPage() {
       formData.append('services', JSON.stringify(data.services));
       formData.append('areas_served', JSON.stringify(data.areas_served));
       formData.append('speaks_english', String(data.speaks_english));
-      formData.append('reference1_name', data.reference1_name);
-      formData.append('reference1_phone', data.reference1_phone);
-      formData.append('reference2_name', data.reference2_name);
-      formData.append('reference2_phone', data.reference2_phone);
+      formData.append('reference1_name', data.reference1_name || '');
+      formData.append('reference1_phone', data.reference1_phone || '');
+      formData.append('reference2_name', data.reference2_name || '');
+      formData.append('reference2_phone', data.reference2_phone || '');
       formData.append('message', data.message || '');
-      formData.append('cedula_photo', cedulaPhoto);
-      formData.append('profile_photo', profilePhoto);
+      if (cedulaPhoto) formData.append('cedula_photo', cedulaPhoto);
+      if (profilePhoto) formData.append('profile_photo', profilePhoto);
 
       const response = await fetch('/api/register', {
         method: 'POST',
@@ -320,7 +324,7 @@ export default function RegisterPage() {
 
               {/* Cédula Photo Upload */}
               <div>
-                <Label htmlFor="cedula_photo">Foto de cédula *</Label>
+                <Label htmlFor="cedula_photo">Foto de cédula (opcional)</Label>
                 <p className="text-sm text-gray-500 mb-2">Sube una foto clara de tu cédula de identidad</p>
                 <label
                   htmlFor="cedula_photo"
@@ -347,7 +351,7 @@ export default function RegisterPage() {
 
               {/* Profile Photo Upload */}
               <div>
-                <Label htmlFor="profile_photo">Foto de perfil *</Label>
+                <Label htmlFor="profile_photo">Foto de perfil (opcional)</Label>
                 <p className="text-sm text-gray-500 mb-2">Una foto tuya profesional para tu perfil</p>
                 <label
                   htmlFor="profile_photo"
@@ -442,7 +446,7 @@ export default function RegisterPage() {
 
               {/* Reference 1 */}
               <div className="border rounded-lg p-4 space-y-4">
-                <h3 className="font-semibold text-gray-900">Referencia 1 *</h3>
+                <h3 className="font-semibold text-gray-900">Referencia 1 (opcional)</h3>
                 <div>
                   <Label htmlFor="reference1_name">Nombre completo</Label>
                   <Input
@@ -472,7 +476,7 @@ export default function RegisterPage() {
 
               {/* Reference 2 */}
               <div className="border rounded-lg p-4 space-y-4">
-                <h3 className="font-semibold text-gray-900">Referencia 2 *</h3>
+                <h3 className="font-semibold text-gray-900">Referencia 2 (opcional)</h3>
                 <div>
                   <Label htmlFor="reference2_name">Nombre completo</Label>
                   <Input
