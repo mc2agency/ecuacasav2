@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
+import { BreadcrumbJsonLd } from '@/components/seo/json-ld';
 import { servicesRepository } from '@/lib/repositories';
 import { SERVICE_ICONS, DEFAULT_SERVICE_ICON } from '@/lib/constants';
+import { ChevronRight } from 'lucide-react';
 
 // ISR: revalidate every hour
 export const revalidate = 3600;
@@ -24,7 +26,26 @@ export default async function ServicesPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Inicio', url: 'https://ecuacasa.com' },
+          { name: 'Servicios', url: 'https://ecuacasa.com/services' },
+        ]}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        {/* Breadcrumbs */}
+        <nav aria-label="Breadcrumb" className="mb-8">
+          <ol className="flex items-center gap-1.5 text-sm text-gray-500">
+            <li>
+              <Link href="/" className="hover:text-accent-600 transition-colors">
+                Inicio
+              </Link>
+            </li>
+            <li><ChevronRight className="w-3.5 h-3.5" /></li>
+            <li className="text-gray-900 font-medium">Servicios</li>
+          </ol>
+        </nav>
+
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ServiceJsonLd } from '@/components/seo/json-ld';
+import { ServiceJsonLd, BreadcrumbJsonLd, FAQJsonLd } from '@/components/seo/json-ld';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { RatingStars } from '@/components/shared/rating-stars';
@@ -9,22 +9,15 @@ import { WhatsAppButton } from '@/components/shared/whatsapp-button';
 import { servicesRepository, providersRepository } from '@/lib/repositories';
 import { SERVICE_ICONS, DEFAULT_SERVICE_ICON } from '@/lib/constants';
 import { getProviderPlaceholder, getBlurDataURL } from '@/lib/utils/placeholders';
-import { CheckCircle, Clock, ArrowLeft } from 'lucide-react';
+import { getServiceContent } from '@/lib/seo/service-content';
+import { CheckCircle, Clock, ChevronRight } from 'lucide-react';
 
 interface ServicePageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Custom SEO titles/descriptions per service slug
+// Fallback SEO for services without rich content
 const SERVICE_SEO: Record<string, { title: string; description: string }> = {
-  carpinteria: {
-    title: 'Carpinteros en Cuenca Ecuador | Carpintería a Domicilio',
-    description: 'Encuentra carpinteros verificados en Cuenca. Muebles a medida, puertas, closets, reparaciones. Servicio a domicilio, presupuesto sin compromiso. Respuesta en 2 horas.',
-  },
-  plomeria: {
-    title: 'Plomeros en Cuenca Ecuador | Plomería a Domicilio',
-    description: 'Plomeros verificados en Cuenca. Reparaciones, instalaciones, emergencias 24h. Servicio a domicilio, presupuesto sin compromiso. Respuesta en 2 horas.',
-  },
   limpieza: {
     title: 'Limpieza de Casas en Cuenca Ecuador | Servicio a Domicilio',
     description: 'Servicio de limpieza de casas y departamentos en Cuenca. Personal verificado, limpieza profunda, mantenimiento. Presupuesto sin compromiso.',
@@ -36,10 +29,6 @@ const SERVICE_SEO: Record<string, { title: string; description: string }> = {
   jardineria: {
     title: 'Jardineros en Cuenca Ecuador | Jardinería y Mantenimiento',
     description: 'Jardineros verificados en Cuenca. Mantenimiento de jardines, paisajismo, poda, limpieza. Servicio a domicilio. Presupuesto sin compromiso.',
-  },
-  pintura: {
-    title: 'Pintores en Cuenca Ecuador | Pintura de Casas y Fachadas',
-    description: 'Pintores verificados en Cuenca. Pintura interior, exterior, fachadas. Servicio profesional a domicilio. Presupuesto sin compromiso.',
   },
   handyman: {
     title: 'Handyman Services in Cuenca Ecuador | Verified Professionals',
@@ -55,14 +44,29 @@ export async function generateMetadata({ params }: ServicePageProps) {
     return { title: 'Servicio no encontrado | EcuaCasa' };
   }
 
-  const customSeo = SERVICE_SEO[slug];
+  const seoContent = getServiceContent(slug);
+  const fallback = SERVICE_SEO[slug];
+
+  const title = seoContent?.metaTitle || fallback?.title || `${service.name_es} en Cuenca | EcuaCasa`;
+  const description = seoContent?.metaDescription || fallback?.description || service.description_es;
 
   return {
-    title: customSeo?.title || `${service.name_es} en Cuenca | EcuaCasa`,
-    description: customSeo?.description || service.description_es,
+    title,
+    description,
+    keywords: seoContent
+      ? `${service.name_es}, ${service.name_es} cuenca, ${service.name_es} a domicilio, ecuacasa`
+      : undefined,
     openGraph: {
-      title: (customSeo?.title || `${service.name_es} en Cuenca`) + ' | EcuaCasa',
-      description: customSeo?.description || service.description_es,
+      title,
+      description,
+      url: `https://ecuacasa.com/services/${slug}`,
+    },
+    alternates: {
+      canonical: `/services/${slug}`,
+      languages: {
+        'es': `/services/${slug}`,
+        'en': `/services/${slug}`,
+      },
     },
   };
 }
@@ -79,23 +83,53 @@ export default async function ServicePage({ params }: ServicePageProps) {
   }
 
   const Icon = SERVICE_ICONS[service.slug] || DEFAULT_SERVICE_ICON;
+  const seoContent = getServiceContent(slug);
+
+  // Compute aggregate rating from providers
+  const ratedProviders = providers.filter((p) => p.review_count > 0);
+  const totalReviews = ratedProviders.reduce((sum, p) => sum + p.review_count, 0);
+  const avgRating =
+    ratedProviders.length > 0
+      ? ratedProviders.reduce((sum, p) => sum + p.rating * p.review_count, 0) / totalReviews
+      : undefined;
+
+  const breadcrumbItems = [
+    { name: 'Inicio', url: 'https://ecuacasa.com' },
+    { name: 'Servicios', url: 'https://ecuacasa.com/services' },
+    { name: service.name_es, url: `https://ecuacasa.com/services/${slug}` },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <ServiceJsonLd
-        name={service.name_es}
-        description={service.description_es}
+        name={seoContent?.h1 || service.name_es}
+        description={seoContent?.metaDescription || service.description_es}
         slug={service.slug}
+        rating={avgRating ? Math.round(avgRating * 10) / 10 : undefined}
+        reviewCount={totalReviews > 0 ? totalReviews : undefined}
       />
+      <BreadcrumbJsonLd items={breadcrumbItems} />
+      {seoContent && <FAQJsonLd faqs={seoContent.faqs} />}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        {/* Back Link */}
-        <Link
-          href="/services"
-          className="inline-flex items-center text-gray-600 hover:text-accent-600 mb-8 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Todos los servicios
-        </Link>
+        {/* Breadcrumbs */}
+        <nav aria-label="Breadcrumb" className="mb-8">
+          <ol className="flex items-center gap-1.5 text-sm text-gray-500">
+            <li>
+              <Link href="/" className="hover:text-accent-600 transition-colors">
+                Inicio
+              </Link>
+            </li>
+            <li><ChevronRight className="w-3.5 h-3.5" /></li>
+            <li>
+              <Link href="/services" className="hover:text-accent-600 transition-colors">
+                Servicios
+              </Link>
+            </li>
+            <li><ChevronRight className="w-3.5 h-3.5" /></li>
+            <li className="text-gray-900 font-medium">{service.name_es}</li>
+          </ol>
+        </nav>
 
         {/* Request Service Banner */}
         <div className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-100 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -115,20 +149,36 @@ export default async function ServicePage({ params }: ServicePageProps) {
           </Link>
         </div>
 
-        {/* Service Header */}
+        {/* Service Header — keyword-rich H1 */}
         <div className="flex items-start gap-6 mb-12">
           <div className="w-20 h-20 bg-gradient-to-br from-primary-50 to-blue-100 rounded-2xl flex items-center justify-center flex-shrink-0">
             <Icon className="w-10 h-10 text-primary-600" />
           </div>
           <div>
             <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-3">
-              {service.name_es}
+              {seoContent?.h1 || service.name_es}
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl">
               {service.description_es}
             </p>
           </div>
         </div>
+
+        {/* Rich Content Section */}
+        {seoContent && (
+          <section className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              {service.name_es} profesional en Cuenca
+            </h2>
+            <div className="prose prose-gray max-w-none">
+              {seoContent.content.split('\n\n').map((paragraph, i) => (
+                <p key={i} className="text-gray-700 leading-relaxed mb-4">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Providers Count */}
         <div className="mb-8">
@@ -148,7 +198,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
                     <div className="relative h-48 w-full bg-gradient-to-br from-primary-50 to-blue-100 overflow-hidden">
                       <Image
                         src={getProviderPlaceholder(provider.name)}
-                        alt={provider.name}
+                        alt={`${provider.name} — ${service.name_es} verificado en Cuenca`}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                         placeholder="blur"
@@ -229,6 +279,60 @@ export default async function ServicePage({ params }: ServicePageProps) {
               Solicitar este servicio
             </Link>
           </div>
+        )}
+
+        {/* FAQ Section */}
+        {seoContent && (
+          <section className="mt-16">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              Preguntas Frecuentes sobre {service.name_es} en Cuenca
+            </h2>
+            <div className="space-y-4">
+              {seoContent.faqs.map((faq, i) => (
+                <details
+                  key={i}
+                  className="group bg-white border-2 border-gray-100 rounded-xl overflow-hidden"
+                >
+                  <summary className="flex items-center justify-between cursor-pointer p-5 font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+                    <h3 className="text-left pr-4">{faq.question}</h3>
+                    <ChevronRight className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-90 flex-shrink-0" />
+                  </summary>
+                  <div className="px-5 pb-5 text-gray-700 leading-relaxed">
+                    {faq.answer}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Related Services */}
+        {seoContent && seoContent.relatedServices.length > 0 && (
+          <section className="mt-16">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              Servicios Relacionados
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {seoContent.relatedServices.map((related) => {
+                const RelatedIcon = SERVICE_ICONS[related.slug] || DEFAULT_SERVICE_ICON;
+                return (
+                  <Link
+                    key={related.slug}
+                    href={`/services/${related.slug}`}
+                    className="flex items-center gap-4 p-4 bg-white border-2 border-gray-100 rounded-xl hover:border-accent-200 hover:shadow-md transition-all"
+                  >
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary-50 to-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <RelatedIcon className="w-6 h-6 text-primary-600" />
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-900">{related.label}</span>
+                      <p className="text-sm text-gray-500">Ver profesionales</p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
         )}
       </div>
     </div>
