@@ -11,6 +11,21 @@ function getSupabaseClient() {
 }
 
 /**
+ * Extracts the storage path from a raw path or a full Supabase public URL.
+ */
+function extractStoragePath(input: string): string {
+  if (!input) return input;
+
+  const publicUrlMarker = `/storage/v1/object/public/${BUCKET}/`;
+  const idx = input.indexOf(publicUrlMarker);
+  if (idx !== -1) {
+    return decodeURIComponent(input.substring(idx + publicUrlMarker.length));
+  }
+
+  return input;
+}
+
+/**
  * Public endpoint to serve a provider's card photo from private storage.
  * GET /api/providers/[id]/photo
  */
@@ -32,8 +47,10 @@ export async function GET(
     return NextResponse.json({ error: 'No photo' }, { status: 404 });
   }
 
+  // Normalize the path (handle both raw paths and full Supabase URLs)
+  const path = extractStoragePath(provider.photo_url);
+
   // Ensure we never serve a cedula photo publicly
-  const path = provider.photo_url;
   if (path.includes('/cedula.') || path.includes('/cedula_')) {
     return NextResponse.json({ error: 'No photo' }, { status: 404 });
   }

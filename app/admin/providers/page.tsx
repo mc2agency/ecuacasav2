@@ -43,6 +43,7 @@ function PhotoPanel({
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -52,9 +53,12 @@ function PhotoPanel({
           const data = await res.json();
           setPhotos(data.photos || []);
           setSelectedPath(data.selected_photo_url || null);
+        } else {
+          const errData = await res.json().catch(() => null);
+          setError(`Error ${res.status}: ${errData?.error || res.statusText}`);
         }
-      } catch {
-        // ignore
+      } catch (err) {
+        setError('Error de conexión');
       } finally {
         setLoading(false);
       }
@@ -122,12 +126,21 @@ function PhotoPanel({
             <div className="flex items-center justify-center py-12">
               <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
             </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                <X className="w-7 h-7 text-red-400" />
+              </div>
+              <p className="text-red-600 text-sm font-medium mb-1">No se pudieron cargar las fotos</p>
+              <p className="text-gray-400 text-xs">{error}</p>
+            </div>
           ) : photos.length === 0 ? (
             <div className="text-center py-12">
               <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <ImageIcon className="w-7 h-7 text-gray-400" />
               </div>
               <p className="text-gray-500 text-sm">No hay fotos disponibles</p>
+              <p className="text-gray-400 text-xs mt-1">Este profesional no tiene fotos en el sistema</p>
             </div>
           ) : (
             <>
