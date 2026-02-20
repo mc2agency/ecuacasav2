@@ -45,10 +45,14 @@ export function ServiceJsonLd({
   name,
   description,
   slug,
+  rating,
+  reviewCount,
 }: {
   name: string;
   description: string;
   slug: string;
+  rating?: number;
+  reviewCount?: number;
 }) {
   return (
     <JsonLd
@@ -58,16 +62,81 @@ export function ServiceJsonLd({
         name,
         description,
         url: `https://ecuacasa.com/services/${slug}`,
+        providerMobility: "dynamic",
         provider: {
-          "@type": "Organization",
+          "@type": "LocalBusiness",
           name: "EcuaCasa",
           url: "https://ecuacasa.com",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Cuenca",
+            addressRegion: "Azuay",
+            addressCountry: "EC",
+          },
+          knowsLanguage: ["es", "en"],
         },
         areaServed: {
-          "@type": "City",
-          name: "Cuenca",
-          addressCountry: "EC",
+          "@type": "GeoCircle",
+          geoMidpoint: {
+            "@type": "GeoCoordinates",
+            latitude: -2.9001,
+            longitude: -79.0059,
+          },
+          geoRadius: "30000",
         },
+        ...(reviewCount && reviewCount > 0 && rating && {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: rating,
+            reviewCount,
+            bestRating: 5,
+            worstRating: 1,
+          },
+        }),
+      }}
+    />
+  );
+}
+
+export function BreadcrumbJsonLd({
+  items,
+}: {
+  items: Array<{ name: string; url: string }>;
+}) {
+  return (
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: items.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.name,
+          item: item.url,
+        })),
+      }}
+    />
+  );
+}
+
+export function FAQJsonLd({
+  faqs,
+}: {
+  faqs: Array<{ question: string; answer: string }>;
+}) {
+  return (
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
       }}
     />
   );

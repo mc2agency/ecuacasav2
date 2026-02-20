@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -8,13 +7,13 @@ import { RatingStars } from '@/components/shared/rating-stars';
 import { WhatsAppButton } from '@/components/shared/whatsapp-button';
 import { useTranslation } from '@/hooks/use-translation';
 import { getLocalizedField } from '@/lib/i18n/helpers';
-import { getProviderPlaceholder, getBlurDataURL } from '@/lib/utils/placeholders';
 import { CheckCircle, Clock } from 'lucide-react';
 
 interface Provider {
   id: string;
   slug: string;
   name: string;
+  photo_url?: string | null;
   description_es: string;
   description_en: string;
   rating: number;
@@ -59,10 +58,17 @@ export function FeaturedProviders({ providers }: FeaturedProvidersProps) {
                 {/* Provider Header with Avatar */}
                 <Link href={`/providers/${provider.slug}`}>
                   <div className="relative h-48 w-full bg-gradient-to-br from-purple-50 to-pink-50 overflow-hidden flex items-center justify-center">
-                    {/* Gradient Avatar */}
-                    <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-xl group-hover:scale-110 transition-transform">
-                      {provider.name?.charAt(0) || 'P'}
-                    </div>
+                    {provider.photo_url ? (
+                      <img
+                        src={`/api/providers/${provider.id}/photo`}
+                        alt={provider.name}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-xl group-hover:scale-110 transition-transform">
+                        {provider.name?.charAt(0) || 'P'}
+                      </div>
+                    )}
                     {/* Verified Badge Overlay */}
                     {provider.verified && (
                       <div className="absolute top-3 right-3 bg-green-500 text-white px-2.5 py-1 rounded-full flex items-center gap-1 text-xs font-medium shadow-lg">

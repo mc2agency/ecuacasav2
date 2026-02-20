@@ -78,12 +78,12 @@ export const registrationFormSchema = z.object({
   services_interested: z.array(z.string()).min(1, 'Select at least one service'),
   areas_served: z.array(z.string()).min(1, 'Select at least one area'),
   speaks_english: z.boolean().default(false),
-  reference1_name: z.string().min(2, 'Reference name is required'),
-  reference1_phone: z.string()
-    .refine((v) => isValidEcuadorPhone(v), 'Formato inválido. Usa 09XXXXXXXX o +593XXXXXXXXX'),
-  reference2_name: z.string().min(2, 'Reference name is required'),
-  reference2_phone: z.string()
-    .refine((v) => isValidEcuadorPhone(v), 'Formato inválido. Usa 09XXXXXXXX o +593XXXXXXXXX'),
+  reference1_name: z.string().optional(),
+  reference1_phone: z.string().optional()
+    .refine((v) => !v || isValidEcuadorPhone(v), 'Formato inválido. Usa 09XXXXXXXX o +593XXXXXXXXX'),
+  reference2_name: z.string().optional(),
+  reference2_phone: z.string().optional()
+    .refine((v) => !v || isValidEcuadorPhone(v), 'Formato inválido. Usa 09XXXXXXXX o +593XXXXXXXXX'),
   message: z.string().max(500, 'Message must be less than 500 characters').optional(),
 });
 

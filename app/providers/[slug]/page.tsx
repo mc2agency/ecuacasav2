@@ -13,6 +13,7 @@ import { providersRepository } from '@/lib/repositories';
 import { getProviderPlaceholder, getBlurDataURL } from '@/lib/utils/placeholders';
 import { CheckCircle, Clock, DollarSign, ArrowLeft, MapPin, Briefcase } from 'lucide-react';
 import { ProviderReviews } from '@/components/providers/provider-reviews';
+import { TrackProviderView } from '@/components/shared/track-provider-view';
 
 interface ProviderPageProps {
   params: Promise<{ slug: string }>;
@@ -42,6 +43,7 @@ export default async function ProviderPage({ params }: ProviderPageProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+      <TrackProviderView slug={slug} />
       <ProviderJsonLd
         name={provider.name}
         description={provider.description_es || provider.description_en || ''}
@@ -83,15 +85,23 @@ export default async function ProviderPage({ params }: ProviderPageProps) {
               <div className="flex flex-col sm:flex-row items-start gap-6">
                 {/* Photo */}
                 <div className="relative w-32 h-32 rounded-2xl overflow-hidden border-4 border-white/30 flex-shrink-0">
-                  <Image
-                    src={getProviderPlaceholder(provider.name)}
-                    alt={provider.name}
-                    fill
-                    className="object-cover"
-                    placeholder="blur"
-                    blurDataURL={getBlurDataURL()}
-                    priority
-                  />
+                  {provider.photo_url ? (
+                    <img
+                      src={`/api/providers/${provider.id}/photo`}
+                      alt={provider.name}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={getProviderPlaceholder(provider.name)}
+                      alt={provider.name}
+                      fill
+                      className="object-cover"
+                      placeholder="blur"
+                      blurDataURL={getBlurDataURL()}
+                      priority
+                    />
+                  )}
                 </div>
 
                 {/* Info */}

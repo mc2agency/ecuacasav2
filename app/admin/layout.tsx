@@ -27,15 +27,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   async function checkAuth() {
     try {
-      const supabase = createClient();
-      const { data: { user } } = await supabase.auth.getUser();
-
-      if (user?.email) {
-        // Verify admin status via API (checks admin_users table server-side)
-        const res = await fetch('/api/admin/auth/check');
-        if (res.ok) {
-          setIsAuthenticated(true);
-        }
+      const res = await fetch('/api/admin/auth/check');
+      if (res.ok) {
+        setIsAuthenticated(true);
       }
     } catch {
       // Not authenticated
@@ -50,16 +44,24 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     setError('');
 
     try {
-      const res = await fetch('/api/admin/auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+      // Sign in with the browser Supabase client so session cookies
+      // are set via document.cookie and reliably sent on future requests
+      const supabase = createClient();
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
 
-      const data = await res.json();
+      if (signInError) {
+        setError('Credenciales incorrectas');
+        return;
+      }
 
+      // Verify the user is in the admin_users table
+      const res = await fetch('/api/admin/auth/check');
       if (!res.ok) {
-        setError(data.error || 'Error al iniciar sesión');
+        await supabase.auth.signOut();
+        setError('No autorizado');
         return;
       }
 
@@ -73,7 +75,6 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/admin/auth', { method: 'DELETE' });
       const supabase = createClient();
       await supabase.auth.signOut();
     } catch {

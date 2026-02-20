@@ -52,6 +52,7 @@ export interface ProviderWithRelations extends Provider {
 export interface RegistrationRequest {
   id: string;
   name: string;
+  display_name?: string;
   phone: string;
   email?: string;
   services_interested?: string[];
@@ -111,6 +112,7 @@ export interface ProviderFormData {
 
 export interface RegistrationFormData {
   name: string;
+  display_name: string;
   phone: string;
   email?: string;
   services_interested: string[];

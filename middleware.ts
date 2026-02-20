@@ -2,8 +2,9 @@ import { updateSession } from '@/lib/supabase/middleware';
 import { type NextRequest, NextResponse } from 'next/server';
 
 export async function middleware(request: NextRequest) {
-  // Only check auth for admin routes - skip Supabase calls for public pages
-  if (request.nextUrl.pathname.startsWith('/admin')) {
+  // Refresh Supabase session for admin routes and admin API routes
+  const path = request.nextUrl.pathname;
+  if (path.startsWith('/admin') || path.startsWith('/api/admin')) {
     return await updateSession(request);
   }
   

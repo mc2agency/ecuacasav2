@@ -5,12 +5,18 @@ import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Check, X, Phone, Mail, MessageSquare, Filter, Pencil, User, CreditCard } from 'lucide-react';
+import { Check, X, Phone, Mail, MessageSquare, Filter, Pencil, User, CreditCard, Trash2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+
+/** Converts a storage path (or legacy public URL) to admin-only proxy URL */
+function storageProxyUrl(pathOrUrl: string): string {
+  return `/api/admin/storage?path=${encodeURIComponent(pathOrUrl)}`;
+}
 
 interface Registration {
   id: string;
   name: string;
+  display_name: string | null;
   phone: string;
   email: string | null;
   services_interested: string[];
@@ -102,6 +108,18 @@ export default function AdminRegistrationsPage() {
     } catch (error) {
       console.error('Error approving registration:', error);
       alert('Error al aprobar la solicitud');
+    }
+  }
+
+  async function deleteRegistration(id: string) {
+    if (!confirm('¿Estás seguro que deseas eliminar este profesional? Esta acción no se puede deshacer.')) return;
+    try {
+      const supabase = createClient();
+      await supabase.from('registration_requests').delete().eq('id', id);
+      fetchRegistrations();
+    } catch (error) {
+      console.error('Error deleting registration:', error);
+      alert('Error al eliminar la solicitud');
     }
   }
 
@@ -209,7 +227,12 @@ export default function AdminRegistrationsPage() {
                   {/* Main Info */}
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-xl font-bold text-gray-900">{reg.name}</h3>
+                      <h3 className="text-xl font-bold text-gray-900">
+                        {reg.display_name || reg.name}
+                        {reg.display_name && (
+                          <span className="text-sm font-normal text-gray-500 ml-2">({reg.name})</span>
+                        )}
+                      </h3>
                       <Badge className={getStatusColor(reg.status)}>
                         {getStatusLabel(reg.status)}
                       </Badge>
@@ -273,21 +296,21 @@ export default function AdminRegistrationsPage() {
                       </div>
                     )}
 
-                    {/* Photos */}
+                    {/* Photos (served through admin-only proxy) */}
                     {(reg.profile_photo_url || reg.cedula_photo_url) && (
                       <div className="flex gap-4 mb-4">
                         {reg.profile_photo_url && (
-                          <a href={reg.profile_photo_url} target="_blank" rel="noopener noreferrer" className="block">
+                          <a href={storageProxyUrl(reg.profile_photo_url)} target="_blank" rel="noopener noreferrer" className="block">
                             <div className="w-16 h-16 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-primary-400 transition-colors">
-                              <img src={reg.profile_photo_url} alt="Foto de perfil" className="w-full h-full object-cover" />
+                              <img src={storageProxyUrl(reg.profile_photo_url)} alt="Foto de perfil" className="w-full h-full object-cover" />
                             </div>
                             <p className="text-xs text-gray-500 mt-1 text-center">Perfil</p>
                           </a>
                         )}
                         {reg.cedula_photo_url && (
-                          <a href={reg.cedula_photo_url} target="_blank" rel="noopener noreferrer" className="block">
+                          <a href={storageProxyUrl(reg.cedula_photo_url)} target="_blank" rel="noopener noreferrer" className="block">
                             <div className="w-16 h-16 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-primary-400 transition-colors">
-                              <img src={reg.cedula_photo_url} alt="Foto de cédula" className="w-full h-full object-cover" />
+                              <img src={storageProxyUrl(reg.cedula_photo_url)} alt="Foto de cédula" className="w-full h-full object-cover" />
                             </div>
                             <p className="text-xs text-gray-500 mt-1 text-center">Cédula</p>
                           </a>
@@ -365,6 +388,14 @@ export default function AdminRegistrationsPage() {
                           <X className="w-4 h-4 mr-1" />
                           Rechazar
                         </Button>
+                        <Button
+                          size="sm"
+                          onClick={() => deleteRegistration(reg.id)}
+                          className="bg-red-600 hover:bg-red-700 text-white"
+                        >
+                          <Trash2 className="w-4 h-4 mr-1" />
+                          Eliminar
+                        </Button>
                       </>
                     )}
                     {reg.status === 'contacted' && (
@@ -385,6 +416,14 @@ export default function AdminRegistrationsPage() {
                         >
                           <X className="w-4 h-4 mr-1" />
                           Rechazar
+                        </Button>
+                        <Button
+                          size="sm"
+                          onClick={() => deleteRegistration(reg.id)}
+                          className="bg-red-600 hover:bg-red-700 text-white"
+                        >
+                          <Trash2 className="w-4 h-4 mr-1" />
+                          Eliminar
                         </Button>
                       </>
                     )}
@@ -410,6 +449,16 @@ export default function AdminRegistrationsPage() {
                           Ver Profesionales
                         </Button>
                       </Link>
+                    )}
+                    {reg.status === 'rejected' && (
+                      <Button
+                        size="sm"
+                        onClick={() => deleteRegistration(reg.id)}
+                        className="bg-red-600 hover:bg-red-700 text-white"
+                      >
+                        <Trash2 className="w-4 h-4 mr-1" />
+                        Eliminar
+                      </Button>
                     )}
                     <a
                       href={`https://wa.me/${reg.phone.replace(/\D/g, '')}`}

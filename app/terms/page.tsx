@@ -90,8 +90,46 @@ export default function TermsPage() {
             </p>
           </section>
 
+          <section className="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-xl">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Relación entre usuario y profesional</h2>
+            <p className="text-gray-600">
+              EcuaCasa actúa exclusivamente como plataforma de conexión digital. Los profesionales registrados
+              son trabajadores independientes — <strong>no son empleados, agentes ni representantes de EcuaCasa</strong>.
+              Al contactar a un profesional, el usuario establece una relación contractual directa y exclusiva
+              con dicho profesional. EcuaCasa no es parte de ese acuerdo.
+            </p>
+          </section>
+
+          <section className="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-xl">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Sin verificación de antecedentes penales</h2>
+            <p className="text-gray-600">
+              EcuaCasa recopila y verifica el número de cédula de cada profesional antes de aprobar su perfil.
+              Sin embargo, <strong>esto no constituye una verificación de antecedentes penales ni garantía de
+              idoneidad, honestidad o competencia</strong>. El usuario asume plena responsabilidad por la decisión
+              de contratar a cualquier profesional y de permitir su acceso a su propiedad.
+            </p>
+          </section>
+
+          <section className="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-xl">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Exoneración de responsabilidad por daños</h2>
+            <p className="text-gray-600">
+              <strong>EcuaCasa no será responsable por:</strong> daños materiales a la propiedad, robo o hurto,
+              lesiones físicas, trabajos defectuosos o incompletos, disputas económicas entre usuario y profesional,
+              o cualquier pérdida directa o indirecta derivada del uso de la plataforma.
+            </p>
+          </section>
+
+          <section className="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-xl">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Resolución de disputas</h2>
+            <p className="text-gray-600">
+              Cualquier disputa entre usuario y profesional es responsabilidad exclusiva de las partes.
+              EcuaCasa no actúa como árbitro ni mediador. EcuaCasa se reserva el derecho pero no la obligación
+              de suspender profesionales ante quejas fundadas.
+            </p>
+          </section>
+
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Propiedad intelectual</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Propiedad intelectual</h2>
             <p className="text-gray-600">
               Todo el contenido de EcuaCasa, incluyendo textos, gráficos, logos, y software,
               es propiedad de EcuaCasa o sus licenciantes y está protegido por leyes de
@@ -100,7 +138,7 @@ export default function TermsPage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Suspensión y terminación</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Suspensión y terminación</h2>
             <p className="text-gray-600">
               Nos reservamos el derecho de suspender o terminar el acceso de cualquier usuario
               que viole estos términos de servicio, sin previo aviso.
@@ -108,7 +146,7 @@ export default function TermsPage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Modificaciones</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">13. Modificaciones</h2>
             <p className="text-gray-600">
               Podemos modificar estos términos en cualquier momento. Los cambios serán efectivos
               inmediatamente después de su publicación. El uso continuado del servicio después
@@ -117,7 +155,7 @@ export default function TermsPage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Ley aplicable</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">14. Ley aplicable</h2>
             <p className="text-gray-600">
               Estos términos se rigen por las leyes de la República del Ecuador. Cualquier
               disputa será resuelta en los tribunales competentes de Cuenca, Ecuador.
@@ -125,7 +163,7 @@ export default function TermsPage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Contacto</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">15. Contacto</h2>
             <p className="text-gray-600">
               Para preguntas sobre estos términos de servicio, puede contactarnos a través
               de nuestra plataforma.
