@@ -171,12 +171,12 @@ export default function AdminRegistrationsPage() {
       </div>
 
       {/* Status Filter */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 overflow-x-auto pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:overflow-visible scrollbar-none">
         {filterConfig.map((filter) => (
           <button
             key={filter.value}
             onClick={() => setStatusFilter(filter.value as StatusFilter)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
               statusFilter === filter.value
                 ? `${filter.activeClass} shadow-md`
                 : filter.inactiveClass
@@ -344,7 +344,7 @@ export default function AdminRegistrationsPage() {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex flex-row lg:flex-col gap-2 flex-shrink-0">
+                    <div className="flex flex-wrap sm:flex-row lg:flex-col gap-2 flex-shrink-0">
                       {reg.status === 'pending' && (
                         <>
                           <Button
