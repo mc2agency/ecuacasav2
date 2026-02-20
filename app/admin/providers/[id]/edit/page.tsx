@@ -10,10 +10,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent } from '@/components/ui/card';
 import { createClient } from '@/lib/supabase/client';
 import { COVERAGE_SECTORS } from '@/lib/constants';
-import { CheckCircle, ArrowLeft, ArrowRight, Loader2, Upload } from 'lucide-react';
+import { CheckCircle, ArrowLeft, ArrowRight, Loader2, Upload, Edit } from 'lucide-react';
 
 const TOTAL_STEPS = 4;
 
@@ -279,16 +278,19 @@ export default function EditProviderPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-2 border-gray-300 border-t-purple-600"></div>
       </div>
     );
   }
 
   if (notFound) {
     return (
-      <div className="text-center py-12">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Profesional no encontrado</h1>
-        <Link href="/admin/providers" className="text-primary-600 hover:underline">
+      <div className="text-center py-16">
+        <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-3">
+          <Edit className="w-7 h-7 text-gray-400" />
+        </div>
+        <h1 className="text-xl font-bold text-gray-900 mb-2">Profesional no encontrado</h1>
+        <Link href="/admin/providers" className="text-sm text-purple-600 hover:text-purple-700 font-medium">
           Volver a profesionales
         </Link>
       </div>
@@ -296,24 +298,30 @@ export default function EditProviderPage() {
   }
 
   return (
-    <div>
+    <div className="space-y-6">
       <Link
         href="/admin/providers"
-        className="inline-flex items-center text-gray-600 hover:text-primary-600 mb-6"
+        className="inline-flex items-center text-sm text-gray-500 hover:text-purple-600 transition-colors"
       >
-        <ArrowLeft className="w-4 h-4 mr-2" />
+        <ArrowLeft className="w-4 h-4 mr-1.5" />
         Volver a profesionales
       </Link>
 
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Editar Profesional</h1>
+      <div>
+        <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+          <Edit className="w-6 h-6 text-purple-600" />
+          Editar Profesional
+        </h1>
+        <p className="text-sm text-gray-500 mt-1">Modificar datos del profesional</p>
+      </div>
 
       {/* Progress Bar */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-2">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <div className="flex items-center justify-between mb-3">
           <span className="text-sm font-medium text-gray-700">Paso {step + 1} de {TOTAL_STEPS}</span>
           <span className="text-sm text-gray-500">{STEPS[step].title}</span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
+        <div className="w-full bg-gray-100 rounded-full h-2">
           <div
             className="bg-gradient-to-r from-purple-600 to-pink-600 h-2 rounded-full transition-all duration-500 ease-out"
             style={{ width: `${((step + 1) / TOTAL_STEPS) * 100}%` }}
@@ -325,12 +333,12 @@ export default function EditProviderPage() {
               key={i}
               type="button"
               onClick={() => setStep(i)}
-              className={`flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              className={`flex items-center justify-center w-8 h-8 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 i < step
                   ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-md'
                   : i === step
                   ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white ring-4 ring-purple-100'
-                  : 'bg-gray-200 text-gray-500 hover:bg-gray-300'
+                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
               }`}
             >
               {i < step ? <CheckCircle className="w-4 h-4" /> : i + 1}
@@ -339,12 +347,12 @@ export default function EditProviderPage() {
         </div>
       </div>
 
-      <Card>
-        <CardContent className="p-6 sm:p-8">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+        <div className="p-6 sm:p-8">
           {/* Step Title */}
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-gray-900">{STEPS[step].title}</h2>
-            <p className="text-sm text-gray-500 mt-1">{STEPS[step].subtitle}</p>
+            <h2 className="text-lg font-bold text-gray-900">{STEPS[step].title}</h2>
+            <p className="text-sm text-gray-500 mt-0.5">{STEPS[step].subtitle}</p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -353,20 +361,20 @@ export default function EditProviderPage() {
             <div className={step !== 0 ? 'hidden' : 'space-y-6'}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <Label htmlFor="name">Nombre *</Label>
-                    <Input id="name" {...register('name')} className="mt-1" />
+                    <Label htmlFor="name" className="text-sm font-medium text-gray-700">Nombre *</Label>
+                    <Input id="name" {...register('name')} className="mt-1.5 rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500" />
                     {errors.name && (
                       <p className="text-sm text-red-500 mt-1">{errors.name.message}</p>
                     )}
                   </div>
 
                   <div>
-                    <Label htmlFor="phone">WhatsApp *</Label>
+                    <Label htmlFor="phone" className="text-sm font-medium text-gray-700">WhatsApp *</Label>
                     <Input
                       id="phone"
                       type="tel"
                       {...register('phone')}
-                      className="mt-1"
+                      className="mt-1.5 rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500"
                       placeholder="+593991234567"
                     />
                     {errors.phone && (
@@ -375,16 +383,16 @@ export default function EditProviderPage() {
                   </div>
 
                   <div>
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" {...register('email')} className="mt-1" />
+                    <Label htmlFor="email" className="text-sm font-medium text-gray-700">Email</Label>
+                    <Input id="email" type="email" {...register('email')} className="mt-1.5 rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500" />
                   </div>
 
                   <div>
-                    <Label htmlFor="status">Estado</Label>
+                    <Label htmlFor="status" className="text-sm font-medium text-gray-700">Estado</Label>
                     <select
                       id="status"
                       {...register('status')}
-                      className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="mt-1.5 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white"
                     >
                       <option value="active">Activo</option>
                       <option value="pending">Pendiente</option>
@@ -397,18 +405,18 @@ export default function EditProviderPage() {
             {/* ========== STEP 2: Verificación de identidad ========== */}
             <div className={step !== 1 ? 'hidden' : 'space-y-6'}>
                 <div>
-                  <Label htmlFor="cedula_number">Número de cédula</Label>
-                  <Input id="cedula_number" {...register('cedula_number')} className="mt-1" placeholder="0101234567" />
+                  <Label htmlFor="cedula_number" className="text-sm font-medium text-gray-700">Número de cédula</Label>
+                  <Input id="cedula_number" {...register('cedula_number')} className="mt-1.5 rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500" placeholder="0101234567" />
                 </div>
 
                 <div>
-                  <Label>Foto de cédula</Label>
+                  <Label className="text-sm font-medium text-gray-700">Foto de cédula</Label>
                   {cedulaPhotoUrl && (
                     <a href={storageProxyUrl(cedulaPhotoUrl)} target="_blank" rel="noopener noreferrer" className="block mb-2">
-                      <img src={storageProxyUrl(cedulaPhotoUrl)} alt="Foto de cédula" className="w-24 h-24 object-cover rounded-lg border-2 border-gray-200 mt-1" />
+                      <img src={storageProxyUrl(cedulaPhotoUrl)} alt="Foto de cédula" className="w-24 h-24 object-cover rounded-xl border-2 border-gray-200 mt-1.5" />
                     </a>
                   )}
-                  <label className={`flex items-center gap-3 px-4 py-3 border-2 border-dashed rounded-lg cursor-pointer transition-colors mt-1 ${uploadingCedula ? 'opacity-50' : 'border-gray-300 hover:border-primary-400'}`}>
+                  <label className={`flex items-center gap-3 px-4 py-3.5 border-2 border-dashed rounded-xl cursor-pointer transition-colors mt-1.5 ${uploadingCedula ? 'opacity-50' : 'border-gray-200 hover:border-purple-400 hover:bg-purple-50/30'}`}>
                     <Upload className="w-5 h-5 text-gray-400" />
                     <span className="text-sm text-gray-600">{uploadingCedula ? 'Subiendo...' : 'Subir foto de cédula'}</span>
                     <input
@@ -425,13 +433,13 @@ export default function EditProviderPage() {
                 </div>
 
                 <div>
-                  <Label>Foto de perfil</Label>
+                  <Label className="text-sm font-medium text-gray-700">Foto de perfil</Label>
                   {profilePhotoUrl && (
                     <a href={storageProxyUrl(profilePhotoUrl)} target="_blank" rel="noopener noreferrer" className="block mb-2">
-                      <img src={storageProxyUrl(profilePhotoUrl)} alt="Foto de perfil" className="w-24 h-24 object-cover rounded-full border-2 border-gray-200 mt-1" />
+                      <img src={storageProxyUrl(profilePhotoUrl)} alt="Foto de perfil" className="w-24 h-24 object-cover rounded-full border-2 border-gray-200 mt-1.5" />
                     </a>
                   )}
-                  <label className={`flex items-center gap-3 px-4 py-3 border-2 border-dashed rounded-lg cursor-pointer transition-colors mt-1 ${uploadingProfile ? 'opacity-50' : 'border-gray-300 hover:border-primary-400'}`}>
+                  <label className={`flex items-center gap-3 px-4 py-3.5 border-2 border-dashed rounded-xl cursor-pointer transition-colors mt-1.5 ${uploadingProfile ? 'opacity-50' : 'border-gray-200 hover:border-purple-400 hover:bg-purple-50/30'}`}>
                     <Upload className="w-5 h-5 text-gray-400" />
                     <span className="text-sm text-gray-600">{uploadingProfile ? 'Subiendo...' : 'Subir foto de perfil'}</span>
                     <input
@@ -451,17 +459,17 @@ export default function EditProviderPage() {
             {/* ========== STEP 3: Servicios y cobertura ========== */}
             <div className={step !== 2 ? 'hidden' : 'space-y-6'}>
                 <div>
-                  <Label>Servicios *</Label>
+                  <Label className="text-sm font-medium text-gray-700">Servicios *</Label>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {services.map((service) => (
                       <button
                         key={service.slug}
                         type="button"
                         onClick={() => toggleService(service.slug)}
-                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                        className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                           selectedServices?.includes(service.slug)
-                            ? 'bg-primary-600 text-white'
-                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md shadow-purple-200'
+                            : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200'
                         }`}
                       >
                         {service.name_es}
@@ -474,17 +482,17 @@ export default function EditProviderPage() {
                 </div>
 
                 <div>
-                  <Label>Sectores donde trabaja</Label>
+                  <Label className="text-sm font-medium text-gray-700">Sectores donde trabaja</Label>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {COVERAGE_SECTORS.map((sector) => (
                       <button
                         key={sector}
                         type="button"
                         onClick={() => toggleSector(sector)}
-                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                        className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                           selectedSectors?.includes(sector)
-                            ? 'bg-accent-500 text-white'
-                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-200'
+                            : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200'
                         }`}
                       >
                         {sector}
@@ -494,31 +502,31 @@ export default function EditProviderPage() {
                 </div>
 
                 <div className="flex flex-wrap gap-6 pt-2">
-                  <label className="flex items-center gap-2 cursor-pointer">
+                  <label className="flex items-center gap-2.5 cursor-pointer group">
                     <input
                       type="checkbox"
                       {...register('speaks_english')}
-                      className="rounded border-gray-300 text-primary-600 focus:ring-primary-500 w-5 h-5"
+                      className="rounded-lg border-gray-300 text-purple-600 focus:ring-purple-500 w-5 h-5"
                     />
-                    <span>Habla inglés</span>
+                    <span className="text-sm text-gray-700 group-hover:text-gray-900">Habla inglés</span>
                   </label>
 
-                  <label className="flex items-center gap-2 cursor-pointer">
+                  <label className="flex items-center gap-2.5 cursor-pointer group">
                     <input
                       type="checkbox"
                       {...register('verified')}
-                      className="rounded border-gray-300 text-green-600 focus:ring-green-500 w-5 h-5"
+                      className="rounded-lg border-gray-300 text-green-600 focus:ring-green-500 w-5 h-5"
                     />
-                    <span>Verificado</span>
+                    <span className="text-sm text-gray-700 group-hover:text-gray-900">Verificado</span>
                   </label>
 
-                  <label className="flex items-center gap-2 cursor-pointer">
+                  <label className="flex items-center gap-2.5 cursor-pointer group">
                     <input
                       type="checkbox"
                       {...register('featured')}
-                      className="rounded border-gray-300 text-orange-600 focus:ring-orange-500 w-5 h-5"
+                      className="rounded-lg border-gray-300 text-orange-600 focus:ring-orange-500 w-5 h-5"
                     />
-                    <span>Destacado</span>
+                    <span className="text-sm text-gray-700 group-hover:text-gray-900">Destacado</span>
                   </label>
                 </div>
             </div>
@@ -527,17 +535,17 @@ export default function EditProviderPage() {
             <div className={step !== 3 ? 'hidden' : 'space-y-6'}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <Label htmlFor="price_range">Rango de precios</Label>
-                    <Input id="price_range" {...register('price_range')} className="mt-1" placeholder="Ej: $25-50/hora" />
+                    <Label htmlFor="price_range" className="text-sm font-medium text-gray-700">Rango de precios</Label>
+                    <Input id="price_range" {...register('price_range')} className="mt-1.5 rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500" placeholder="Ej: $25-50/hora" />
                   </div>
 
                   <div>
-                    <Label htmlFor="response_time">Tiempo de respuesta</Label>
-                    <Input id="response_time" {...register('response_time')} className="mt-1" placeholder="Ej: 30 min" />
+                    <Label htmlFor="response_time" className="text-sm font-medium text-gray-700">Tiempo de respuesta</Label>
+                    <Input id="response_time" {...register('response_time')} className="mt-1.5 rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500" placeholder="Ej: 30 min" />
                   </div>
 
                   <div>
-                    <Label htmlFor="rating">Rating (0-5)</Label>
+                    <Label htmlFor="rating" className="text-sm font-medium text-gray-700">Rating (0-5)</Label>
                     <Input
                       id="rating"
                       type="number"
@@ -545,70 +553,70 @@ export default function EditProviderPage() {
                       min="0"
                       max="5"
                       {...register('rating', { valueAsNumber: true })}
-                      className="mt-1"
+                      className="mt-1.5 rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="review_count">Número de reseñas</Label>
+                    <Label htmlFor="review_count" className="text-sm font-medium text-gray-700">Número de reseñas</Label>
                     <Input
                       id="review_count"
                       type="number"
                       min="0"
                       {...register('review_count', { valueAsNumber: true })}
-                      className="mt-1"
+                      className="mt-1.5 rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500"
                     />
                   </div>
                 </div>
 
                 {/* References */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="border rounded-lg p-4 space-y-4">
-                    <h3 className="font-semibold text-gray-900">Referencia 1</h3>
+                  <div className="border border-gray-100 rounded-2xl p-5 space-y-4 bg-gray-50/50">
+                    <h3 className="font-semibold text-gray-900 text-sm">Referencia 1</h3>
                     <div>
-                      <Label htmlFor="reference1_name">Nombre</Label>
-                      <Input id="reference1_name" {...register('reference1_name')} className="mt-1" />
+                      <Label htmlFor="reference1_name" className="text-sm font-medium text-gray-700">Nombre</Label>
+                      <Input id="reference1_name" {...register('reference1_name')} className="mt-1.5 rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500 bg-white" />
                     </div>
                     <div>
-                      <Label htmlFor="reference1_phone">Teléfono</Label>
-                      <Input id="reference1_phone" type="tel" {...register('reference1_phone')} className="mt-1" placeholder="09X XXX XXXX" />
+                      <Label htmlFor="reference1_phone" className="text-sm font-medium text-gray-700">Teléfono</Label>
+                      <Input id="reference1_phone" type="tel" {...register('reference1_phone')} className="mt-1.5 rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500 bg-white" placeholder="09X XXX XXXX" />
                     </div>
                   </div>
 
-                  <div className="border rounded-lg p-4 space-y-4">
-                    <h3 className="font-semibold text-gray-900">Referencia 2</h3>
+                  <div className="border border-gray-100 rounded-2xl p-5 space-y-4 bg-gray-50/50">
+                    <h3 className="font-semibold text-gray-900 text-sm">Referencia 2</h3>
                     <div>
-                      <Label htmlFor="reference2_name">Nombre</Label>
-                      <Input id="reference2_name" {...register('reference2_name')} className="mt-1" />
+                      <Label htmlFor="reference2_name" className="text-sm font-medium text-gray-700">Nombre</Label>
+                      <Input id="reference2_name" {...register('reference2_name')} className="mt-1.5 rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500 bg-white" />
                     </div>
                     <div>
-                      <Label htmlFor="reference2_phone">Teléfono</Label>
-                      <Input id="reference2_phone" type="tel" {...register('reference2_phone')} className="mt-1" placeholder="09X XXX XXXX" />
+                      <Label htmlFor="reference2_phone" className="text-sm font-medium text-gray-700">Teléfono</Label>
+                      <Input id="reference2_phone" type="tel" {...register('reference2_phone')} className="mt-1.5 rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500 bg-white" placeholder="09X XXX XXXX" />
                     </div>
                   </div>
                 </div>
 
                 {/* Description ES */}
                 <div>
-                  <Label htmlFor="description_es">Descripción (Español)</Label>
-                  <Textarea id="description_es" {...register('description_es')} className="mt-1" rows={3} />
+                  <Label htmlFor="description_es" className="text-sm font-medium text-gray-700">Descripción (Español)</Label>
+                  <Textarea id="description_es" {...register('description_es')} className="mt-1.5 rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500" rows={3} />
                 </div>
 
                 {/* Description EN */}
                 <div>
-                  <Label htmlFor="description_en">Descripción (English)</Label>
-                  <Textarea id="description_en" {...register('description_en')} className="mt-1" rows={3} />
+                  <Label htmlFor="description_en" className="text-sm font-medium text-gray-700">Descripción (English)</Label>
+                  <Textarea id="description_en" {...register('description_en')} className="mt-1.5 rounded-xl border-gray-200 focus:ring-purple-500 focus:border-purple-500" rows={3} />
                 </div>
             </div>
 
             {/* ========== Navigation Buttons ========== */}
-            <div className="flex items-center gap-4 pt-2">
+            <div className="flex items-center gap-3 pt-2">
               {step > 0 && (
                 <Button
                   type="button"
                   variant="outline"
                   onClick={handleBack}
-                  className="flex-1 py-5"
+                  className="flex-1 py-5 rounded-xl"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Atrás
@@ -619,7 +627,7 @@ export default function EditProviderPage() {
                 <Button
                   type="button"
                   onClick={handleNext}
-                  className={`flex-1 py-5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white ${step === 0 ? 'w-full' : ''}`}
+                  className={`flex-1 py-5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-xl shadow-lg shadow-purple-200 ${step === 0 ? 'w-full' : ''}`}
                 >
                   Siguiente
                   <ArrowRight className="w-4 h-4 ml-2" />
@@ -628,7 +636,7 @@ export default function EditProviderPage() {
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 py-5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+                  className="flex-1 py-5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-xl shadow-lg shadow-purple-200"
                 >
                   {submitting ? (
                     <>
@@ -643,15 +651,15 @@ export default function EditProviderPage() {
 
               {step === TOTAL_STEPS - 1 && (
                 <Link href="/admin/providers">
-                  <Button type="button" variant="outline" className="py-5">
+                  <Button type="button" variant="outline" className="py-5 rounded-xl">
                     Cancelar
                   </Button>
                 </Link>
               )}
             </div>
           </form>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }
