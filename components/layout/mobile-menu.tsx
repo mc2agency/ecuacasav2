@@ -12,10 +12,9 @@ interface MobileMenuProps {
   open: boolean;
   onClose: () => void;
   navLinks: { href: string; label: string }[];
-  isAdmin?: boolean;
 }
 
-export function MobileMenu({ open, onClose, navLinks, isAdmin }: MobileMenuProps) {
+export function MobileMenu({ open, onClose, navLinks }: MobileMenuProps) {
   const pathname = usePathname();
   const { t } = useTranslation();
   const prevPathname = useRef(pathname);
@@ -102,15 +101,13 @@ export function MobileMenu({ open, onClose, navLinks, isAdmin }: MobileMenuProps
             {/* Language Toggle */}
             <LanguageToggle variant="button" className="w-full justify-center" />
 
-            {/* Admin Link - Only visible to authenticated admins */}
-            {isAdmin && (
-              <Link href="/admin">
-                <Button variant="outline" className="w-full flex items-center justify-center gap-2">
-                  <Settings className="w-4 h-4" />
-                  Admin
-                </Button>
-              </Link>
-            )}
+            {/* Admin Link - Always accessible since /admin has its own login gate */}
+            <Link href="/admin">
+              <Button variant="outline" className="w-full flex items-center justify-center gap-2">
+                <Settings className="w-4 h-4" />
+                Admin
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
