@@ -16,41 +16,40 @@ export async function GET() {
   const supabase = getSupabaseClient();
 
   try {
-    // Fetch provider stats
-    const { count: totalProviders, error: totalError } = await supabase
-      .from('providers')
-      .select('*', { count: 'exact', head: true });
-
-    if (totalError) {
-      console.error('Error fetching total providers:', totalError);
-    }
-
-    const { count: activeProviders, error: activeError } = await supabase
-      .from('providers')
-      .select('*', { count: 'exact', head: true })
-      .eq('status', 'active');
-
-    if (activeError) {
-      console.error('Error fetching active providers:', activeError);
-    }
-
-    const { count: pendingRegistrations, error: pendingError } = await supabase
-      .from('registration_requests')
-      .select('*', { count: 'exact', head: true })
-      .eq('status', 'pending');
-
-    if (pendingError) {
-      console.error('Error fetching pending registrations:', pendingError);
-    }
-
-    const { data: ratingData, error: ratingError } = await supabase
-      .from('providers')
-      .select('rating')
-      .eq('status', 'active');
-
-    if (ratingError) {
-      console.error('Error fetching ratings:', ratingError);
-    }
+    const [
+      { count: totalProviders },
+      { count: activeProviders },
+      { count: pendingRegistrations },
+      { data: ratingData },
+      { data: recentRegistrations },
+      { data: recentProviders },
+    ] = await Promise.all([
+      supabase
+        .from('providers')
+        .select('*', { count: 'exact', head: true }),
+      supabase
+        .from('providers')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'active'),
+      supabase
+        .from('registration_requests')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'pending'),
+      supabase
+        .from('providers')
+        .select('rating')
+        .eq('status', 'active'),
+      supabase
+        .from('registration_requests')
+        .select('id, name, display_name, phone, status, services_interested, created_at')
+        .order('created_at', { ascending: false })
+        .limit(5),
+      supabase
+        .from('providers')
+        .select('id, name, phone, status, verified, featured, rating, created_at')
+        .order('created_at', { ascending: false })
+        .limit(5),
+    ]);
 
     const avgRating = ratingData?.length
       ? ratingData.reduce((acc, p) => acc + (p.rating || 0), 0) / ratingData.length
@@ -61,6 +60,8 @@ export async function GET() {
       activeProviders: activeProviders || 0,
       pendingRegistrations: pendingRegistrations || 0,
       averageRating: Math.round(avgRating * 10) / 10,
+      recentRegistrations: recentRegistrations || [],
+      recentProviders: recentProviders || [],
     });
   } catch (error: any) {
     console.error('Stats API error:', error);
