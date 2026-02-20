@@ -5,14 +5,12 @@ import { usePathname } from 'next/navigation';
 import { Menu, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/use-translation';
-import { useIsAdmin } from '@/hooks/use-is-admin';
 import { useState, useCallback } from 'react';
 import { MobileMenu } from './mobile-menu';
 
 export function Navbar() {
   const pathname = usePathname();
   const { t, locale, setLocale } = useTranslation();
-  const isAdmin = useIsAdmin();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const closeMobileMenu = useCallback(() => setMobileMenuOpen(false), []);
 
@@ -75,14 +73,12 @@ export function Navbar() {
                 {locale === 'en' ? 'ES' : 'EN'}
               </Button>
 
-              {/* Admin Link - Only visible to authenticated admins */}
-              {isAdmin && (
-                <Link href="/admin">
-                  <Button variant="ghost" size="sm" className="text-gray-500 hover:text-primary-600">
-                    <Settings className="w-4 h-4" />
-                  </Button>
-                </Link>
-              )}
+              {/* Admin Link - Always accessible since /admin has its own login gate */}
+              <Link href="/admin">
+                <Button variant="ghost" size="sm" className="text-gray-500 hover:text-primary-600">
+                  <Settings className="w-4 h-4" />
+                </Button>
+              </Link>
 
               {/* Mobile Menu Button */}
               <Button
@@ -103,7 +99,6 @@ export function Navbar() {
         open={mobileMenuOpen}
         onClose={closeMobileMenu}
         navLinks={navLinks}
-        isAdmin={isAdmin}
       />
     </>
   );
