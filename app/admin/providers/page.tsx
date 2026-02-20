@@ -347,8 +347,112 @@ export default function AdminProvidersPage() {
           </Link>
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
+        <>
+          {/* Mobile: Card layout */}
+          <div className="lg:hidden space-y-3">
+            {filteredProviders.map((provider) => (
+              <div key={provider.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+                <div className="flex items-start gap-3">
+                  {/* Avatar */}
+                  <div className="w-11 h-11 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                    {provider.photo_url ? (
+                      <img
+                        src={`/api/providers/${provider.id}/photo`}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white text-sm font-bold">
+                        {provider.name.charAt(0)}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Info */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-semibold text-gray-900 text-sm truncate">{provider.name}</h3>
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-semibold flex-shrink-0 ${
+                        provider.status === 'active'
+                          ? 'bg-green-50 text-green-700'
+                          : 'bg-gray-100 text-gray-600'
+                      }`}>
+                        {provider.status === 'active' ? 'Activo' : provider.status}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-3 text-xs text-gray-500 mb-2.5">
+                      <span>{provider.phone}</span>
+                      <span className="flex items-center gap-0.5">
+                        <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
+                        {provider.rating}
+                      </span>
+                      {provider.speaks_english && (
+                        <span className="text-purple-500">EN</span>
+                      )}
+                    </div>
+
+                    {/* Badges */}
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      <button
+                        onClick={() => toggleVerified(provider.id, provider.verified)}
+                        className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
+                          provider.verified
+                            ? 'bg-green-50 text-green-700 hover:bg-green-100'
+                            : 'bg-gray-50 text-gray-400 hover:bg-gray-100'
+                        }`}
+                      >
+                        <CheckCircle className="w-3 h-3 inline mr-1" />
+                        Verificado
+                      </button>
+                      <button
+                        onClick={() => toggleFeatured(provider.id, provider.featured)}
+                        className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
+                          provider.featured
+                            ? 'bg-orange-50 text-orange-700 hover:bg-orange-100'
+                            : 'bg-gray-50 text-gray-400 hover:bg-gray-100'
+                        }`}
+                      >
+                        <Star className="w-3 h-3 inline mr-1" />
+                        Destacado
+                      </button>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex gap-1.5">
+                      <button
+                        onClick={() => setPhotoPanelProvider(provider)}
+                        className="p-2 rounded-xl text-purple-600 bg-purple-50 hover:bg-purple-100 transition-colors"
+                        title="Foto de tarjeta"
+                      >
+                        <ImageIcon className="w-4 h-4" />
+                      </button>
+                      <Link href={`/admin/providers/${provider.id}/edit`}>
+                        <button className="p-2 rounded-xl text-gray-600 bg-gray-50 hover:bg-gray-100 transition-colors">
+                          <Edit className="w-4 h-4" />
+                        </button>
+                      </Link>
+                      <button
+                        onClick={() => deleteProvider(provider.id, provider.name)}
+                        className="p-2 rounded-xl text-red-500 bg-red-50 hover:bg-red-100 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {searchQuery && (
+              <p className="text-xs text-gray-400 text-center pt-1">
+                {filteredProviders.length} de {providers.length} profesionales
+              </p>
+            )}
+          </div>
+
+          {/* Desktop: Table layout */}
+          <div className="hidden lg:block bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-gray-100">
@@ -365,7 +469,6 @@ export default function AdminProvidersPage() {
                   <tr key={provider.id} className="hover:bg-gray-50/50 transition-colors">
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-3">
-                        {/* Thumbnail */}
                         <div className="w-9 h-9 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
                           {provider.photo_url ? (
                             <img
@@ -455,15 +558,14 @@ export default function AdminProvidersPage() {
                 ))}
               </tbody>
             </table>
-          </div>
 
-          {/* Results count */}
-          {searchQuery && (
-            <div className="px-5 py-3 border-t border-gray-100 text-xs text-gray-400">
-              {filteredProviders.length} de {providers.length} profesionales
-            </div>
-          )}
-        </div>
+            {searchQuery && (
+              <div className="px-5 py-3 border-t border-gray-100 text-xs text-gray-400">
+                {filteredProviders.length} de {providers.length} profesionales
+              </div>
+            )}
+          </div>
+        </>
       )}
 
       {/* Photo Panel Modal */}
