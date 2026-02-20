@@ -2,11 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { createClient } from '@/lib/supabase/client';
-import { Plus, Edit, Trash2, CheckCircle, Star, ImageIcon, X, Check, Lock, Loader2 } from 'lucide-react';
+import { Plus, Edit, Trash2, CheckCircle, Star, ImageIcon, X, Check, Lock, Loader2, Users, Search } from 'lucide-react';
 
 interface Provider {
   id: string;
@@ -103,19 +102,19 @@ function PhotoPanel({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
 
       {/* Panel */}
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
+        <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
           <div>
             <h2 className="text-lg font-bold text-gray-900">Foto de tarjeta</h2>
             <p className="text-sm text-gray-500">{provider.name}</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
           >
             <X className="w-5 h-5 text-gray-500" />
           </button>
@@ -128,7 +127,7 @@ function PhotoPanel({
             </div>
           ) : error ? (
             <div className="text-center py-12">
-              <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-3">
+              <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-3">
                 <X className="w-7 h-7 text-red-400" />
               </div>
               <p className="text-red-600 text-sm font-medium mb-1">No se pudieron cargar las fotos</p>
@@ -136,7 +135,7 @@ function PhotoPanel({
             </div>
           ) : photos.length === 0 ? (
             <div className="text-center py-12">
-              <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-3">
                 <ImageIcon className="w-7 h-7 text-gray-400" />
               </div>
               <p className="text-gray-500 text-sm">No hay fotos disponibles</p>
@@ -163,7 +162,7 @@ function PhotoPanel({
                           className={`relative rounded-xl overflow-hidden transition-all ${
                             isSelected
                               ? 'ring-3 ring-green-500 shadow-lg shadow-green-100'
-                              : 'ring-1 ring-gray-200 hover:ring-primary-300 hover:shadow-md'
+                              : 'ring-1 ring-gray-200 hover:ring-purple-300 hover:shadow-md'
                           } ${saving && !isSaving ? 'opacity-50' : ''}`}
                         >
                           <div className="aspect-square bg-gray-100">
@@ -185,7 +184,7 @@ function PhotoPanel({
                           {isSaving && (
                             <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                               <div className="bg-white rounded-full p-2 shadow-lg">
-                                <Loader2 className="w-5 h-5 animate-spin text-primary-600" />
+                                <Loader2 className="w-5 h-5 animate-spin text-purple-600" />
                               </div>
                             </div>
                           )}
@@ -246,6 +245,7 @@ export default function AdminProvidersPage() {
   const [providers, setProviders] = useState<Provider[]>([]);
   const [loading, setLoading] = useState(true);
   const [photoPanelProvider, setPhotoPanelProvider] = useState<Provider | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchProviders();
@@ -288,56 +288,85 @@ export default function AdminProvidersPage() {
     fetchProviders();
   }
 
+  const filteredProviders = searchQuery
+    ? providers.filter(p =>
+        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.phone.includes(searchQuery)
+      )
+    : providers;
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-2 border-gray-300 border-t-purple-600"></div>
       </div>
     );
   }
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Profesionales</h1>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+            <Users className="w-6 h-6 text-purple-600" />
+            Profesionales
+          </h1>
+          <p className="text-sm text-gray-500 mt-1">{providers.length} registrados</p>
+        </div>
         <Link href="/admin/providers/new">
-          <Button className="bg-primary-600 hover:bg-primary-700">
+          <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-xl shadow-lg shadow-purple-200 hover:shadow-xl hover:shadow-purple-300 transition-all">
             <Plus className="w-4 h-4 mr-2" />
             Agregar
           </Button>
         </Link>
       </div>
 
+      {/* Search */}
+      {providers.length > 0 && (
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Buscar por nombre o teléfono..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-11 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+          />
+        </div>
+      )}
+
       {providers.length === 0 ? (
-        <Card>
-          <CardContent className="p-12 text-center">
-            <p className="text-gray-500 mb-4">No hay profesionales registrados</p>
-            <Link href="/admin/providers/new">
-              <Button>Agregar el primero</Button>
-            </Link>
-          </CardContent>
-        </Card>
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-12 text-center">
+          <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-3">
+            <Users className="w-7 h-7 text-gray-400" />
+          </div>
+          <p className="text-gray-500 mb-4">No hay profesionales registrados</p>
+          <Link href="/admin/providers/new">
+            <Button className="bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl">Agregar el primero</Button>
+          </Link>
+        </div>
       ) : (
-        <div className="bg-white rounded-xl shadow overflow-hidden">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 border-b">
-                <tr>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Nombre</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Teléfono</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Rating</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Estado</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Badges</th>
-                  <th className="px-6 py-4 text-right text-sm font-semibold text-gray-900">Acciones</th>
+              <thead>
+                <tr className="border-b border-gray-100">
+                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Nombre</th>
+                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Teléfono</th>
+                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Rating</th>
+                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Estado</th>
+                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Badges</th>
+                  <th className="px-5 py-3.5 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Acciones</th>
                 </tr>
               </thead>
-              <tbody className="divide-y">
-                {providers.map((provider) => (
-                  <tr key={provider.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4">
+              <tbody className="divide-y divide-gray-50">
+                {filteredProviders.map((provider) => (
+                  <tr key={provider.id} className="hover:bg-gray-50/50 transition-colors">
+                    <td className="px-5 py-3.5">
                       <div className="flex items-center gap-3">
                         {/* Thumbnail */}
-                        <div className="w-9 h-9 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                        <div className="w-9 h-9 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
                           {provider.photo_url ? (
                             <img
                               src={`/api/providers/${provider.id}/photo`}
@@ -345,39 +374,43 @@ export default function AdminProvidersPage() {
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <div className="w-full h-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-xs font-bold">
+                            <div className="w-full h-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white text-xs font-bold">
                               {provider.name.charAt(0)}
                             </div>
                           )}
                         </div>
                         <div>
-                          <div className="font-medium text-gray-900">{provider.name}</div>
+                          <div className="font-medium text-gray-900 text-sm">{provider.name}</div>
                           {provider.speaks_english && (
-                            <span className="text-xs text-gray-500">Habla inglés</span>
+                            <span className="text-xs text-gray-400">Habla inglés</span>
                           )}
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-gray-600">{provider.phone}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-5 py-3.5 text-sm text-gray-600">{provider.phone}</td>
+                    <td className="px-5 py-3.5">
                       <div className="flex items-center gap-1">
-                        <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                        <span className="font-medium">{provider.rating}</span>
+                        <Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
+                        <span className="text-sm font-medium text-gray-900">{provider.rating}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4">
-                      <Badge variant={provider.status === 'active' ? 'default' : 'secondary'}>
+                    <td className="px-5 py-3.5">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold ${
+                        provider.status === 'active'
+                          ? 'bg-green-50 text-green-700'
+                          : 'bg-gray-100 text-gray-600'
+                      }`}>
                         {provider.status === 'active' ? 'Activo' : provider.status}
-                      </Badge>
+                      </span>
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="flex gap-2">
+                    <td className="px-5 py-3.5">
+                      <div className="flex gap-1.5">
                         <button
                           onClick={() => toggleVerified(provider.id, provider.verified)}
-                          className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                          className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
                             provider.verified
-                              ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                              : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                              ? 'bg-green-50 text-green-700 hover:bg-green-100'
+                              : 'bg-gray-50 text-gray-400 hover:bg-gray-100'
                           }`}
                         >
                           <CheckCircle className="w-3 h-3 inline mr-1" />
@@ -385,10 +418,10 @@ export default function AdminProvidersPage() {
                         </button>
                         <button
                           onClick={() => toggleFeatured(provider.id, provider.featured)}
-                          className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                          className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
                             provider.featured
-                              ? 'bg-orange-100 text-orange-700 hover:bg-orange-200'
-                              : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                              ? 'bg-orange-50 text-orange-700 hover:bg-orange-100'
+                              : 'bg-gray-50 text-gray-400 hover:bg-gray-100'
                           }`}
                         >
                           <Star className="w-3 h-3 inline mr-1" />
@@ -396,30 +429,26 @@ export default function AdminProvidersPage() {
                         </button>
                       </div>
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
+                    <td className="px-5 py-3.5">
+                      <div className="flex justify-end gap-1.5">
+                        <button
                           onClick={() => setPhotoPanelProvider(provider)}
-                          className="text-purple-600 hover:text-purple-700 hover:bg-purple-50"
+                          className="p-2 rounded-xl text-purple-600 hover:bg-purple-50 transition-colors"
                           title="Foto de tarjeta"
                         >
                           <ImageIcon className="w-4 h-4" />
-                        </Button>
+                        </button>
                         <Link href={`/admin/providers/${provider.id}/edit`}>
-                          <Button variant="outline" size="sm">
+                          <button className="p-2 rounded-xl text-gray-500 hover:bg-gray-100 transition-colors">
                             <Edit className="w-4 h-4" />
-                          </Button>
+                          </button>
                         </Link>
-                        <Button
-                          variant="outline"
-                          size="sm"
+                        <button
                           onClick={() => deleteProvider(provider.id, provider.name)}
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          className="p-2 rounded-xl text-red-500 hover:bg-red-50 transition-colors"
                         >
                           <Trash2 className="w-4 h-4" />
-                        </Button>
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -427,6 +456,13 @@ export default function AdminProvidersPage() {
               </tbody>
             </table>
           </div>
+
+          {/* Results count */}
+          {searchQuery && (
+            <div className="px-5 py-3 border-t border-gray-100 text-xs text-gray-400">
+              {filteredProviders.length} de {providers.length} profesionales
+            </div>
+          )}
         </div>
       )}
 
