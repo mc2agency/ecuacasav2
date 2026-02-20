@@ -73,8 +73,8 @@ export function Navbar() {
                 {locale === 'en' ? 'ES' : 'EN'}
               </Button>
 
-              {/* Admin Link - Always accessible since /admin has its own login gate */}
-              <Link href="/admin">
+              {/* Admin Link - Desktop only; mobile uses hamburger menu */}
+              <Link href="/admin" className="hidden md:inline-flex">
                 <Button variant="ghost" size="sm" className="text-gray-500 hover:text-primary-600">
                   <Settings className="w-4 h-4" />
                 </Button>
